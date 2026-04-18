@@ -10,22 +10,15 @@ import { categoryOfItem, itemById } from "@/content/bundle";
 import { allReviews } from "@/db";
 import type { ReviewEvent } from "@/db/types";
 import { fmtDate } from "@/lib/time";
-
-type MockEntry = { points: number; passed: boolean; at: number };
+import { useStore } from "@/store";
 
 export default function Stats() {
   const [reviews, setReviews] = useState<ReviewEvent[]>([]);
-  const [mocks, setMocks] = useState<MockEntry[]>([]);
+  const mocks = useStore((s) => s.mockHistory);
 
   useEffect(() => {
     void (async () => {
       setReviews(await allReviews());
-      try {
-        const raw = localStorage.getItem("mockHistory");
-        if (raw) setMocks(JSON.parse(raw));
-      } catch {
-        /* ignore */
-      }
     })();
   }, []);
 

@@ -257,6 +257,7 @@ export default function Card({
           rules={rules}
           totalCorrectInTruth={totalCorrectInTruth}
           userCorrectMatches={userCorrectMatches}
+          userTicks={ticks}
         />
       )}
     </div>
@@ -269,12 +270,14 @@ function ResultBlock({
   rules,
   totalCorrectInTruth,
   userCorrectMatches,
+  userTicks,
 }: {
   result: ReturnType<typeof gradeAnswer>;
   item: Item;
   rules: Rule[];
   totalCorrectInTruth: number;
   userCorrectMatches: number;
+  userTicks: [boolean, boolean, boolean];
 }) {
   const banner = result.correct
     ? { cls: "bg-green-950/50 border-ok text-green-200", label: `${result.matched} of 3 points` }
@@ -303,6 +306,67 @@ function ResultBlock({
           </div>
         )}
       </div>
+      {!result.correct && (
+        <AskClaudeButton item={item} userTicks={userTicks} />
+      )}
     </div>
+  );
+}
+
+/**
+ * Pragmatic "Ask Claude" escape hatch (C-4): copies a structured prompt with
+ * the question, the user's ticks vs. the truth, and the rationale, then opens
+ * claude.ai in a new tab so the user can paste it. We don't have an API key in
+ * the PWA — this is a clipboard handoff, not an in-app conversation. Shown
+ * only on incorrect answers (so it doesn't clutter wins) and only when the
+ * rationale is visible (so it's hidden in mock strict mode).
+ */
+function AskClaudeButton({
+  item,
+  userTicks,
+}: {
+  item: Item;
+  userTicks: [boolean, boolean, boolean];
+}) {
+  const [copied, setCopied] = useState(false);
+
+  const prompt = useMemo(() => {
+    const lines: string[] = [];
+    lines.push(
+      "I'm preparing for the Swiss Cat. B driving theory exam and got this multiple-choice question wrong. Please explain it clearly, in plain English, and tell me what mental rule will help me get similar questions right next time.",
+      "",
+      `Question: ${item.question}`,
+      "",
+      "Options (multi-select; any number can be correct):",
+    );
+    item.options.forEach((opt, i) => {
+      const ticked = userTicks[i] ? "I ticked" : "I did not tick";
+      const truth = opt.correct ? "actually correct" : "actually incorrect";
+      lines.push(`  ${i + 1}. ${opt.text}  —  ${ticked}; ${truth}`);
+    });
+    lines.push("", `Official rationale: ${item.rationale}`);
+    return lines.join("\n");
+  }, [item, userTicks]);
+
+  async function handleClick() {
+    try {
+      await navigator.clipboard.writeText(prompt);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Best-effort: still open Claude even if clipboard write fails.
+    }
+    window.open("https://claude.ai/new", "_blank", "noopener,noreferrer");
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={handleClick}
+      className="w-full rounded-xl border border-slate-700 bg-slate-800/60 px-4 py-2 text-sm text-slate-200 hover:bg-slate-800"
+      title="Copy a structured prompt to your clipboard and open claude.ai so you can paste and ask"
+    >
+      {copied ? "Copied — paste in Claude" : "Ask Claude to explain"}
+    </button>
   );
 }

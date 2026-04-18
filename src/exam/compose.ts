@@ -108,11 +108,3 @@ function shuffled<T>(xs: T[]): T[] {
   }
   return out;
 }
-
-export function truthOf(item: Item): [boolean, boolean, boolean] {
-  return [
-    item.options[0].correct,
-    item.options[1].correct,
-    item.options[2].correct,
-  ];
-}

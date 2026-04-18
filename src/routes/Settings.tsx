@@ -194,7 +194,9 @@ export default function Settings() {
           Content version: <b>{CONTENT_VERSION}</b> · {RULES.length} rules ·{" "}
           {ITEMS.length} items
         </div>
-        <div>App build: {import.meta.env.MODE}</div>
+        <div>
+          App version: <b>{__APP_VERSION__}</b> · build {__GIT_SHA__} ({import.meta.env.MODE})
+        </div>
       </section>
 
       {msg && (

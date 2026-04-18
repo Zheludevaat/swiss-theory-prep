@@ -1,7 +1,7 @@
 // Today screen. Biggest button: Start review. The rest is honest reporting —
 // readiness, due count, last session, streak. See DESIGN_v3 §10.1.
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { ITEMS, ruleById } from "@/content/bundle";
 import { summarise, dailyCapacity, isInCatchUpMode, triage as triageFn, type PickContext } from "@/scheduler/pickNext";
@@ -21,6 +21,7 @@ export default function Today() {
   const flagged = useStore((s) => s.flagged);
   const reviews24h = useStore((s) => s.reviews24h);
   const lastSessionEndedAt = useStore(selectLastSessionEndedAt);
+  const mockHistory = useStore((s) => s.mockHistory);
 
   const ctx: PickContext = useMemo(
     () => ({
@@ -38,21 +39,11 @@ export default function Today() {
   const catchUp = useMemo(() => isInCatchUpMode(ctx), [ctx]);
   const cap = dailyCapacity(settings);
 
-  // Mock history last 10 (from localStorage, synced alongside review events).
-  const [mocks, setMocks] = useState<Array<{ points: number; passed: boolean; at: number }>>([]);
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem("mockHistory");
-      if (raw) setMocks(JSON.parse(raw));
-    } catch {
-      /* ignore */
-    }
-  }, []);
-
+  // Mock history (last 10) sourced from the store, which mirrors IDB.
   const readiness = computeReadiness({
     items: ITEMS,
     memory,
-    recentMocks: mocks,
+    recentMocks: mockHistory.slice(0, 10),
   });
   const streak = computeStreak(recent);
   const lastSession = recent[0];
@@ -126,6 +117,34 @@ export default function Today() {
         </div>
       </section>
 
+      {flagged.some((f) => f.count >= 3) && (
+        <section className="rounded-2xl border border-amber-600/60 bg-amber-950/30 p-4 text-sm text-amber-100">
+          <div className="text-xs uppercase tracking-wide text-amber-200/80">
+            Drill this rule
+          </div>
+          <p className="mt-1 text-sm">
+            You've flagged the same rule {Math.max(...flagged.map((f) => f.count))}+ times.
+            A short teach-and-drill block usually unsticks it.
+          </p>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {flagged
+              .filter((f) => f.count >= 3)
+              .map((f) => {
+                const r = ruleById.get(f.ruleId);
+                return (
+                  <button
+                    key={f.ruleId}
+                    className="rounded-lg bg-amber-800/60 px-3 py-1 text-xs text-amber-50"
+                    onClick={() => navigate(`/teach/${encodeURIComponent(f.ruleId)}`)}
+                  >
+                    Teach · {r?.title ?? f.ruleId}
+                  </button>
+                );
+              })}
+          </div>
+        </section>
+      )}
+
       {flagged.length > 0 && (
         <section className="rounded-2xl border border-slate-800 bg-slate-900 p-4">
           <div className="mb-2 text-xs uppercase tracking-wide text-slate-400">
@@ -139,7 +158,12 @@ export default function Today() {
                   key={f.ruleId}
                   className="flex items-center justify-between"
                 >
-                  <span className="text-sm">{r?.title ?? f.ruleId}</span>
+                  <span className="text-sm">
+                    {r?.title ?? f.ruleId}
+                    {f.count > 1 && (
+                      <span className="ml-2 text-xs text-slate-400">×{f.count}</span>
+                    )}
+                  </span>
                   <button
                     className="rounded-lg bg-sky-700/50 px-3 py-1 text-xs"
                     onClick={() => navigate(`/teach/${encodeURIComponent(f.ruleId)}`)}

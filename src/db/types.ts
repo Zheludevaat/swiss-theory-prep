@@ -80,12 +80,29 @@ export type FlaggedRule = {
   count: number;
 };
 
+export type MockResult = {
+  /** uuid */
+  id: string;
+  /** epoch ms */
+  at: number;
+  /** total points scored */
+  points: number;
+  /** 3 × number of items (usually 150) */
+  maxPoints: number;
+  /** total penalty count */
+  penalties: number;
+  /** derived flag: points ≥135 and penalties ≤15 */
+  passed: boolean;
+  mode: "strict" | "practice";
+};
+
 export type Backup = {
-  version: 1;
+  version: 1 | 2;
   exportedAt: number;
   memoryState: MemoryState[];
   reviews: ReviewEvent[];
   sessions: Session[];
   settings: Settings;
   flagged?: FlaggedRule[];
+  mockHistory?: MockResult[];
 };

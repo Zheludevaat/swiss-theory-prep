@@ -9,6 +9,7 @@ import { CATEGORY_LABELS, type Category, type Rule } from "@/content/schema";
 import { ITEMS, RULES } from "@/content/bundle";
 import { useStore } from "@/store";
 import { isGraduated } from "@/scheduler/fsrs";
+import type { FsrsState, MemoryState } from "@/db/types";
 
 type Tab = "rules" | "signs";
 
@@ -53,6 +54,7 @@ function TabButton({
 
 function RulesView() {
   const memory = useStore((s) => s.memory);
+  const [allOpen, setAllOpen] = useState(false);
   const grouped = useMemo(() => {
     const buckets = new Map<Category, Rule[]>();
     for (const r of RULES) {
@@ -65,6 +67,20 @@ function RulesView() {
 
   return (
     <div className="space-y-4">
+      <div className="flex justify-end gap-2 text-xs">
+        <button
+          className="rounded-lg bg-slate-800 px-2 py-1 text-slate-300"
+          onClick={() => setAllOpen(true)}
+        >
+          Expand all
+        </button>
+        <button
+          className="rounded-lg bg-slate-800 px-2 py-1 text-slate-300"
+          onClick={() => setAllOpen(false)}
+        >
+          Collapse all
+        </button>
+      </div>
       {grouped.map(([cat, rules]) => (
         <section
           key={cat}
@@ -82,7 +98,7 @@ function RulesView() {
               }).length;
               return (
                 <li key={r.id} className="px-4 py-3">
-                  <details>
+                  <details open={allOpen}>
                     <summary className="flex cursor-pointer items-center justify-between text-sm">
                       <span className="font-medium">{r.title}</span>
                       <span className="text-xs text-slate-400">
@@ -103,6 +119,35 @@ function RulesView() {
                           ))}
                         </ul>
                       )}
+                      {items.length > 0 && (
+                        <div>
+                          <div className="mt-2 text-slate-400">Items</div>
+                          <ul className="mt-1 space-y-1">
+                            {items.map((it) => {
+                              const m = memory.get(it.id);
+                              const mastery = describeMastery(m);
+                              return (
+                                <li
+                                  key={it.id}
+                                  className="flex items-center justify-between gap-2 rounded bg-slate-950/40 px-2 py-1"
+                                >
+                                  <span className="truncate">
+                                    {it.question.length > 60
+                                      ? `${it.question.slice(0, 60)}…`
+                                      : it.question}
+                                  </span>
+                                  <span
+                                    className={`shrink-0 rounded px-2 py-0.5 text-[10px] uppercase tracking-wide ${mastery.cls}`}
+                                    title={mastery.detail}
+                                  >
+                                    {mastery.label}
+                                  </span>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        </div>
+                      )}
                     </div>
                   </details>
                 </li>
@@ -113,6 +158,48 @@ function RulesView() {
       ))}
     </div>
   );
+}
+
+const MASTERY_STATE_LABEL: Record<FsrsState, string> = {
+  new: "new",
+  learning: "learning",
+  review: "review",
+  relearning: "relearning",
+};
+
+function describeMastery(m: MemoryState | undefined): {
+  label: string;
+  cls: string;
+  detail: string;
+} {
+  if (!m) {
+    return {
+      label: "new",
+      cls: "bg-slate-800 text-slate-400",
+      detail: "Not yet reviewed",
+    };
+  }
+  if (isGraduated(m)) {
+    return {
+      label: "graduated",
+      cls: "bg-green-950 text-green-300",
+      detail: `${m.reps} reviews · ${m.lapses} lapses`,
+    };
+  }
+  const stateLabel = MASTERY_STATE_LABEL[m.state];
+  const cls =
+    m.state === "relearning"
+      ? "bg-red-950 text-red-300"
+      : m.state === "learning"
+        ? "bg-yellow-950 text-yellow-300"
+        : m.state === "review"
+          ? "bg-sky-950 text-sky-300"
+          : "bg-slate-800 text-slate-400";
+  return {
+    label: stateLabel,
+    cls,
+    detail: `${m.reps} reviews · ${m.lapses} lapses`,
+  };
 }
 
 function SignsView() {

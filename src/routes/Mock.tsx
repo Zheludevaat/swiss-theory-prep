@@ -15,6 +15,7 @@ import Card from "@/components/Card";
 import { CATEGORY_LABELS, type Category } from "@/content/schema";
 import { ITEMS, categoryOfItem, ruleById } from "@/content/bundle";
 import { allReviews } from "@/db";
+import type { MockResult } from "@/db/types";
 import { composeMockExam } from "@/exam/compose";
 import {
   DEFAULT_EXAM_LENGTH,
@@ -25,6 +26,7 @@ import {
   type TickTriple,
 } from "@/exam/scoring";
 import { useStore } from "@/store";
+import { uuid } from "@/lib/uuid";
 import { daysUntil, fmtDate } from "@/lib/time";
 
 const EXAM_DURATION_MS = 45 * 60 * 1000;
@@ -56,6 +58,8 @@ export default function Mock() {
   const startReview = useStore((s) => s.startReview);
   const finishSession = useStore((s) => s.finishSession);
   const recordReview = useStore((s) => s.recordReview);
+  const recordMockResult = useStore((s) => s.recordMockResult);
+  const mockHistory = useStore((s) => s.mockHistory);
 
   const [phase, setPhase] = useState<Phase>("lobby");
   const [mode, setMode] = useState<Mode>("strict");
@@ -136,18 +140,22 @@ export default function Mock() {
         console.error("mock: finishSession failed", err);
       }
 
-      // Append to mock history (lives in localStorage; migrated to IDB in Chunk 10).
+      // Persist a full mock result to IDB via the store. Old localStorage
+      // entries were migrated on init; this is the sole write path.
       const result = scoreExam(finalAnswers);
+      const persisted: MockResult = {
+        id: uuid(),
+        at: Date.now(),
+        points: result.points,
+        maxPoints: result.maxPoints,
+        penalties: result.penalties,
+        passed: result.passed,
+        mode: modeRef.current,
+      };
       try {
-        const raw = localStorage.getItem("mockHistory");
-        const prev = raw ? (JSON.parse(raw) as Array<unknown>) : [];
-        const next = [
-          { points: result.points, passed: result.passed, at: Date.now() },
-          ...prev,
-        ].slice(0, 30);
-        localStorage.setItem("mockHistory", JSON.stringify(next));
-      } catch {
-        /* ignore */
+        await recordMockResult(persisted);
+      } catch (err) {
+        console.error("mock: recordMockResult failed", err);
       }
 
       if (failed.length > 0) {
@@ -176,7 +184,7 @@ export default function Mock() {
         }
       }
     },
-    [phase, recordReview, finishSession],
+    [phase, recordReview, finishSession, recordMockResult],
   );
 
   // Auto-finish on timeout. Use the ref — `answers` in closure may be stale
@@ -236,6 +244,7 @@ export default function Mock() {
       <Lobby
         settings={settings}
         memory={memory}
+        mockHistory={mockHistory}
         fellBackToRecentlySeen={fellBackToRecentlySeen}
         onBegin={begin}
         onCancel={() => navigate("/")}
@@ -345,6 +354,7 @@ export default function Mock() {
 function Lobby({
   settings,
   memory,
+  mockHistory,
   fellBackToRecentlySeen,
   onBegin,
   onCancel,
@@ -352,6 +362,7 @@ function Lobby({
 }: {
   settings: ReturnType<typeof useStore.getState>["settings"];
   memory: Map<string, { due: number; reps: number }>;
+  mockHistory: MockResult[];
   fellBackToRecentlySeen: boolean;
   onBegin: (mode: Mode) => void;
   onCancel: () => void;
@@ -370,16 +381,7 @@ function Lobby({
   }, []);
 
   const examIn = daysUntil(settings.examDate);
-  const recentMocks = useMemo(() => {
-    try {
-      const raw = localStorage.getItem("mockHistory");
-      return raw
-        ? (JSON.parse(raw) as Array<{ points: number; passed: boolean; at: number }>).slice(0, 5)
-        : [];
-    } catch {
-      return [];
-    }
-  }, []);
+  const recentMocks = useMemo(() => mockHistory.slice(0, 5), [mockHistory]);
 
   // Memory size tells us the catalog we're drawing from is meaningfully sized.
   const memorySize = memory.size;

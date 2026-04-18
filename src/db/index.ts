@@ -10,6 +10,7 @@ import {
   type Backup,
   type FlaggedRule,
   type MemoryState,
+  type MockResult,
   type ReviewEvent,
   type Session,
   type Settings,
@@ -17,10 +18,11 @@ import {
 
 const DB_NAME = "swiss-theory-prep";
 // v2: add by-timestamp index on reviews + recover from any pre-existing v1 db
-// from an earlier deploy that used a different schema. Migration is destructive
-// (the prior data shape is incompatible), but the app stores only personal
-// review state, which is recreated as the user studies.
-const DB_VERSION = 2;
+//     from an earlier deploy that used a different schema. Migration from v1 is
+//     destructive (the prior data shape is incompatible) but only happens once
+//     to recover from the broken first deploy.
+// v3: add mockHistory store. Additive — preserves all v2 data.
+const DB_VERSION = 3;
 
 interface AppDB extends DBSchema {
   memoryState: {
@@ -50,6 +52,11 @@ interface AppDB extends DBSchema {
     key: string; // e.g. "schemaVersion", "contentVersion"
     value: string;
   };
+  mockHistory: {
+    key: string; // mock result id (uuid)
+    value: MockResult;
+    indexes: { "by-at": number };
+  };
 }
 
 let _db: Promise<IDBPDatabase<AppDB>> | null = null;
@@ -59,28 +66,33 @@ export function db(): Promise<IDBPDatabase<AppDB>> {
   if (_db) return _db;
   _db = openDB<AppDB>(DB_NAME, DB_VERSION, {
     upgrade(dbi, oldVersion) {
-      // Any upgrade path (including recovery from an incompatible older build)
-      // rebuilds from scratch. Drop every store we know about, plus anything
-      // else the db may have, then create the canonical v2 schema.
-      for (const name of Array.from(dbi.objectStoreNames)) {
-        dbi.deleteObjectStore(name);
+      // v0/v1 → v2: the first deploy shipped an incompatible v1 schema. If we
+      // ever see that old shape, nuke it and rebuild. This is the only
+      // destructive path; every later upgrade is additive.
+      if (oldVersion < 2) {
+        for (const name of Array.from(dbi.objectStoreNames)) {
+          dbi.deleteObjectStore(name);
+        }
+        const mem = dbi.createObjectStore("memoryState", { keyPath: "itemId" });
+        mem.createIndex("by-due", "due");
+
+        const rev = dbi.createObjectStore("reviews", { keyPath: "id" });
+        rev.createIndex("by-item", "itemId");
+        rev.createIndex("by-session", "sessionId");
+        rev.createIndex("by-timestamp", "timestamp");
+
+        const sess = dbi.createObjectStore("sessions", { keyPath: "id" });
+        sess.createIndex("by-startedAt", "startedAt");
+
+        dbi.createObjectStore("settings");
+        dbi.createObjectStore("flagged", { keyPath: "ruleId" });
+        dbi.createObjectStore("meta");
       }
-      void oldVersion;
-
-      const mem = dbi.createObjectStore("memoryState", { keyPath: "itemId" });
-      mem.createIndex("by-due", "due");
-
-      const rev = dbi.createObjectStore("reviews", { keyPath: "id" });
-      rev.createIndex("by-item", "itemId");
-      rev.createIndex("by-session", "sessionId");
-      rev.createIndex("by-timestamp", "timestamp");
-
-      const sess = dbi.createObjectStore("sessions", { keyPath: "id" });
-      sess.createIndex("by-startedAt", "startedAt");
-
-      dbi.createObjectStore("settings");
-      dbi.createObjectStore("flagged", { keyPath: "ruleId" });
-      dbi.createObjectStore("meta");
+      // v2 → v3: add mockHistory store. Additive, preserves all prior data.
+      if (oldVersion < 3) {
+        const mock = dbi.createObjectStore("mockHistory", { keyPath: "id" });
+        mock.createIndex("by-at", "at");
+      }
     },
   });
   return _db;
@@ -198,35 +210,110 @@ export async function allFlagged(): Promise<FlaggedRule[]> {
   return (await db()).getAll("flagged");
 }
 
+// ---------- mock history ----------
+
+export async function addMockResult(m: MockResult): Promise<void> {
+  await (await db()).put("mockHistory", m);
+}
+
+export async function allMockResults(): Promise<MockResult[]> {
+  const dbi = await db();
+  const out: MockResult[] = [];
+  const idx = dbi.transaction("mockHistory").store.index("by-at");
+  for await (const cursor of idx.iterate(null, "prev")) {
+    out.push(cursor.value);
+  }
+  return out;
+}
+
+export async function recentMockResults(limit: number): Promise<MockResult[]> {
+  const all = await allMockResults();
+  return all.slice(0, limit);
+}
+
+/**
+ * One-shot migration: copy any pre-existing localStorage["mockHistory"]
+ * entries into the IDB store, then delete the localStorage key. Safe to call
+ * many times — it's a no-op once the key is gone.
+ *
+ * Old shape was `{ points, passed, at }` with no id/maxPoints/penalties/mode.
+ * We synthesise a v1-compatible record so historical entries still render in
+ * Stats, but mark mode as "strict" since that was the only mode pre-Chunk 7.
+ */
+export async function migrateLocalStorageMockHistory(): Promise<number> {
+  let migrated = 0;
+  try {
+    const raw = localStorage.getItem("mockHistory");
+    if (!raw) return 0;
+    const arr = JSON.parse(raw) as Array<{
+      points?: number;
+      passed?: boolean;
+      at?: number;
+    }>;
+    if (!Array.isArray(arr)) {
+      localStorage.removeItem("mockHistory");
+      return 0;
+    }
+    const dbi = await db();
+    const tx = dbi.transaction("mockHistory", "readwrite");
+    for (const entry of arr) {
+      if (typeof entry?.at !== "number" || typeof entry.points !== "number") continue;
+      const id = `legacy-${entry.at}`;
+      // Don't overwrite if already migrated.
+      const existing = await tx.objectStore("mockHistory").get(id);
+      if (existing) continue;
+      const result: MockResult = {
+        id,
+        at: entry.at,
+        points: entry.points,
+        maxPoints: 150,
+        penalties: 0,
+        passed: !!entry.passed,
+        mode: "strict",
+      };
+      await tx.objectStore("mockHistory").put(result);
+      migrated++;
+    }
+    await tx.done;
+    localStorage.removeItem("mockHistory");
+  } catch {
+    /* best-effort migration; don't crash startup */
+  }
+  return migrated;
+}
+
 // ---------- backup ----------
 
 export async function exportBackup(): Promise<Backup> {
-  const [memoryState, reviews, sessions, settings, flagged] = await Promise.all([
-    allMemoryState(),
-    allReviews(),
-    recentSessions(10_000),
-    getSettings(),
-    allFlagged(),
-  ]);
+  const [memoryState, reviews, sessions, settings, flagged, mockHistory] =
+    await Promise.all([
+      allMemoryState(),
+      allReviews(),
+      recentSessions(10_000),
+      getSettings(),
+      allFlagged(),
+      allMockResults(),
+    ]);
   return {
-    version: 1,
+    version: 2,
     exportedAt: Date.now(),
     memoryState,
     reviews,
     sessions,
     settings,
     flagged,
+    mockHistory,
   };
 }
 
 /** Replaces current state with the backup. Destructive on purpose. */
 export async function importBackup(b: Backup): Promise<void> {
-  if (b.version !== 1) {
+  if (b.version !== 1 && b.version !== 2) {
     throw new Error(`Unsupported backup version: ${b.version as number}`);
   }
   const dbi = await db();
   const tx = dbi.transaction(
-    ["memoryState", "reviews", "sessions", "settings", "flagged"],
+    ["memoryState", "reviews", "sessions", "settings", "flagged", "mockHistory"],
     "readwrite",
   );
   await Promise.all([
@@ -235,6 +322,7 @@ export async function importBackup(b: Backup): Promise<void> {
     tx.objectStore("sessions").clear(),
     tx.objectStore("settings").clear(),
     tx.objectStore("flagged").clear(),
+    tx.objectStore("mockHistory").clear(),
   ]);
   for (const m of b.memoryState) await tx.objectStore("memoryState").put(m);
   for (const r of b.reviews) await tx.objectStore("reviews").put(r);
@@ -243,6 +331,9 @@ export async function importBackup(b: Backup): Promise<void> {
   if (b.flagged) {
     for (const f of b.flagged) await tx.objectStore("flagged").put(f);
   }
+  if (b.mockHistory) {
+    for (const m of b.mockHistory) await tx.objectStore("mockHistory").put(m);
+  }
   await tx.done;
 }
 
@@ -250,7 +341,7 @@ export async function importBackup(b: Backup): Promise<void> {
 export async function wipeAll(): Promise<void> {
   const dbi = await db();
   const tx = dbi.transaction(
-    ["memoryState", "reviews", "sessions", "settings", "flagged", "meta"],
+    ["memoryState", "reviews", "sessions", "settings", "flagged", "meta", "mockHistory"],
     "readwrite",
   );
   await Promise.all([
@@ -260,6 +351,7 @@ export async function wipeAll(): Promise<void> {
     tx.objectStore("settings").clear(),
     tx.objectStore("flagged").clear(),
     tx.objectStore("meta").clear(),
+    tx.objectStore("mockHistory").clear(),
   ]);
   await tx.done;
 }

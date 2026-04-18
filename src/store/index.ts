@@ -4,14 +4,16 @@
 import { create } from "zustand";
 import { ITEMS, RULES } from "@/content/bundle";
 import {
+  addMockResult,
   addReview,
   allFlagged,
   allMemoryState,
+  allMockResults,
   bumpDueByOneDay,
   flagRule as dbFlagRule,
   clearFlag as dbClearFlag,
-  getMemoryState,
   getSettings,
+  migrateLocalStorageMockHistory,
   putMemoryState,
   putSettings,
   recentSessions,
@@ -23,6 +25,7 @@ import {
   DEFAULT_SETTINGS,
   type FlaggedRule,
   type MemoryState,
+  type MockResult,
   type ReviewEvent,
   type Session,
   type SessionMode,
@@ -44,6 +47,7 @@ type State = {
   recent: Session[];
   flagged: FlaggedRule[];
   reviews24h: ReviewEvent[];
+  mockHistory: MockResult[];
 };
 
 type Actions = {
@@ -65,6 +69,8 @@ type Actions = {
    * Updates the in-memory map so subsequent compose calls see the new dues.
    */
   deferItems: (ids: Iterable<string>) => Promise<void>;
+  /** Append a mock exam result to persistent history. Reloads the cache. */
+  recordMockResult: (result: MockResult) => Promise<void>;
 };
 
 /** Compute the most recent prior session's endedAt, ignoring the active one. */
@@ -84,18 +90,24 @@ export const useStore = create<State & Actions>((set, get) => ({
   recent: [],
   flagged: [],
   reviews24h: [],
+  mockHistory: [],
 
   async init() {
     if (get().status === "loading" || get().status === "ready") return;
     set({ status: "loading" });
     try {
-      const [memList, settings, recent, flagged, recent24h] = await Promise.all([
-        allMemoryState(),
-        getSettings(),
-        recentSessions(7),
-        allFlagged(),
-        reviewsSince(Date.now() - 24 * 60 * 60 * 1000),
-      ]);
+      // Migrate any legacy localStorage mock history into IDB before first
+      // read. Safe to call on every init — it's a no-op once the key is gone.
+      await migrateLocalStorageMockHistory();
+      const [memList, settings, recent, flagged, recent24h, mockHistory] =
+        await Promise.all([
+          allMemoryState(),
+          getSettings(),
+          recentSessions(7),
+          allFlagged(),
+          reviewsSince(Date.now() - 24 * 60 * 60 * 1000),
+          allMockResults(),
+        ]);
       const memory = new Map(memList.map((m) => [m.itemId, m]));
       set({
         status: "ready",
@@ -104,6 +116,7 @@ export const useStore = create<State & Actions>((set, get) => ({
         recent,
         flagged,
         reviews24h: recent24h,
+        mockHistory,
       });
     } catch (err) {
       console.error(err);
@@ -139,13 +152,16 @@ export const useStore = create<State & Actions>((set, get) => ({
   },
 
   async recordReview(itemId, grading, extras) {
-    const { settings, session } = get();
+    const { settings, session, memory: currentMemory } = get();
     if (!session) throw new Error("No active session");
 
     const result = gradeAnswer(grading);
     const scheduler = makeScheduler(settings.retentionTarget);
 
-    const prev = (await getMemoryState(itemId)) ?? emptyMemory(itemId);
+    // Use the in-memory mirror as the source of truth for prev state. The
+    // store always reflects the latest writes (we update it at the end of
+    // every recordReview), so we avoid the IDB round-trip for the read.
+    const prev = currentMemory.get(itemId) ?? emptyMemory(itemId);
     const next = applyGrade(scheduler, prev, result.grade);
     await putMemoryState(next);
 
@@ -198,6 +214,12 @@ export const useStore = create<State & Actions>((set, get) => ({
     const next = { ...get().settings, ...partial };
     await putSettings(next);
     set({ settings: next });
+  },
+
+  async recordMockResult(result) {
+    await addMockResult(result);
+    // Append in newest-first order to keep the UI's slice cheap.
+    set({ mockHistory: [result, ...get().mockHistory] });
   },
 
   async deferItems(ids) {

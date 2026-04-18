@@ -2,12 +2,45 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
 import path from "node:path";
+import { execSync } from "node:child_process";
+import { readFileSync } from "node:fs";
 
 // GitHub Pages base. Override with VITE_BASE if hosting elsewhere.
 const base = process.env.VITE_BASE ?? "/swiss-theory-prep/";
 
+// Inject app version + short git SHA into the bundle so Settings can show
+// them. Both fall back gracefully when the env doesn't have git available
+// (e.g. fresh tarball install) or when reading package.json fails.
+const APP_VERSION = ((): string => {
+  try {
+    const pkg = JSON.parse(readFileSync(path.resolve(__dirname, "package.json"), "utf8")) as {
+      version?: string;
+    };
+    return pkg.version ?? "unknown";
+  } catch {
+    return "unknown";
+  }
+})();
+
+const GIT_SHA = ((): string => {
+  try {
+    return execSync("git rev-parse --short HEAD", {
+      cwd: __dirname,
+      stdio: ["ignore", "pipe", "ignore"],
+    })
+      .toString()
+      .trim();
+  } catch {
+    return "unknown";
+  }
+})();
+
 export default defineConfig({
   base,
+  define: {
+    __APP_VERSION__: JSON.stringify(APP_VERSION),
+    __GIT_SHA__: JSON.stringify(GIT_SHA),
+  },
   resolve: {
     alias: { "@": path.resolve(__dirname, "src") },
   },
