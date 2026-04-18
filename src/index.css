@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* App-wide overrides. Keep this file small — most styling is Tailwind. */
+html, body, #root {
+  height: 100%;
+}
+
+/* Prevent iOS elastic bounce revealing anything behind the shell. */
+html, body {
+  overscroll-behavior-y: none;
+}
+
+/* Disable text selection on tap targets (feels more app-like on iOS). */
+button, [role="button"] {
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+/* Respect iOS safe area so bottom buttons aren't eaten by the home bar. */
+.safe-bottom {
+  padding-bottom: max(env(safe-area-inset-bottom), 0.75rem);
+}
+.safe-top {
+  padding-top: max(env(safe-area-inset-top), 0.5rem);
+}

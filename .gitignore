@@ -1,0 +1,14 @@
+node_modules
+dist
+dist-ssr
+.vite
+.DS_Store
+*.local
+.env
+.env.*
+coverage
+.idea
+.vscode
+*.log
+vite.config.*.timestamp-*
+tsconfig.tsbuildinfo
