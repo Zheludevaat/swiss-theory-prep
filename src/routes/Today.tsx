@@ -1,7 +1,7 @@
 // Today screen. Biggest button: Start review. The rest is honest reporting —
 // readiness, due count, last session, streak. See DESIGN_v3 §10.1.
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ITEMS, ruleById } from "@/content/bundle";
 import { summarise, dailyCapacity, isInCatchUpMode, triage as triageFn, type PickContext } from "@/scheduler/pickNext";
@@ -63,6 +63,8 @@ export default function Today() {
       </header>
 
       <ReadinessBadge readiness={readiness} />
+
+      <InstallPrompt />
 
       <section className="rounded-2xl border border-slate-800 bg-slate-900 p-4">
         <div className="mb-3 flex items-end justify-between">
@@ -230,6 +232,90 @@ function LastSessionCard({ last }: { last: Session | undefined }) {
         {fmtDate(last.startedAt)} · {last.itemsReviewed} cards · {pct}% ·{" "}
         {fmtMinutes(last.endedAt - last.startedAt)}
       </div>
+    </section>
+  );
+}
+
+/**
+ * D-7: dismissable "Add to Home Screen" onboarding card. The PWA works fine
+ * from a tab, but installing it unlocks proper offline behavior + safe-area
+ * handling on iOS. We show it exactly once per device unless dismissed; iOS
+ * Safari doesn't fire beforeinstallprompt so we surface manual instructions.
+ */
+const INSTALL_DISMISSED_KEY = "installPromptDismissed";
+
+function InstallPrompt() {
+  const [dismissed, setDismissed] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem(INSTALL_DISMISSED_KEY) === "1";
+    } catch {
+      return false;
+    }
+  });
+  const [showIos, setShowIos] = useState(false);
+  const [installed, setInstalled] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    // matchMedia display-mode: standalone is the best cross-browser signal.
+    // navigator.standalone is iOS-specific fallback.
+    const mm = window.matchMedia?.("(display-mode: standalone)");
+    const iosStandalone = (navigator as unknown as { standalone?: boolean }).standalone;
+    return !!(mm?.matches) || !!iosStandalone;
+  });
+
+  useEffect(() => {
+    const mm = window.matchMedia?.("(display-mode: standalone)");
+    if (!mm) return undefined;
+    const onChange = (e: MediaQueryListEvent) => setInstalled(e.matches);
+    mm.addEventListener?.("change", onChange);
+    return () => mm.removeEventListener?.("change", onChange);
+  }, []);
+
+  function dismiss() {
+    try {
+      localStorage.setItem(INSTALL_DISMISSED_KEY, "1");
+    } catch {
+      /* non-fatal */
+    }
+    setDismissed(true);
+  }
+
+  if (dismissed || installed) return null;
+
+  return (
+    <section className="rounded-2xl border border-slate-800 bg-slate-900 p-4 text-sm">
+      <div className="flex items-start justify-between gap-2">
+        <div>
+          <p className="font-medium text-slate-200">Install for offline use</p>
+          <p className="mt-1 text-slate-400">
+            Add this app to your Home Screen so it works offline on the tram,
+            in the car park, or anywhere without signal.
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={dismiss}
+          aria-label="Dismiss install prompt"
+          className="rounded-lg bg-slate-800 px-2 py-1 text-xs text-slate-300"
+        >
+          Dismiss
+        </button>
+      </div>
+      <div className="mt-3 flex gap-2">
+        <button
+          type="button"
+          onClick={() => setShowIos((v) => !v)}
+          className="rounded-lg bg-slate-800 px-3 py-2 text-xs"
+        >
+          {showIos ? "Hide iOS steps" : "iOS / Safari steps"}
+        </button>
+      </div>
+      {showIos && (
+        <ol className="mt-2 list-decimal space-y-1 pl-5 text-xs text-slate-300">
+          <li>Tap the Share button at the bottom of Safari.</li>
+          <li>Scroll down and tap <b>Add to Home Screen</b>.</li>
+          <li>Confirm with <b>Add</b>. The app launches from the new icon.</li>
+        </ol>
+      )}
     </section>
   );
 }

@@ -4,7 +4,7 @@
 // This component is deliberately stateful but un-routed — the Review/Mock
 // routes own session-level state and feed cards in.
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Item, Rule } from "@/content/schema";
 import type { GradingInput } from "@/scheduler/grading";
 import { gradeAnswer } from "@/scheduler/grading";
@@ -61,7 +61,9 @@ export default function Card({
   const [confidence, setConfidence] = useState<1 | 2 | 3 | 4 | undefined>(
     undefined,
   );
+  const [imageZoomed, setImageZoomed] = useState(false);
   const startRef = useRef<number>(performance.now());
+  const continueRef = useRef<HTMLButtonElement>(null);
 
   // Reset on new item.
   useEffect(() => {
@@ -69,6 +71,7 @@ export default function Card({
     setSubmitted(false);
     setFlagged(false);
     setConfidence(undefined);
+    setImageZoomed(false);
     startRef.current = performance.now();
   }, [item.id]);
 
@@ -81,14 +84,24 @@ export default function Card({
     [item],
   );
 
-  function toggle(i: 0 | 1 | 2) {
-    if (submitted) return;
-    const next: [boolean, boolean, boolean] = [...ticks] as [boolean, boolean, boolean];
-    next[i] = !next[i];
-    setTicks(next);
-  }
+  const toggle = useCallback(
+    (i: 0 | 1 | 2) => {
+      if (submitted) return;
+      setTicks((cur) => {
+        const next: [boolean, boolean, boolean] = [...cur] as [
+          boolean,
+          boolean,
+          boolean,
+        ];
+        next[i] = !next[i];
+        return next;
+      });
+    },
+    [submitted],
+  );
 
-  function handleSubmit() {
+  const handleSubmit = useCallback(() => {
+    if (askConfidence && confidence === undefined) return;
     const latencyMs = performance.now() - startRef.current;
     setSubmitted(true);
     onSubmit({
@@ -96,7 +109,48 @@ export default function Card({
       flaggedConfused: flagged,
       ...(confidence !== undefined ? { confidence } : {}),
     });
-  }
+  }, [askConfidence, confidence, ticks, truth, flagged, onSubmit]);
+
+  // D-4: keyboard shortcuts. 1/2/3 toggle options; Enter submits (pre-submit);
+  // Space or Enter advances (post-submit). We intentionally ignore events that
+  // originate inside inputs — the confidence radios still own their own focus.
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      const target = e.target as HTMLElement | null;
+      if (target && target.closest("input, textarea, select")) return;
+      if (imageZoomed) return; // Zoom modal handles its own keys.
+      if (!submitted) {
+        if (e.key === "1" || e.key === "2" || e.key === "3") {
+          e.preventDefault();
+          toggle((Number(e.key) - 1) as 0 | 1 | 2);
+        } else if (e.key === "Enter") {
+          e.preventDefault();
+          handleSubmit();
+        }
+      } else {
+        if (e.key === "Enter" || e.key === " ") {
+          // Only trigger the shortcut if the continue button is the default
+          // target (i.e. not when focus is on a nested button like Ask Claude).
+          if (!target || target === document.body || target === continueRef.current) {
+            e.preventDefault();
+            onContinue();
+          }
+        }
+      }
+    }
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [submitted, toggle, handleSubmit, onContinue, imageZoomed]);
+
+  // D-15: pull focus to the Continue button after submit so keyboard users
+  // can immediately press Enter/Space to advance without an extra Tab.
+  useEffect(() => {
+    if (submitted) {
+      const t = window.setTimeout(() => continueRef.current?.focus(), 30);
+      return () => window.clearTimeout(t);
+    }
+    return undefined;
+  }, [submitted]);
 
   // Result preview after Submit (we recompute locally to colour the buttons).
   const result = submitted
@@ -124,14 +178,22 @@ export default function Card({
         )}
       </div>
 
-      {/* Image / diagram (optional). Plain <img> — no asset bundle in MVP. */}
+      {/* Image / diagram (optional). D-17: bumped max-h from 48 to 80 so signs
+          are large enough to read on phones; tap to open a fullscreen zoom. */}
       {item.imageAssetId && (
         <div className="mb-3 flex justify-center">
-          <img
-            src={`./signs/${item.imageAssetId}`}
-            alt=""
-            className="max-h-48 w-auto"
-          />
+          <button
+            type="button"
+            onClick={() => setImageZoomed(true)}
+            className="block focus:outline-none"
+            aria-label="Zoom sign image"
+          >
+            <img
+              src={`./signs/${item.imageAssetId}`}
+              alt=""
+              className="max-h-80 w-auto"
+            />
+          </button>
         </div>
       )}
 
@@ -162,11 +224,25 @@ export default function Card({
             <button
               key={idx}
               type="button"
+              role="checkbox"
+              aria-checked={checked}
+              aria-disabled={submitted}
               onClick={() => toggle(i)}
+              onKeyDown={(e) => {
+                // D-3: Space toggles per ARIA checkbox pattern. Enter falls
+                // through to the global submit shortcut.
+                if (e.key === " ") {
+                  e.preventDefault();
+                  toggle(i);
+                }
+              }}
               disabled={submitted}
-              className={cls}
+              className={`${cls} min-h-[44px]`}
             >
-              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border border-slate-500">
+              <span
+                className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border border-slate-500"
+                aria-hidden="true"
+              >
                 {checked && (
                   <svg viewBox="0 0 20 20" className="h-4 w-4">
                     <path
@@ -178,7 +254,10 @@ export default function Card({
                   </svg>
                 )}
               </span>
-              <span className="flex-1">{opt.text}</span>
+              <span className="flex-1">
+                <span className="sr-only">Option {idx + 1}: </span>
+                {opt.text}
+              </span>
               {submitted && isTruth && (
                 <span className="text-xs text-ok">correct</span>
               )}
@@ -187,18 +266,26 @@ export default function Card({
         })}
       </div>
 
-      {/* Confidence prompt (sampled). Shown before Submit. */}
+      {/* Confidence prompt (sampled). Shown before Submit. D-9: 2×2 grid on
+          narrow screens, 4-up on wider, every button at least 44×44 (WCAG). */}
       {askConfidence && !submitted && (
-        <div className="mt-4 rounded-xl border border-slate-800 p-3">
+        <div
+          className="mt-4 rounded-xl border border-slate-800 p-3"
+          role="radiogroup"
+          aria-label="How sure are you?"
+        >
           <p className="mb-2 text-xs uppercase tracking-wide text-slate-400">
             How sure?
           </p>
-          <div className="flex gap-2">
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
             {[1, 2, 3, 4].map((n) => (
               <button
                 key={n}
+                type="button"
+                role="radio"
+                aria-checked={confidence === n}
                 onClick={() => setConfidence(n as 1 | 2 | 3 | 4)}
-                className={`flex-1 rounded-lg px-3 py-2 text-sm ${
+                className={`min-h-[44px] rounded-lg px-3 py-2 text-sm ${
                   confidence === n
                     ? "bg-sky-600 text-white"
                     : "bg-slate-800 text-slate-200"
@@ -219,7 +306,8 @@ export default function Card({
               <button
                 type="button"
                 onClick={() => setFlagged((v) => !v)}
-                className={`rounded-xl px-3 py-3 text-sm ${
+                aria-pressed={flagged}
+                className={`min-h-[44px] min-w-[44px] rounded-xl px-3 py-3 text-sm ${
                   flagged
                     ? "bg-amber-600 text-white"
                     : "bg-slate-800 text-slate-200"
@@ -233,7 +321,7 @@ export default function Card({
               type="button"
               onClick={handleSubmit}
               disabled={askConfidence && confidence === undefined}
-              className="flex-1 rounded-xl bg-sky-600 px-4 py-3 text-base font-semibold disabled:opacity-50"
+              className="min-h-[44px] flex-1 rounded-xl bg-sky-600 px-4 py-3 text-base font-semibold disabled:opacity-50"
             >
               Submit
             </button>
@@ -241,8 +329,9 @@ export default function Card({
         ) : (
           <button
             type="button"
+            ref={continueRef}
             onClick={onContinue}
-            className="w-full rounded-xl bg-sky-600 px-4 py-3 text-base font-semibold"
+            className="min-h-[44px] w-full rounded-xl bg-sky-600 px-4 py-3 text-base font-semibold"
           >
             {isLast ? "Finish" : "Continue"}
           </button>
@@ -260,6 +349,52 @@ export default function Card({
           userTicks={ticks}
         />
       )}
+
+      {/* D-17: fullscreen zoom modal for sign images. */}
+      {imageZoomed && item.imageAssetId && (
+        <ImageZoomModal
+          assetId={item.imageAssetId}
+          onClose={() => setImageZoomed(false)}
+        />
+      )}
+    </div>
+  );
+}
+
+function ImageZoomModal({
+  assetId,
+  onClose,
+}: {
+  assetId: string;
+  onClose: () => void;
+}) {
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+    }
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [onClose]);
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label="Sign image"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
+      onClick={onClose}
+    >
+      <img
+        src={`./signs/${assetId}`}
+        alt=""
+        className="max-h-[90vh] max-w-full object-contain"
+      />
+      <button
+        type="button"
+        onClick={onClose}
+        className="absolute right-4 top-4 rounded-full bg-slate-800/80 px-3 py-1 text-sm text-slate-100"
+      >
+        Close
+      </button>
     </div>
   );
 }

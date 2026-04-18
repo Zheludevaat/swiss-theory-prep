@@ -7,8 +7,9 @@
 //   - Export / import backup
 //   - Reset (destructive)
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CONTENT_VERSION, ITEMS, RULES } from "@/content/bundle";
+import ConfirmModal from "@/components/ConfirmModal";
 import { exportBackup, importBackup, wipeAll } from "@/db";
 import type { Backup } from "@/db/types";
 import { useStore } from "@/store";
@@ -19,6 +20,15 @@ export default function Settings() {
   const init = useStore((s) => s.init);
   const fileRef = useRef<HTMLInputElement>(null);
   const [msg, setMsg] = useState<string | null>(null);
+  const [confirmReset, setConfirmReset] = useState(false);
+  const [apiKeyDraft, setApiKeyDraft] = useState<string>(settings.anthropicKey ?? "");
+
+  // Keep the draft in sync if settings.anthropicKey changes externally
+  // (e.g. backup import). We don't overwrite while the user is mid-edit if
+  // their draft already differs — checking equality below avoids that.
+  useEffect(() => {
+    setApiKeyDraft((cur) => (cur === "" ? settings.anthropicKey ?? "" : cur));
+  }, [settings.anthropicKey]);
 
   async function doExport() {
     const backup = await exportBackup();
@@ -48,10 +58,16 @@ export default function Settings() {
   }
 
   async function doReset() {
-    if (!confirm("Wipe all local review state? This cannot be undone.")) return;
+    setConfirmReset(false);
     await wipeAll();
     await init();
     setMsg("Wiped.");
+  }
+
+  async function saveApiKey() {
+    const trimmed = apiKeyDraft.trim();
+    await save({ anthropicKey: trimmed === "" ? undefined : trimmed });
+    setMsg("API key saved.");
   }
 
   return (
@@ -136,13 +152,25 @@ export default function Settings() {
           Enable
         </label>
         {settings.useLLM && (
-          <input
-            type="password"
-            placeholder="Anthropic API key (stored on device)"
-            defaultValue={settings.anthropicKey ?? ""}
-            onBlur={(e) => void save({ anthropicKey: e.target.value || undefined })}
-            className="mt-2 w-full rounded-lg bg-slate-800 px-3 py-2 text-sm"
-          />
+          <div className="mt-2 space-y-2">
+            <input
+              type="password"
+              placeholder="Anthropic API key (stored on device)"
+              value={apiKeyDraft}
+              onChange={(e) => setApiKeyDraft(e.target.value)}
+              className="w-full rounded-lg bg-slate-800 px-3 py-2 text-sm"
+            />
+            {/* D-13: explicit Save button. onBlur saves were ambiguous —
+                users couldn't tell if the key had actually persisted. */}
+            <button
+              type="button"
+              onClick={() => void saveApiKey()}
+              disabled={apiKeyDraft === (settings.anthropicKey ?? "")}
+              className="rounded-lg bg-sky-700 px-3 py-2 text-xs disabled:opacity-50"
+            >
+              Save key
+            </button>
+          </div>
         )}
         <p className="mt-1 text-xs text-slate-400">
           Without a key, the "Ask Claude" button copies a prompt to clipboard
@@ -183,11 +211,22 @@ export default function Settings() {
         <h2 className="mb-2 text-sm font-medium text-red-200">Danger zone</h2>
         <button
           className="w-full rounded-lg bg-red-700 px-3 py-2 text-sm"
-          onClick={doReset}
+          onClick={() => setConfirmReset(true)}
         >
           Reset local state
         </button>
       </section>
+
+      <ConfirmModal
+        open={confirmReset}
+        title="Wipe all local state?"
+        message="This erases every review, session, flag, mock, and setting on this device. It cannot be undone. Export a backup first if you want to keep your progress."
+        confirmLabel="Wipe"
+        cancelLabel="Cancel"
+        destructive
+        onCancel={() => setConfirmReset(false)}
+        onConfirm={() => void doReset()}
+      />
 
       <section className="rounded-2xl border border-slate-800 bg-slate-900 p-4 text-xs text-slate-400">
         <div>

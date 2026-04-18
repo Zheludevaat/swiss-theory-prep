@@ -34,6 +34,11 @@ export default function Stats() {
       <section className="rounded-2xl border border-slate-800 bg-slate-900 p-4">
         <h2 className="mb-3 text-sm font-medium">Cards / day · last 30 days</h2>
         <DailyBars data={perDay} />
+        <div className="mt-1 flex justify-between text-[10px] text-slate-500">
+          <span>−30d</span>
+          <span>−15d</span>
+          <span>today</span>
+        </div>
       </section>
 
       <section className="rounded-2xl border border-slate-800 bg-slate-900 p-4">
@@ -117,15 +122,32 @@ function bucketPerDay(reviews: ReviewEvent[], days: number) {
 function DailyBars({ data }: { data: number[] }) {
   const max = Math.max(1, ...data);
   return (
-    <div className="flex h-24 items-end gap-[2px]">
-      {data.map((n, i) => (
-        <div
-          key={i}
-          className="flex-1 rounded-t bg-sky-500"
-          style={{ height: `${(n / max) * 100}%`, minHeight: n ? "2px" : 0 }}
-          title={`${n} cards`}
-        />
-      ))}
+    <div
+      className="flex h-24 items-end gap-[2px]"
+      role="img"
+      aria-label={`Daily card count for the last ${data.length} days`}
+    >
+      {data.map((n, i) => {
+        // D-12: every day gets at least a 2px ghost bar so the chart's x-axis
+        // is visible even on streak-breaking days. Active days draw on top in
+        // a brighter tone.
+        const filledHeight = (n / max) * 100;
+        return (
+          <div
+            key={i}
+            className="relative flex-1"
+            title={n > 0 ? `${n} cards` : "no cards"}
+          >
+            <div className="absolute inset-x-0 bottom-0 h-[2px] rounded-t bg-slate-700" />
+            {n > 0 && (
+              <div
+                className="absolute inset-x-0 bottom-0 rounded-t bg-sky-500"
+                style={{ height: `max(${filledHeight}%, 2px)` }}
+              />
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }

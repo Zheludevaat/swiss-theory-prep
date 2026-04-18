@@ -538,7 +538,15 @@ function ExamTimer({
     >
       <div className="mx-auto flex max-w-lg items-center justify-between">
         <span className="tabular-nums">{progress}</span>
-        <span className="font-mono text-base font-semibold tabular-nums">
+        {/* aria-live polite so the timer doesn't shout at screen readers
+            every second; the assertive variant kicks in only in the final
+            five minutes when the urgency change is meaningful. */}
+        <span
+          className="font-mono text-base font-semibold tabular-nums"
+          role="timer"
+          aria-live={isLate ? "assertive" : "off"}
+          aria-label={`Time remaining: ${m} minutes ${s} seconds`}
+        >
           {m}:{s.toString().padStart(2, "0")}
         </span>
       </div>

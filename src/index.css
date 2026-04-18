@@ -25,3 +25,43 @@ button, [role="button"] {
 .safe-top {
   padding-top: max(env(safe-area-inset-top), 0.5rem);
 }
+
+/* D-18: visible focus ring for keyboard nav. We deliberately scope this to
+   :focus-visible (not :focus) so mouse clicks on buttons don't draw it.
+   The ring picks up `theme(colors.sky.400)` ≈ #38bdf8. */
+:focus-visible {
+  outline: 2px solid #38bdf8;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Honour the OS-level reduced-motion preference. Kills both transitions and
+   the timer-pulse animation — anything that scrolls/animates flips to a
+   single 0.01s tick. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Skeleton placeholder shimmer. Used while initial state is loading from IDB. */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(30, 41, 59, 0.6) 0%,
+    rgba(51, 65, 85, 0.7) 50%,
+    rgba(30, 41, 59, 0.6) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+  border-radius: 0.75rem;
+}
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

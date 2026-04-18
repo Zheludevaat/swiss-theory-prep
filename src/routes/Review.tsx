@@ -122,18 +122,43 @@ export default function Review() {
   );
 
   if (queue.length === 0) {
+    // D-10: when the normal queue is empty but new items are still available,
+    // offer a direct path into a 5-minute blast rather than bouncing the user
+    // back to Today with nothing to show for the trip.
+    const ctx: PickContext = {
+      catalog,
+      memory,
+      settings,
+      now: Date.now(),
+      recentReviews: reviews24h,
+      ...(lastSessionEndedAt !== undefined ? { lastSessionEndedAt } : {}),
+    };
+    const summaryNow = summarise(ctx);
+    const hasNew = summaryNow.newAvailable.length > 0;
     return (
       <div className="mx-auto max-w-lg p-6 text-center text-slate-300">
         <h1 className="mb-2 text-xl font-semibold">Nothing to review</h1>
         <p className="text-sm text-slate-400">
-          You're caught up. Want to introduce some new items?
+          {hasNew
+            ? `You're caught up on review. ${summaryNow.newAvailable.length} new item${summaryNow.newAvailable.length === 1 ? "" : "s"} waiting.`
+            : "You're caught up. Come back tomorrow when more cards are due."}
         </p>
-        <button
-          className="mt-4 rounded-xl bg-sky-600 px-4 py-3"
-          onClick={() => navigate("/")}
-        >
-          Back to Today
-        </button>
+        <div className="mt-4 flex flex-col gap-2">
+          {hasNew && (
+            <button
+              className="min-h-[44px] rounded-xl bg-sky-600 px-4 py-3 font-semibold"
+              onClick={() => navigate("/review?mode=blast5")}
+            >
+              Start new items (5-min blast)
+            </button>
+          )}
+          <button
+            className="min-h-[44px] rounded-xl bg-slate-800 px-4 py-3"
+            onClick={() => navigate("/")}
+          >
+            Back to Today
+          </button>
+        </div>
       </div>
     );
   }
