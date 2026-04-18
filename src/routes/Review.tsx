@@ -16,7 +16,7 @@ import {
   triage as triageFn,
   type PickContext,
 } from "@/scheduler/pickNext";
-import { useStore } from "@/store";
+import { selectLastSessionEndedAt, useStore } from "@/store";
 
 const NORMAL_LENGTH = 20;
 const BLAST_LENGTH = 10;
@@ -34,10 +34,13 @@ export default function Review() {
   const memory = useStore((s) => s.memory);
   const settings = useStore((s) => s.settings);
   const catalog = useStore((s) => s.catalog);
+  const reviews24h = useStore((s) => s.reviews24h);
+  const lastSessionEndedAt = useStore(selectLastSessionEndedAt);
   const startReview = useStore((s) => s.startReview);
   const finishSession = useStore((s) => s.finishSession);
   const recordReview = useStore((s) => s.recordReview);
   const flagRule = useStore((s) => s.flagRule);
+  const deferItems = useStore((s) => s.deferItems);
 
   const [queue, setQueue] = useState<string[]>([]);
   const [idx, setIdx] = useState(0);
@@ -56,6 +59,8 @@ export default function Review() {
         memory,
         settings,
         now: Date.now(),
+        recentReviews: reviews24h,
+        ...(lastSessionEndedAt !== undefined ? { lastSessionEndedAt } : {}),
       };
       let ids: string[] = [];
       if (mode === "blast5") {
@@ -69,6 +74,9 @@ export default function Review() {
         // pool to the highest-priority items so we don't avalanche the user.
         // Learning + relearning items always stay in scope — they must
         // stabilise regardless of the backlog.
+        //
+        // Side effect: write back the deferred ids to IndexedDB so the next
+        // session doesn't reconsider them (otherwise triage repeats forever).
         const summary = summarise(ctx);
         const tri = triageFn(summary, ctx);
         const opts = tri.triaged
@@ -80,6 +88,9 @@ export default function Review() {
               ]),
             }
           : {};
+        if (tri.triaged && tri.defer.length > 0) {
+          await deferItems(tri.defer);
+        }
         ids = composeNormalSession(ctx, NORMAL_LENGTH, opts);
       }
       if (!cancelled) setQueue(ids);

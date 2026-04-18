@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { ITEMS, ruleById } from "@/content/bundle";
 import { allMemoryState } from "@/db";
 import { reviewsSince } from "@/db";
-import { summarise, dailyCapacity, triage as triageFn, buildCatalog, type PickContext } from "@/scheduler/pickNext";
-import { useStore } from "@/store";
+import { summarise, dailyCapacity, isInCatchUpMode, triage as triageFn, buildCatalog, type PickContext } from "@/scheduler/pickNext";
+import { selectLastSessionEndedAt, useStore } from "@/store";
 import { computeStreak } from "@/lib/streak";
 import { computeReadiness, READINESS_BLURB, READINESS_LABEL } from "@/lib/readiness";
 import { fmtDate, fmtMinutes, daysUntil } from "@/lib/time";
@@ -21,13 +21,23 @@ export default function Today() {
   const catalog = useStore((s) => s.catalog);
   const recent = useStore((s) => s.recent);
   const flagged = useStore((s) => s.flagged);
+  const reviews24h = useStore((s) => s.reviews24h);
+  const lastSessionEndedAt = useStore(selectLastSessionEndedAt);
 
   const ctx: PickContext = useMemo(
-    () => ({ catalog, memory, settings, now: Date.now() }),
-    [catalog, memory, settings],
+    () => ({
+      catalog,
+      memory,
+      settings,
+      now: Date.now(),
+      recentReviews: reviews24h,
+      ...(lastSessionEndedAt !== undefined ? { lastSessionEndedAt } : {}),
+    }),
+    [catalog, memory, settings, reviews24h, lastSessionEndedAt],
   );
   const summary = useMemo(() => summarise(ctx), [ctx]);
   const triageState = useMemo(() => triageFn(summary, ctx), [summary, ctx]);
+  const catchUp = useMemo(() => isInCatchUpMode(ctx), [ctx]);
   const cap = dailyCapacity(settings);
 
   // Mock history last 10 (from localStorage, synced alongside review events).
@@ -77,6 +87,15 @@ export default function Today() {
             Capacity {cap}/day
           </div>
         </div>
+        {catchUp && (
+          <div className="mb-3 rounded-xl border border-sky-700/50 bg-sky-950/30 p-3 text-sm text-sky-200">
+            <div className="font-medium">Welcome back — let's catch up first.</div>
+            <div className="text-xs text-sky-200/80">
+              It's been a few days. We'll clear the backlog before showing new
+              items.
+            </div>
+          </div>
+        )}
         {triageState.triaged && (
           <div className="mb-3 rounded-xl border border-amber-700/50 bg-amber-950/30 p-3 text-sm text-amber-200">
             <div className="font-medium">

@@ -100,6 +100,27 @@ export async function allMemoryState(): Promise<MemoryState[]> {
   return (await db()).getAll("memoryState");
 }
 
+/**
+ * Bump the `due` field on a set of items by exactly one day. Used by the
+ * triage write-back path (DESIGN_v3 §6.6) so that deferred items don't get
+ * reconsidered in the next session — they actually shift to tomorrow.
+ *
+ * Items without a persisted MemoryState are ignored (they are "new" and
+ * triage should never defer something the user has never seen).
+ */
+export async function bumpDueByOneDay(itemIds: Iterable<string>): Promise<void> {
+  const dbi = await db();
+  const tx = dbi.transaction("memoryState", "readwrite");
+  const store = tx.objectStore("memoryState");
+  const ONE_DAY = 24 * 60 * 60 * 1000;
+  for (const id of itemIds) {
+    const existing = await store.get(id);
+    if (!existing) continue;
+    await store.put({ ...existing, due: existing.due + ONE_DAY });
+  }
+  await tx.done;
+}
+
 // ---------- reviews ----------
 
 export async function addReview(ev: ReviewEvent): Promise<void> {

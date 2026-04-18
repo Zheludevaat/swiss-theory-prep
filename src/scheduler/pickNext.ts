@@ -13,10 +13,16 @@
 // defer the rest by one day.
 
 import type { Item, Rule } from "@/content/schema";
-import type { MemoryState } from "@/db/types";
+import type { MemoryState, ReviewEvent } from "@/db/types";
 import type { Settings } from "@/db/types";
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
+
+/** If a session hasn't happened in this long, suspend new-item drip. */
+export const CATCH_UP_THRESHOLD_MS = 72 * 60 * 60 * 1000; // 72 hours
+
+/** Lapses at or above this count mark an item as a weak-spot candidate. */
+export const WEAK_SPOT_LAPSE_THRESHOLD = 2;
 
 export type CatalogIndex = {
   items: Item[];
@@ -43,6 +49,17 @@ export type PickContext = {
   lastItemId?: string;
   /** ids served earlier in this session — used to avoid immediate repeats. */
   servedThisSession?: Set<string>;
+  /**
+   * Recent review events (typically the last 24h) used by the weak-spot
+   * detector. Optional — when absent, weak-spot defaults to lapse-only.
+   */
+  recentReviews?: ReviewEvent[];
+  /**
+   * Epoch ms when the user's last session ended. When this is more than
+   * CATCH_UP_THRESHOLD_MS ago we suspend new-item drip (DESIGN_v3 §6.6).
+   * Undefined means "no prior session" — treated as fresh, not in catch-up.
+   */
+  lastSessionEndedAt?: number;
 };
 
 /** Daily review capacity inferred from daily target minutes. Cards/min ≈ 3. */
@@ -228,25 +245,132 @@ function tryPick(
   return undefined;
 }
 
-/** Session composition for the normal review loop (§6.7). */
+/**
+ * Items the user is currently struggling with. Two signals:
+ *   - lapses ≥ WEAK_SPOT_LAPSE_THRESHOLD (chronic difficulty), or
+ *   - any incorrect review in the last 24h (acute confusion).
+ * The intersection isn't required — either signal qualifies an item.
+ */
+export function weakSpotIds(ctx: PickContext): string[] {
+  const out = new Set<string>();
+  for (const m of ctx.memory.values()) {
+    if (m.lapses >= WEAK_SPOT_LAPSE_THRESHOLD) out.add(m.itemId);
+  }
+  const oneDayAgo = ctx.now - MS_PER_DAY;
+  for (const ev of ctx.recentReviews ?? []) {
+    if (!ev.correct && ev.timestamp >= oneDayAgo) out.add(ev.itemId);
+  }
+  return Array.from(out);
+}
+
+/**
+ * Has the user been away long enough that we should suspend new-item drip
+ * and just clear the backlog? Returns false when there is no prior session
+ * recorded (treat as fresh start, not absence).
+ */
+export function isInCatchUpMode(ctx: PickContext): boolean {
+  if (ctx.lastSessionEndedAt == null) return false;
+  return ctx.now - ctx.lastSessionEndedAt > CATCH_UP_THRESHOLD_MS;
+}
+
+/**
+ * Session composition for the normal review loop (DESIGN_v3 §6.7).
+ *
+ * Quotas: 70% overdue/due (priority-ranked) + 20% new (budget-bounded) +
+ * 10% weak-spot. Empty buckets spill to a final pass that fills any
+ * remaining slots from whatever's available, respecting interleaving and
+ * the optional `restrictTo` pool.
+ *
+ * In catch-up mode (no session in 72h+), the new-item quota is forced to
+ * zero so the user clears backlog before introducing fresh material.
+ */
 export function composeNormalSession(
   ctx: PickContext,
   n: number,
   opts: PickOptions = {},
 ): string[] {
+  if (n <= 0) return [];
+
+  const summary = summarise(ctx);
+  const catchUp = isInCatchUpMode(ctx);
+
+  // Quota math: ceil(0.7n) overdue, floor(0.2n) new, remainder weak-spot.
+  // Keeps overdue dominant when n is small and lets weak-spot get its slice.
+  const quotaOverdue = Math.ceil(n * 0.7);
+  const quotaNewRaw = Math.floor(n * 0.2);
+  const quotaNew = catchUp ? 0 : quotaNewRaw;
+  const quotaWeak = Math.max(0, n - quotaOverdue - quotaNew);
+
+  const passesRestrict = (id: string) =>
+    opts.restrictTo ? opts.restrictTo.has(id) : true;
+
+  // Overdue-and-due-today pool, intersected with any restrictTo.
+  const overduePool = new Set(
+    [
+      ...summary.relearning,
+      ...summary.learning,
+      ...summary.overdue,
+      ...summary.dueToday,
+    ].filter(passesRestrict),
+  );
+  const newPool = new Set(summary.newAvailable.filter(passesRestrict));
+  const weakSet = new Set(weakSpotIds(ctx));
+  const weakPool = new Set(
+    Array.from(overduePool).filter((id) => weakSet.has(id)),
+  );
+
   const picked: string[] = [];
   const served = new Set<string>(ctx.servedThisSession ?? []);
   let last = ctx.lastItemId;
-  for (let i = 0; i < n; i++) {
-    const id = pickNext(
-      { ...ctx, lastItemId: last, servedThisSession: served },
-      opts,
-    );
-    if (!id) break;
-    picked.push(id);
-    served.add(id);
-    last = id;
+
+  const drawFromPool = (
+    pool: Set<string>,
+    quota: number,
+    drawOpts: PickOptions,
+  ): number => {
+    if (quota <= 0 || pool.size === 0) return 0;
+    let drawn = 0;
+    while (drawn < quota) {
+      // Subtract already-served from the pool view so pickNext won't repeat.
+      const live = new Set<string>();
+      for (const id of pool) if (!served.has(id)) live.add(id);
+      if (live.size === 0) break;
+      const id = pickNext(
+        { ...ctx, lastItemId: last, servedThisSession: served },
+        { ...drawOpts, restrictTo: live },
+      );
+      if (!id) break;
+      picked.push(id);
+      served.add(id);
+      last = id;
+      drawn++;
+    }
+    return drawn;
+  };
+
+  // Order matters: overdue first so the high-priority bucket gets first
+  // pick of the interleaving budget.
+  drawFromPool(overduePool, quotaOverdue, { allowNew: false });
+  drawFromPool(weakPool, quotaWeak, { allowNew: false });
+  drawFromPool(newPool, quotaNew, { allowNew: true });
+
+  // Spill: top up from any remaining pool until n is filled or we run out.
+  if (picked.length < n) {
+    const spillPool = opts.restrictTo
+      ? new Set(Array.from(opts.restrictTo).filter((id) => !served.has(id)))
+      : undefined;
+    while (picked.length < n) {
+      const id = pickNext(
+        { ...ctx, lastItemId: last, servedThisSession: served },
+        { ...opts, restrictTo: spillPool, allowNew: !catchUp },
+      );
+      if (!id) break;
+      picked.push(id);
+      served.add(id);
+      last = id;
+    }
   }
+
   return picked;
 }
 

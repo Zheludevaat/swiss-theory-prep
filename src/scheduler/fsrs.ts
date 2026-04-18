@@ -92,15 +92,25 @@ export function applyGrade(
 }
 
 /**
- * Has this item graduated? "Graduated" = reps≥3 AND state ∈ {review} AND no
- * recent lapse within the last 7d. Used by the readiness badge (§9).
+ * Has this item graduated? "Graduated" = reps≥3 AND state ∈ {review} AND
+ * either zero lapses OR the current scheduled interval is ≥14d (i.e. FSRS
+ * itself considers the item stable enough to wait that long). See §9.
+ *
+ * We don't track lastLapseAt on MemoryState (it would require a schema
+ * migration), so we use the FORWARD-looking interval `due - lastReview` as
+ * a proxy for "FSRS currently trusts this item." A freshly-lapsed item has a
+ * tiny interval (minutes to hours); a mature item's interval grows past 14d.
+ * This replaces an older heuristic that read `now - lastReview > 7d` — that
+ * was backwards, flagging LONG-neglected items as graduated.
  */
-export function isGraduated(m: MemoryState, now = Date.now()): boolean {
+export function isGraduated(m: MemoryState, _now = Date.now()): boolean {
+  void _now;
   if (m.reps < 3) return false;
   if (m.state !== "review") return false;
   if (m.lapses === 0) return true;
-  // crude "recent lapse" proxy — state is "review" so last lapse is implicit,
-  // and we just check lastReview isn't within the very recent past.
-  const sevenDays = 7 * 24 * 60 * 60 * 1000;
-  return now - m.lastReview > sevenDays;
+  const fourteenDays = 14 * 24 * 60 * 60 * 1000;
+  // If there's no lastReview (shouldn't happen in state=review, but be safe),
+  // fall through to "not graduated" rather than claim stability.
+  if (!m.lastReview) return false;
+  return m.due - m.lastReview >= fourteenDays;
 }

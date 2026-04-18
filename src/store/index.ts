@@ -7,6 +7,7 @@ import {
   addReview,
   allFlagged,
   allMemoryState,
+  bumpDueByOneDay,
   flagRule as dbFlagRule,
   clearFlag as dbClearFlag,
   getMemoryState,
@@ -58,7 +59,22 @@ type Actions = {
   flagRule: (ruleId: string) => Promise<void>;
   clearFlag: (ruleId: string) => Promise<void>;
   saveSettings: (s: Partial<Settings>) => Promise<void>;
+  /**
+   * Persist a triage decision: shift the `due` of every deferred item one
+   * day into the future so we don't rescore them in the next session.
+   * Updates the in-memory map so subsequent compose calls see the new dues.
+   */
+  deferItems: (ids: Iterable<string>) => Promise<void>;
 };
+
+/** Compute the most recent prior session's endedAt, ignoring the active one. */
+function lastEndedAt(sessions: Session[], activeId?: string): number | undefined {
+  for (const s of sessions) {
+    if (s.id === activeId) continue;
+    if (s.endedAt != null) return s.endedAt;
+  }
+  return undefined;
+}
 
 export const useStore = create<State & Actions>((set, get) => ({
   status: "idle",
@@ -183,4 +199,24 @@ export const useStore = create<State & Actions>((set, get) => ({
     await putSettings(next);
     set({ settings: next });
   },
+
+  async deferItems(ids) {
+    const idList = Array.from(ids);
+    if (idList.length === 0) return;
+    await bumpDueByOneDay(idList);
+    // Mirror the shift locally so compose/summarise see the new due values
+    // without a full reloadMemory() round-trip.
+    const memory = new Map(get().memory);
+    const ONE_DAY = 24 * 60 * 60 * 1000;
+    for (const id of idList) {
+      const m = memory.get(id);
+      if (m) memory.set(id, { ...m, due: m.due + ONE_DAY });
+    }
+    set({ memory });
+  },
 }));
+
+/** Convenience selector for the latest ended session timestamp. */
+export function selectLastSessionEndedAt(s: State): number | undefined {
+  return lastEndedAt(s.recent, s.session?.id);
+}
