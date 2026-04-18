@@ -4,9 +4,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ITEMS, ruleById } from "@/content/bundle";
-import { allMemoryState } from "@/db";
-import { reviewsSince } from "@/db";
-import { summarise, dailyCapacity, isInCatchUpMode, triage as triageFn, buildCatalog, type PickContext } from "@/scheduler/pickNext";
+import { summarise, dailyCapacity, isInCatchUpMode, triage as triageFn, type PickContext } from "@/scheduler/pickNext";
 import { selectLastSessionEndedAt, useStore } from "@/store";
 import { computeStreak } from "@/lib/streak";
 import { computeReadiness, READINESS_BLURB, READINESS_LABEL } from "@/lib/readiness";
@@ -224,6 +222,3 @@ function FirstRunNudge({ memory }: { memory: Map<string, MemoryState> }) {
   );
 }
 
-// Re-export for tests + dev inspection.
-export { buildCatalog };
-export { allMemoryState, reviewsSince };

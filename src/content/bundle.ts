@@ -4,10 +4,11 @@
 import { ContentBundleSchema, type Category, type Item, type Rule } from "./schema";
 import { seedRules } from "./rules";
 import { seedItems } from "./items";
+import versionMeta from "../../content/version.json";
 
 const raw = {
-  contentVersion: "0.1.0-seed",
-  generatedAt: new Date().toISOString(),
+  contentVersion: versionMeta.version,
+  generatedAt: versionMeta.updatedAt,
   rules: seedRules,
   items: seedItems,
 };

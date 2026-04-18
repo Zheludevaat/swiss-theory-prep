@@ -292,4 +292,19 @@ export const seedItems: Item[] = [
     tags: ["sign:3.03", "priority"],
     difficulty: 2,
   },
+  {
+    id: "q.fitness.fatigue-break",
+    ruleIds: ["fitness.fatigue-break"],
+    question:
+      "Halfway through a long highway drive you realise you can't recall the last several kilometres. What should you do?",
+    options: [
+      { text: "Stop at the next rest area to sleep or fully revive before continuing", correct: true },
+      { text: "Open a window and turn up the radio to push through the next hour", correct: false },
+      { text: "Speed up so you reach the destination before the tiredness gets worse", correct: false },
+    ],
+    rationale:
+      "Microsleep and lost-time recall are red-flag fatigue signs. SVG Art. 31 requires you to remain capable of controlling the vehicle — you must stop, not mask the symptoms.",
+    tags: ["fatigue", "highway"],
+    difficulty: 2,
+  },
 ];

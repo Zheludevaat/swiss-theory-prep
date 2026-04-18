@@ -235,4 +235,18 @@ export const seedRules: Rule[] = [
       "After passing the 3.04 end-of-priority sign: the right-hand rule resumes, so a car approaching from an unmarked side street on your right now has priority.",
     ],
   },
+  {
+    id: "fitness.fatigue-break",
+    title: "Fatigue and fitness to drive",
+    statement:
+      "You must not drive if tiredness, illness, medication, or any other condition impairs your ability to control the vehicle. When you notice signs of fatigue on a long trip, take a break at the next safe opportunity — fatigue cannot be waited out by opening a window or turning up the radio.",
+    category: "driver-fitness",
+    legalRefs: ["SVG Art. 31 Abs. 2", "VRV Art. 2"],
+    tags: ["fatigue", "fitness", "medication"],
+    examWeight: 0.6,
+    workedExamples: [
+      "You've been driving four hours, notice you've stopped recognising the last few kilometres: pull into the next rest area and sleep or take coffee + walk before continuing.",
+      "A new prescription says 'may cause drowsiness': you must not drive until you know how it actually affects you, even if you feel fine at the start of a trip.",
+    ],
+  },
 ];
