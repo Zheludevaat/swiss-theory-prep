@@ -11,4 +11,5 @@ coverage
 .vscode
 *.log
 vite.config.*.timestamp-*
+vitest.config.*.timestamp-*
 tsconfig.tsbuildinfo

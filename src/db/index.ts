@@ -61,6 +61,25 @@ interface AppDB extends DBSchema {
 
 let _db: Promise<IDBPDatabase<AppDB>> | null = null;
 
+/**
+ * Test-only: discard the cached connection so the next db() reopens. The
+ * setup.ts hook deletes the underlying fake-indexeddb databases between
+ * tests, but our cached Promise would otherwise still point at a closed/
+ * deleted connection. Not exported from the module's public API barrel.
+ */
+export async function __resetDbForTests(): Promise<void> {
+  if (_db) {
+    const pending = _db;
+    _db = null;
+    try {
+      const d = await pending;
+      d.close();
+    } catch {
+      /* ignore */
+    }
+  }
+}
+
 /** Lazily open the db. Safe to call multiple times. */
 export function db(): Promise<IDBPDatabase<AppDB>> {
   if (_db) return _db;
