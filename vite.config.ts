@@ -47,7 +47,10 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      registerType: "autoUpdate",
+      // Chunk 8 F-1/F-2: prompt-based updates — the app shows a toast and
+      // the user chooses when to reload. Prevents a mid-mock catastrophe
+      // when a deploy lands during a 45-minute exam.
+      registerType: "prompt",
       includeAssets: ["favicon.svg", "icons/*.png", "signs/*.svg"],
       manifest: {
         name: "Swiss Theory Prep",
@@ -85,6 +88,27 @@ export default defineConfig({
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
         navigateFallback: `${base}index.html`,
         cleanupOutdatedCaches: true,
+        // F-6: runtime cache for large static assets (signs, diagrams) —
+        // CacheFirst with a bounded quota so a growing library doesn't
+        // fill the device. Capped at ~30d freshness; stale entries are
+        // eligible for eviction before the 200-entry cap kicks in.
+        runtimeCaching: [
+          {
+            urlPattern: ({ url }) =>
+              /\/(signs|diagrams)\//.test(url.pathname),
+            handler: "CacheFirst",
+            options: {
+              cacheName: "theory-prep-assets",
+              expiration: {
+                maxEntries: 200,
+                maxAgeSeconds: 30 * 24 * 60 * 60,
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
+        ],
       },
     }),
   ],

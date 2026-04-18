@@ -10,6 +10,13 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
+      // The `virtual:pwa-register` module is provided by vite-plugin-pwa at
+      // build time. In vitest we stub it so swUpdate.ts — and anything that
+      // imports UpdateToast / App — can load without a real SW runtime.
+      "virtual:pwa-register": path.resolve(
+        __dirname,
+        "tests/mocks/pwa-register.ts",
+      ),
     },
   },
   // Mirror vite.config.ts's define block so code that reads __APP_VERSION__

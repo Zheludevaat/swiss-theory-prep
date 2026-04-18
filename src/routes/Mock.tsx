@@ -28,6 +28,7 @@ import {
 import { useStore } from "@/store";
 import { uuid } from "@/lib/uuid";
 import { daysUntil, fmtDate } from "@/lib/time";
+import { setMockActive } from "@/lib/swUpdate";
 
 const EXAM_DURATION_MS = 45 * 60 * 1000;
 const FINAL_5MIN_MS = 5 * 60 * 1000;
@@ -87,6 +88,16 @@ export default function Mock() {
     if (phase !== "running") return;
     const t = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(t);
+  }, [phase]);
+
+  // F-1: flag mock-running to the SW-update orchestration so the update
+  // toast doesn't pop mid-exam and prompt a catastrophic reload. Cleanup
+  // clears the flag on phase change OR unmount (navigate away also ends
+  // the session).
+  useEffect(() => {
+    if (phase !== "running") return;
+    setMockActive(true);
+    return () => setMockActive(false);
   }, [phase]);
 
   const remainingMs = phase === "running"
