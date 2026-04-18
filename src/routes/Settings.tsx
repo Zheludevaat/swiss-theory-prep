@@ -10,7 +10,13 @@
 import { useEffect, useRef, useState } from "react";
 import { CONTENT_VERSION, ITEMS, RULES } from "@/content/bundle";
 import ConfirmModal from "@/components/ConfirmModal";
-import { exportBackup, importBackup, wipeAll } from "@/db";
+import {
+  allErrorReports,
+  clearErrorReports,
+  exportBackup,
+  importBackup,
+  wipeAll,
+} from "@/db";
 import type { Backup } from "@/db/types";
 import { useStore } from "@/store";
 
@@ -68,6 +74,30 @@ export default function Settings() {
     const trimmed = apiKeyDraft.trim();
     await save({ anthropicKey: trimmed === "" ? undefined : trimmed });
     setMsg("API key saved.");
+  }
+
+  async function doExportErrors() {
+    const errs = await allErrorReports();
+    if (errs.length === 0) {
+      setMsg("No errors logged.");
+      return;
+    }
+    const blob = new Blob([JSON.stringify(errs, null, 2)], {
+      type: "application/json",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    const date = new Date().toISOString().slice(0, 10);
+    a.download = `theory-prep-errors-${date}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    setMsg(`Exported ${errs.length} error${errs.length === 1 ? "" : "s"}.`);
+  }
+
+  async function doClearErrors() {
+    await clearErrorReports();
+    setMsg("Error log cleared.");
   }
 
   return (
@@ -204,6 +234,28 @@ export default function Settings() {
               e.target.value = "";
             }}
           />
+        </div>
+      </section>
+
+      <section className="rounded-2xl border border-slate-800 bg-slate-900 p-4">
+        <h2 className="mb-2 text-sm font-medium">Diagnostics</h2>
+        <p className="mb-3 text-xs text-slate-400">
+          The app records uncaught errors locally so we can investigate
+          crashes after the fact. Nothing is sent anywhere.
+        </p>
+        <div className="flex gap-2">
+          <button
+            className="flex-1 rounded-lg bg-slate-800 px-3 py-2 text-sm"
+            onClick={() => void doExportErrors()}
+          >
+            Export error log
+          </button>
+          <button
+            className="flex-1 rounded-lg bg-slate-800 px-3 py-2 text-sm"
+            onClick={() => void doClearErrors()}
+          >
+            Clear log
+          </button>
         </div>
       </section>
 

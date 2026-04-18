@@ -11,6 +11,7 @@
 
 import { Component, type ErrorInfo, type ReactNode } from "react";
 import { exportBackup, wipeAll } from "@/db";
+import { reportReactError } from "@/lib/errorReporter";
 
 type Props = { children: ReactNode };
 type State = { error: Error | null; info: ErrorInfo | null };
@@ -39,6 +40,9 @@ export class ErrorBoundary extends Component<Props, State> {
     } catch {
       /* localStorage may be full or blocked; we still render the fallback */
     }
+    // E-4: mirror the boundary's capture into the IDB error log so it
+    // appears alongside any uncaught-exception reports in Settings.
+    void reportReactError(error, info.componentStack ?? "");
     console.error("ErrorBoundary:", error, info);
   }
 

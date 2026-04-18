@@ -106,3 +106,23 @@ export type Backup = {
   flagged?: FlaggedRule[];
   mockHistory?: MockResult[];
 };
+
+/**
+ * E-4: lightweight error report. We store the last N of these in IDB so the
+ * user can export them from Settings if something starts going wrong. Not
+ * sent anywhere — strictly local and inspectable.
+ */
+export type ErrorReport = {
+  /** uuid */
+  id: string;
+  /** epoch ms */
+  at: number;
+  /** "error" | "unhandledrejection" | "react" */
+  kind: string;
+  /** route hash at the time of capture, e.g. "#/review" */
+  route: string;
+  message: string;
+  stack: string;
+  /** browser userAgent at the time of capture, useful for triage */
+  userAgent: string;
+};

@@ -8,6 +8,7 @@ import { openDB, type DBSchema, type IDBPDatabase } from "idb";
 import {
   DEFAULT_SETTINGS,
   type Backup,
+  type ErrorReport,
   type FlaggedRule,
   type MemoryState,
   type MockResult,
@@ -22,7 +23,15 @@ const DB_NAME = "swiss-theory-prep";
 //     destructive (the prior data shape is incompatible) but only happens once
 //     to recover from the broken first deploy.
 // v3: add mockHistory store. Additive — preserves all v2 data.
-const DB_VERSION = 3;
+// v4: add errors store (E-4). Additive — preserves all v3 data.
+const DB_VERSION = 4;
+
+/**
+ * Cap on how many error reports we hold on to. The store is opportunistic —
+ * we care about "something went wrong recently", not building a full audit
+ * log. Older entries are trimmed on write.
+ */
+const MAX_ERROR_REPORTS = 50;
 
 interface AppDB extends DBSchema {
   memoryState: {
@@ -55,6 +64,11 @@ interface AppDB extends DBSchema {
   mockHistory: {
     key: string; // mock result id (uuid)
     value: MockResult;
+    indexes: { "by-at": number };
+  };
+  errors: {
+    key: string; // error report id (uuid)
+    value: ErrorReport;
     indexes: { "by-at": number };
   };
 }
@@ -111,6 +125,11 @@ export function db(): Promise<IDBPDatabase<AppDB>> {
       if (oldVersion < 3) {
         const mock = dbi.createObjectStore("mockHistory", { keyPath: "id" });
         mock.createIndex("by-at", "at");
+      }
+      // v3 → v4: add errors store (E-4). Additive, preserves all prior data.
+      if (oldVersion < 4) {
+        const errs = dbi.createObjectStore("errors", { keyPath: "id" });
+        errs.createIndex("by-at", "at");
       }
     },
   });
@@ -360,7 +379,16 @@ export async function importBackup(b: Backup): Promise<void> {
 export async function wipeAll(): Promise<void> {
   const dbi = await db();
   const tx = dbi.transaction(
-    ["memoryState", "reviews", "sessions", "settings", "flagged", "meta", "mockHistory"],
+    [
+      "memoryState",
+      "reviews",
+      "sessions",
+      "settings",
+      "flagged",
+      "meta",
+      "mockHistory",
+      "errors",
+    ],
     "readwrite",
   );
   await Promise.all([
@@ -371,6 +399,49 @@ export async function wipeAll(): Promise<void> {
     tx.objectStore("flagged").clear(),
     tx.objectStore("meta").clear(),
     tx.objectStore("mockHistory").clear(),
+    tx.objectStore("errors").clear(),
   ]);
   await tx.done;
+}
+
+// ---------- error reports (E-4) ----------
+
+/**
+ * Persist a single error report and trim the store to the most recent
+ * MAX_ERROR_REPORTS entries. Best-effort — if IDB is unavailable we
+ * swallow the failure rather than recursing into the error reporter.
+ */
+export async function reportError(report: ErrorReport): Promise<void> {
+  try {
+    const dbi = await db();
+    const tx = dbi.transaction("errors", "readwrite");
+    await tx.objectStore("errors").put(report);
+    // Trim oldest if we're over the cap. We use the index, walking newest-
+    // first, then deleting everything beyond the keep window.
+    const idx = tx.objectStore("errors").index("by-at");
+    const keep = MAX_ERROR_REPORTS;
+    let seen = 0;
+    for await (const cursor of idx.iterate(null, "prev")) {
+      seen++;
+      if (seen > keep) await cursor.delete();
+    }
+    await tx.done;
+  } catch {
+    /* Don't let error reporting itself raise — it would loop forever. */
+  }
+}
+
+export async function allErrorReports(): Promise<ErrorReport[]> {
+  const dbi = await db();
+  const out: ErrorReport[] = [];
+  const idx = dbi.transaction("errors").store.index("by-at");
+  for await (const cursor of idx.iterate(null, "prev")) {
+    out.push(cursor.value);
+  }
+  return out;
+}
+
+export async function clearErrorReports(): Promise<void> {
+  const dbi = await db();
+  await dbi.clear("errors");
 }
