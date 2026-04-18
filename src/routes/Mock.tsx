@@ -7,7 +7,7 @@
 // Each answer is also a real ReviewEvent — the exam IS the most important
 // review session, so it feeds FSRS.
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Card from "@/components/Card";
 import { CATEGORY_LABELS, type Category } from "@/content/schema";
@@ -50,6 +50,13 @@ export default function Mock() {
   const [startedAt, setStartedAt] = useState<number>(0);
   const [now, setNow] = useState<number>(Date.now());
 
+  // Mirror of `answers` kept as a ref so async/timer code paths can always
+  // read the latest list without closure staleness. This matters for the
+  // very last card: if the user submits and then the timer fires (or they
+  // click Finish) before React has re-rendered the parent, we still have
+  // the new answer.
+  const answersRef = useRef<Answer[]>([]);
+
   // Countdown timer.
   useEffect(() => {
     if (phase !== "running") return;
@@ -61,10 +68,11 @@ export default function Mock() {
     ? Math.max(0, EXAM_DURATION_MS - (now - startedAt))
     : EXAM_DURATION_MS;
 
-  // Auto-finish on timeout.
+  // Auto-finish on timeout. Use the ref — `answers` in closure may be stale
+  // if the user answered the last card moments before the clock hit zero.
   useEffect(() => {
     if (phase === "running" && remainingMs === 0) {
-      void finalize(answers);
+      void finalize(answersRef.current);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [remainingMs, phase]);
@@ -85,6 +93,7 @@ export default function Mock() {
     setItems(composed);
     setIdx(0);
     setAnswers([]);
+    answersRef.current = [];
     setStartedAt(Date.now());
     setNow(Date.now());
     await startReview("mock");
@@ -171,11 +180,17 @@ export default function Mock() {
               truth: sub.grading.truth,
               latencyMs: sub.grading.latencyMs,
             };
-            setAnswers((arr) => [...arr, next]);
+            setAnswers((arr) => {
+              const updated = [...arr, next];
+              answersRef.current = updated;
+              return updated;
+            });
           }}
           onContinue={async () => {
             if (isLast) {
-              await finalize([...answers, ...buildFinalIfMissing(currentItem.id, answers)]);
+              // Read from the ref so the just-submitted last answer is
+              // never lost to a stale closure.
+              await finalize(answersRef.current);
             } else {
               setIdx((i) => i + 1);
             }
@@ -186,14 +201,6 @@ export default function Mock() {
       {remainingMs <= FINAL_5MIN_MS && remainingMs > 0 && <FinalMinutesIndicator />}
     </div>
   );
-}
-
-// In strict mode the user can't go back, so any pending answer is recorded
-// as the user moves forward. We rely on Card to call onSubmit before onContinue.
-function buildFinalIfMissing(_id: string, answers: Answer[]): Answer[] {
-  // Future: defensively reconstruct an unanswered final card. For now we
-  // assume the Card flow guarantees onSubmit was called.
-  return answers.length === 0 ? [] : [];
 }
 
 function Lobby({ onBegin, onCancel }: { onBegin: () => void; onCancel: () => void }) {

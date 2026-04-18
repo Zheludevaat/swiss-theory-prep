@@ -26,6 +26,13 @@ type Props = {
   minimalActions?: boolean;
   onSubmit: (s: CardSubmission) => void;
   onContinue: () => void;
+  /**
+   * Optional handler for the "End" button in the header. When provided, the
+   * button is shown and clicking it ends the session (caller decides what
+   * that means). When omitted (e.g. mock exam strict mode), no End button is
+   * rendered.
+   */
+  onStop?: () => void;
   /** Header counter, e.g. "6 / 10". */
   counter?: string;
   /** Whether this is the last card of the session. */
@@ -40,6 +47,7 @@ export default function Card({
   minimalActions = false,
   onSubmit,
   onContinue,
+  onStop,
   counter,
   isLast = false,
 }: Props) {
@@ -103,12 +111,17 @@ export default function Card({
       {/* Tiny header */}
       <div className="mb-3 flex items-center justify-between text-xs text-slate-400">
         <span>{counter ?? ""}</span>
-        <button
-          className="rounded bg-slate-800 px-2 py-1 text-slate-200"
-          onClick={() => onContinue()}
-        >
-          Stop
-        </button>
+        {onStop ? (
+          <button
+            className="rounded bg-slate-800 px-2 py-1 text-slate-200"
+            onClick={() => onStop()}
+            title="End this session and return to Today"
+          >
+            End
+          </button>
+        ) : (
+          <span />
+        )}
       </div>
 
       {/* Image / diagram (optional). Plain <img> — no asset bundle in MVP. */}

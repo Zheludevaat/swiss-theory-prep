@@ -232,6 +232,7 @@ function tryPick(
 export function composeNormalSession(
   ctx: PickContext,
   n: number,
+  opts: PickOptions = {},
 ): string[] {
   const picked: string[] = [];
   const served = new Set<string>(ctx.servedThisSession ?? []);
@@ -239,7 +240,7 @@ export function composeNormalSession(
   for (let i = 0; i < n; i++) {
     const id = pickNext(
       { ...ctx, lastItemId: last, servedThisSession: served },
-      {},
+      opts,
     );
     if (!id) break;
     picked.push(id);

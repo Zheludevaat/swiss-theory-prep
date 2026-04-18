@@ -264,7 +264,7 @@ export const seedItems: Item[] = [
   },
   {
     id: "q.priority.emergency-vehicles",
-    ruleIds: ["priority.tram"],
+    ruleIds: ["priority.emergency-vehicles"],
     question:
       "An emergency vehicle with blue lights and siren approaches from behind. You:",
     options: [
@@ -279,7 +279,7 @@ export const seedItems: Item[] = [
   },
   {
     id: "q.signs.priority-road",
-    ruleIds: ["priority.right-hand.default"],
+    ruleIds: ["signs.priority-road"],
     question:
       "You are on a road marked with the yellow-diamond priority-road sign. At the next intersection:",
     options: [

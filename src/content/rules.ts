@@ -207,4 +207,32 @@ export const seedRules: Rule[] = [
       "Approaching a zebra with a pedestrian visibly waiting at the kerb and looking to cross: stop and let them pass.",
     ],
   },
+  {
+    id: "priority.emergency-vehicles",
+    title: "Emergency vehicles with blue lights and siren",
+    statement:
+      "Emergency vehicles (police, fire, ambulance) using blue lights and siren have priority over all other traffic. Other road users must clear a path immediately — typically by pulling to the right — and must not obstruct them, even at red lights or in queues.",
+    category: "priority",
+    legalRefs: ["SVG Art. 27", "VRV Art. 16"],
+    tags: ["emergency", "blue-light", "siren"],
+    examWeight: 0.8,
+    workedExamples: [
+      "An ambulance with blue lights and siren approaches from behind on a two-lane road: pull as far right as safe, slow, and let it pass. Stopping in-lane is not enough — it can block the path.",
+      "In a queue at a red light with an emergency vehicle arriving: if safe and lawful, move aside (even partially onto the pavement edge is permitted to clear the path).",
+    ],
+  },
+  {
+    id: "signs.priority-road",
+    title: "Priority road (3.03 / 3.04)",
+    statement:
+      "The yellow-diamond priority-road sign (3.03) grants you priority over traffic on crossing side roads until the end-of-priority-road sign (3.04) cancels it. While on a priority road, the right-hand rule does not apply at intersections you cross.",
+    category: "signs",
+    legalRefs: ["SSV Art. 37"],
+    tags: ["sign:3.03", "sign:3.04", "priority"],
+    examWeight: 0.75,
+    workedExamples: [
+      "Driving through a town on a road marked with the yellow-diamond 3.03: crossing traffic from unsigned side streets must yield to you, regardless of which side they come from.",
+      "After passing the 3.04 end-of-priority sign: the right-hand rule resumes, so a car approaching from an unmarked side street on your right now has priority.",
+    ],
+  },
 ];

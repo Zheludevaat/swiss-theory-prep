@@ -12,6 +12,8 @@ import { ITEMS, RULES, ruleById } from "@/content/bundle";
 import {
   composeBlastSession,
   composeNormalSession,
+  summarise,
+  triage as triageFn,
   type PickContext,
 } from "@/scheduler/pickNext";
 import { useStore } from "@/store";
@@ -40,9 +42,13 @@ export default function Review() {
   const [queue, setQueue] = useState<string[]>([]);
   const [idx, setIdx] = useState(0);
 
-  // Compose the queue once per session.
+  // Compose the queue when the route entry changes (mode or ruleId). We do
+  // *not* recompose on memory ticks during a session — that would shuffle the
+  // user's queue mid-flow.
   useEffect(() => {
     let cancelled = false;
+    setIdx(0);
+    setQueue([]);
     async function run() {
       await startReview(mode === "blast5" ? "blast5" : mode === "teach" ? "teach" : "review");
       const ctx: PickContext = {
@@ -52,13 +58,29 @@ export default function Review() {
         now: Date.now(),
       };
       let ids: string[] = [];
-      if (mode === "blast5") ids = composeBlastSession(ctx, BLAST_LENGTH);
-      else if (mode === "teach" && ruleId) {
+      if (mode === "blast5") {
+        ids = composeBlastSession(ctx, BLAST_LENGTH);
+      } else if (mode === "teach" && ruleId) {
         ids = ITEMS.filter((it) => it.ruleIds.includes(ruleId))
           .slice(0, TEACH_LENGTH)
           .map((i) => i.id);
       } else {
-        ids = composeNormalSession(ctx, NORMAL_LENGTH);
+        // Honour triage (DESIGN_v3 §6.6): when due ≫ capacity, restrict the
+        // pool to the highest-priority items so we don't avalanche the user.
+        // Learning + relearning items always stay in scope — they must
+        // stabilise regardless of the backlog.
+        const summary = summarise(ctx);
+        const tri = triageFn(summary, ctx);
+        const opts = tri.triaged
+          ? {
+              restrictTo: new Set<string>([
+                ...summary.relearning,
+                ...summary.learning,
+                ...tri.keep,
+              ]),
+            }
+          : {};
+        ids = composeNormalSession(ctx, NORMAL_LENGTH, opts);
       }
       if (!cancelled) setQueue(ids);
     }
@@ -66,9 +88,11 @@ export default function Review() {
     return () => {
       cancelled = true;
     };
-    // We only want this to run once per route entry; do not refresh on memory tick.
+    // We intentionally exclude memory/settings/catalog from deps: we want one
+    // queue per route entry. Mode/ruleId changes (user navigates from Today →
+    // 5-min blast, etc.) DO recompose.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [mode, ruleId]);
 
   const totalToServe = queue.length;
   const currentId = queue[idx];
@@ -139,6 +163,10 @@ export default function Review() {
           await finishSession();
           navigate("/");
         }
+      }}
+      onStop={async () => {
+        await finishSession();
+        navigate("/");
       }}
     />
   );
