@@ -59,6 +59,7 @@ export type Settings = {
   anthropicKey?: string;
   bedtimeReminder?: string;       // local-time HH:mm; undefined = off
   examDate?: string;              // YYYY-MM-DD; undefined = unset
+  mockAudibleTick: boolean;       // final-5-minutes 1Hz beep; default true
 };
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -67,6 +68,7 @@ export const DEFAULT_SETTINGS: Settings = {
   overlearnMastered: true,
   sampleConfidenceEvery: 5,
   useLLM: false,
+  mockAudibleTick: true,
 };
 
 export type FlaggedRule = {

@@ -1,11 +1,23 @@
 // Mock exam composition — draw 50 items from the catalog such that the
 // category distribution approximates ASA's competence catalog (§8.1), and
 // items seen in the last 48h are excluded so the composition is novel.
+//
+// 48h cool-down (FIX_PLAN A-7): the cool-down is enforced strictly. Recently
+// seen items are admitted only as a last resort when the eligible pool is
+// exhausted. The result includes `fellBackToRecentlySeen` so the UI can warn.
 
 import { CATEGORY_WEIGHTS, type Category, type Item } from "@/content/schema";
 import type { MemoryState, ReviewEvent } from "@/db/types";
 
 const COOLDOWN_MS = 48 * 60 * 60 * 1000;
+
+export type MockComposition = {
+  items: Item[];
+  /** True when the catalog had to admit items seen in the last 48h. */
+  fellBackToRecentlySeen: boolean;
+  /** Items that were excluded by the cool-down. Useful for diagnostics. */
+  cooldownExcluded: number;
+};
 
 export function composeMockExam(
   items: Item[],
@@ -14,13 +26,14 @@ export function composeMockExam(
   _memory: Map<string, MemoryState>,
   now: number,
   length = 50,
-): Item[] {
+): MockComposition {
   // Build "seen recently" set.
   const seenRecently = new Set<string>();
   for (const r of reviews) {
     if (r.timestamp >= now - COOLDOWN_MS) seenRecently.add(r.itemId);
   }
   const pool = items.filter((it) => !seenRecently.has(it.id));
+  const cooldownExcluded = items.length - pool.length;
 
   // Bucket by category.
   const buckets: Partial<Record<Category, Item[]>> = {};
@@ -68,17 +81,23 @@ export function composeMockExam(
     }
   }
   // If still short (catalog too small), allow recently-seen items.
+  let fellBackToRecentlySeen = false;
   if (chosen.length < length) {
     for (const it of shuffled(items)) {
       if (chosen.length >= length) break;
       if (!used.has(it.id)) {
         chosen.push(it);
         used.add(it.id);
+        if (seenRecently.has(it.id)) fellBackToRecentlySeen = true;
       }
     }
   }
 
-  return shuffled(chosen).slice(0, length);
+  return {
+    items: shuffled(chosen).slice(0, length),
+    fellBackToRecentlySeen,
+    cooldownExcluded,
+  };
 }
 
 function shuffled<T>(xs: T[]): T[] {
