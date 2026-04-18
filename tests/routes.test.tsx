@@ -14,6 +14,8 @@ import Library from "@/routes/Library";
 import Stats from "@/routes/Stats";
 import Settings from "@/routes/Settings";
 import Teach from "@/routes/Teach";
+import Review from "@/routes/Review";
+import Mock from "@/routes/Mock";
 import { RULES } from "@/content/bundle";
 
 function renderAt(path: string, element: React.ReactNode, routePattern?: string) {
@@ -70,5 +72,31 @@ describe("route smoke tests", () => {
     );
     // The teach page renders the rule title at the top.
     expect(screen.getByText(RULES[0]!.title)).toBeInTheDocument();
+  });
+
+  it("Review renders the empty-state when there is no queue", () => {
+    // No store init() — memory is empty, scheduler returns nothing → the
+    // "Nothing to review" branch renders synchronously on first paint.
+    // We don't await the async queue compose; we just need the route
+    // to mount without throwing.
+    renderAt("/review", <Review />);
+    expect(
+      screen.getByRole("heading", { name: /nothing to review/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /back to today/i }),
+    ).toBeInTheDocument();
+  });
+
+  it("Mock renders the lobby with strict + practice mode buttons", () => {
+    // Phase starts at "lobby" — composeMockExam doesn't run until the user
+    // clicks Begin, so this is a pure synchronous render test.
+    renderAt("/mock", <Mock />);
+    expect(screen.getByRole("heading", { name: /mock exam/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /^strict/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /^practice/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /^begin (strict|practice) mock$/i }),
+    ).toBeInTheDocument();
   });
 });
