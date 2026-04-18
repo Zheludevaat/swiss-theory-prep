@@ -16,7 +16,11 @@ import {
 } from "./types";
 
 const DB_NAME = "swiss-theory-prep";
-const DB_VERSION = 1;
+// v2: add by-timestamp index on reviews + recover from any pre-existing v1 db
+// from an earlier deploy that used a different schema. Migration is destructive
+// (the prior data shape is incompatible), but the app stores only personal
+// review state, which is recreated as the user studies.
+const DB_VERSION = 2;
 
 interface AppDB extends DBSchema {
   memoryState: {
@@ -55,22 +59,28 @@ export function db(): Promise<IDBPDatabase<AppDB>> {
   if (_db) return _db;
   _db = openDB<AppDB>(DB_NAME, DB_VERSION, {
     upgrade(dbi, oldVersion) {
-      if (oldVersion < 1) {
-        const mem = dbi.createObjectStore("memoryState", { keyPath: "itemId" });
-        mem.createIndex("by-due", "due");
-
-        const rev = dbi.createObjectStore("reviews", { keyPath: "id" });
-        rev.createIndex("by-item", "itemId");
-        rev.createIndex("by-session", "sessionId");
-        rev.createIndex("by-timestamp", "timestamp");
-
-        const sess = dbi.createObjectStore("sessions", { keyPath: "id" });
-        sess.createIndex("by-startedAt", "startedAt");
-
-        dbi.createObjectStore("settings");
-        dbi.createObjectStore("flagged", { keyPath: "ruleId" });
-        dbi.createObjectStore("meta");
+      // Any upgrade path (including recovery from an incompatible older build)
+      // rebuilds from scratch. Drop every store we know about, plus anything
+      // else the db may have, then create the canonical v2 schema.
+      for (const name of Array.from(dbi.objectStoreNames)) {
+        dbi.deleteObjectStore(name);
       }
+      void oldVersion;
+
+      const mem = dbi.createObjectStore("memoryState", { keyPath: "itemId" });
+      mem.createIndex("by-due", "due");
+
+      const rev = dbi.createObjectStore("reviews", { keyPath: "id" });
+      rev.createIndex("by-item", "itemId");
+      rev.createIndex("by-session", "sessionId");
+      rev.createIndex("by-timestamp", "timestamp");
+
+      const sess = dbi.createObjectStore("sessions", { keyPath: "id" });
+      sess.createIndex("by-startedAt", "startedAt");
+
+      dbi.createObjectStore("settings");
+      dbi.createObjectStore("flagged", { keyPath: "ruleId" });
+      dbi.createObjectStore("meta");
     },
   });
   return _db;
