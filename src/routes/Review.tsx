@@ -4,11 +4,17 @@
 //   - normal: composeNormalSession with new-item budget
 //   - blast5: composeBlastSession (no new items)
 //   - teach:  shows 3 items for a single ruleId (param ?rule=...)
+//   - calib:  composeCalibrationDrill for a single category (param ?cat=...).
+//             Bypasses the scheduler entirely — the queue is the recent
+//             high-confidence misses in that ASA category (Audit §3.3).
 
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Card from "@/components/Card";
-import { ITEMS, RULES, ruleById } from "@/content/bundle";
+import { ITEMS, RULES, categoryOfItem, ruleById } from "@/content/bundle";
+import { CATEGORY_LABELS, type Category } from "@/content/schema";
+import { allReviews } from "@/db";
+import { composeCalibrationDrill } from "@/lib/calibration";
 import {
   composeBlastSession,
   composeNormalSession,
@@ -21,15 +27,28 @@ import { selectLastSessionEndedAt, useStore } from "@/store";
 const NORMAL_LENGTH = 20;
 const BLAST_LENGTH = 10;
 const TEACH_LENGTH = 3;
+const CALIB_LENGTH = 10;
+
+const CATEGORY_SET = new Set<Category>(
+  Object.keys(CATEGORY_LABELS) as Category[],
+);
+
+function parseCategory(raw: string | null): Category | undefined {
+  if (!raw) return undefined;
+  return CATEGORY_SET.has(raw as Category) ? (raw as Category) : undefined;
+}
 
 export default function Review() {
   const [params] = useSearchParams();
   const navigate = useNavigate();
-  const mode = (params.get("mode") ?? "normal") as
-    | "normal"
-    | "blast5"
-    | "teach";
+  const rawMode = params.get("mode") ?? "normal";
+  const mode = (
+    rawMode === "blast5" || rawMode === "teach" || rawMode === "calib"
+      ? rawMode
+      : "normal"
+  ) as "normal" | "blast5" | "teach" | "calib";
   const ruleId = params.get("rule") ?? undefined;
+  const calibCategory = parseCategory(params.get("cat"));
 
   const memory = useStore((s) => s.memory);
   const settings = useStore((s) => s.settings);
@@ -53,7 +72,15 @@ export default function Review() {
     setIdx(0);
     setQueue([]);
     async function run() {
-      await startReview(mode === "blast5" ? "blast5" : mode === "teach" ? "teach" : "review");
+      // calib sessions map to a "review" mode in the session log — they're
+      // ordinary review pulls, just with an opinionated queue composer.
+      await startReview(
+        mode === "blast5"
+          ? "blast5"
+          : mode === "teach"
+            ? "teach"
+            : "review",
+      );
       const ctx: PickContext = {
         catalog,
         memory,
@@ -69,6 +96,23 @@ export default function Review() {
         ids = ITEMS.filter((it) => it.ruleIds.includes(ruleId))
           .slice(0, TEACH_LENGTH)
           .map((i) => i.id);
+      } else if (mode === "calib" && calibCategory) {
+        // Audit §3.3: calibration-repair drill. Bypasses the scheduler —
+        // the Koriat feedback-loop effect is strongest on high-confidence
+        // misses, so we deliberately bring those back up front rather than
+        // waiting for the regular review cadence to surface them.
+        //
+        // We read the full review history (not reviews24h) since the drill
+        // window is 30 days by default.
+        const fullReviews = await allReviews();
+        if (cancelled) return;
+        ids = composeCalibrationDrill({
+          reviews: fullReviews,
+          items: ITEMS,
+          itemCategory: categoryOfItem,
+          category: calibCategory,
+          n: CALIB_LENGTH,
+        });
       } else {
         // Honour triage (DESIGN_v3 §6.6): when due ≫ capacity, restrict the
         // pool to the highest-priority items so we don't avalanche the user.
@@ -100,10 +144,10 @@ export default function Review() {
       cancelled = true;
     };
     // We intentionally exclude memory/settings/catalog from deps: we want one
-    // queue per route entry. Mode/ruleId changes (user navigates from Today →
-    // 5-min blast, etc.) DO recompose.
+    // queue per route entry. Mode/ruleId/calibCategory changes (user navigates
+    // from Today → 5-min blast, etc.) DO recompose.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mode, ruleId]);
+  }, [mode, ruleId, calibCategory]);
 
   const totalToServe = queue.length;
   const currentId = queue[idx];

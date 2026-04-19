@@ -5,14 +5,22 @@
 //   - Mock exam history
 
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { CATEGORY_LABELS, type Category } from "@/content/schema";
 import { categoryOfItem, itemById } from "@/content/bundle";
 import { allReviews } from "@/db";
 import type { ReviewEvent } from "@/db/types";
 import { fmtDate } from "@/lib/time";
+import {
+  CALIBRATION_SAMPLE_FLOOR,
+  calibrationByCategory,
+  gapSeverity,
+  type CalibrationRow,
+} from "@/lib/calibration";
 import { useStore } from "@/store";
 
 export default function Stats() {
+  const navigate = useNavigate();
   const [reviews, setReviews] = useState<ReviewEvent[]>([]);
   const mocks = useStore((s) => s.mockHistory);
 
@@ -26,6 +34,18 @@ export default function Stats() {
   const perCategory = useMemo(() => accuracyByCategory(reviews), [reviews]);
   const calibration = useMemo(() => calibrationCurve(reviews), [reviews]);
   const samples = reviews.filter((r) => r.confidence !== undefined).length;
+
+  // Audit §3.3: per-category calibration. The reducer is cheap but pure, so
+  // memo it on the review list — it recomputes only on page load or when a
+  // fresh review lands in the store (not currently — Stats hydrates once).
+  const calibrationPerCategory = useMemo(
+    () =>
+      calibrationByCategory(reviews, (itemId) => {
+        const it = itemById.get(itemId);
+        return it ? categoryOfItem(it) : undefined;
+      }),
+    [reviews],
+  );
 
   return (
     <div className="mx-auto max-w-lg space-y-4 p-4">
@@ -80,6 +100,24 @@ export default function Stats() {
         ) : (
           <CalibrationChart data={calibration} />
         )}
+      </section>
+
+      {/* Audit §3.3: per-category calibration + drill CTA. Each row unlocks
+          independently at CALIBRATION_SAMPLE_FLOOR samples. Tapping a flagged
+          row composes a calibration-repair drill from recent
+          high-confidence misses in that category. */}
+      <section className="rounded-2xl border border-slate-800 bg-slate-900 p-4">
+        <h2 className="mb-1 text-sm font-medium">Calibration by category</h2>
+        <p className="mb-3 text-xs text-slate-400">
+          Overconfidence (said you'd get it right, didn't) is the riskiest
+          metacognitive error. Tap a flagged row to drill recent misses.
+        </p>
+        <CalibrationCategoryTable
+          rows={calibrationPerCategory}
+          onDrill={(cat) =>
+            navigate(`/review?mode=calib&cat=${encodeURIComponent(cat)}`)
+          }
+        />
       </section>
 
       <section className="rounded-2xl border border-slate-800 bg-slate-900 p-4">
@@ -181,6 +219,93 @@ function calibrationCurve(reviews: ReviewEvent[]) {
     const b = buckets.get(c) ?? { correct: 0, n: 0 };
     return { c, pct: b.n ? b.correct / b.n : 0, n: b.n };
   });
+}
+
+function CalibrationCategoryTable({
+  rows,
+  onDrill,
+}: {
+  rows: CalibrationRow[];
+  onDrill: (cat: Category) => void;
+}) {
+  // Only surface buckets that have met the sample floor — anything below is
+  // statistical noise and would mislead rather than inform (Koriat's
+  // feedback loop breaks down at low N).
+  const unlocked = rows.filter((r) => r.n >= CALIBRATION_SAMPLE_FLOOR);
+  const locked = rows.filter((r) => r.n < CALIBRATION_SAMPLE_FLOOR);
+
+  if (unlocked.length === 0) {
+    const total = rows.reduce((acc, r) => acc + r.n, 0);
+    return (
+      <p className="text-sm text-slate-400">
+        No category has {CALIBRATION_SAMPLE_FLOOR}+ confidence samples yet (
+        {total} total so far). Keep answering; rows unlock per category.
+      </p>
+    );
+  }
+
+  return (
+    <div className="space-y-3">
+      <ul className="space-y-2">
+        {unlocked.map((r) => {
+          const sev = gapSeverity(r.gapPp);
+          const over = r.gapPp > 0;
+          // Colour rule: amber + red are attention; green is "stay calm."
+          // Positive gap = overconfident (said high, was wrong); negative
+          // gap = underconfident (said low, got it right). Both are worth
+          // flagging at bad severity but for different reasons.
+          const pillClass =
+            sev === "bad"
+              ? "bg-red-950/40 border-bad text-red-200"
+              : sev === "warn"
+                ? "bg-yellow-950/30 border-warn text-yellow-200"
+                : "bg-green-950/20 border-ok text-green-200";
+          const label = over ? "overconfident" : "underconfident";
+          const canDrill = over && sev !== "ok";
+          return (
+            <li
+              key={r.category}
+              className={`rounded-xl border p-3 text-sm ${pillClass}`}
+            >
+              <div className="flex items-baseline justify-between">
+                <span className="font-medium text-slate-100">
+                  {CATEGORY_LABELS[r.category]}
+                </span>
+                <span className="text-xs text-slate-300">
+                  said {Math.round(r.expectedPct * 100)}% · saw{" "}
+                  {Math.round(r.observedPct * 100)}% · {r.n} samples
+                </span>
+              </div>
+              <div className="mt-1 text-xs">
+                {sev === "ok" ? (
+                  <span>Well calibrated.</span>
+                ) : (
+                  <span>
+                    {Math.round(Math.abs(r.gapPp))}pp {label}.
+                  </span>
+                )}
+              </div>
+              {canDrill && (
+                <button
+                  className="mt-2 min-h-[44px] w-full rounded-lg bg-sky-700/60 px-3 py-2 text-xs font-medium text-sky-50"
+                  onClick={() => onDrill(r.category)}
+                >
+                  Drill recent misses in{" "}
+                  {CATEGORY_LABELS[r.category].toLowerCase()}
+                </button>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+      {locked.length > 0 && (
+        <p className="text-xs text-slate-500">
+          {locked.length} more categor{locked.length === 1 ? "y" : "ies"}{" "}
+          unlocking at {CALIBRATION_SAMPLE_FLOOR} samples.
+        </p>
+      )}
+    </div>
+  );
 }
 
 function CalibrationChart({

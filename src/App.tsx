@@ -8,6 +8,7 @@ import Library from "@/routes/Library";
 import Stats from "@/routes/Stats";
 import Settings from "@/routes/Settings";
 import Teach from "@/routes/Teach";
+import ExamMorning from "@/routes/ExamMorning";
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
           <Route path="stats" element={<Stats />} />
           <Route path="settings" element={<Settings />} />
           <Route path="teach/:ruleId" element={<Teach />} />
+          <Route path="exam-morning" element={<ExamMorning />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

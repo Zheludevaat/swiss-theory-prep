@@ -9,6 +9,12 @@ import { selectLastSessionEndedAt, useStore } from "@/store";
 import { computeStreak } from "@/lib/streak";
 import { computeReadiness, READINESS_BLURB, READINESS_LABEL } from "@/lib/readiness";
 import { fmtDate, fmtMinutes, daysUntil } from "@/lib/time";
+import {
+  IF_THEN_CUES,
+  IF_THEN_PLACES,
+  renderIfThenSentence,
+  shouldShowCueTile,
+} from "@/lib/ifThen";
 import type { MemoryState } from "@/db/types";
 import type { Session } from "@/db/types";
 
@@ -49,6 +55,25 @@ export default function Today() {
   const lastSession = recent[0];
   const examIn = daysUntil(settings.examDate);
 
+  // Audit §3.2 — if-then plan state. The onboarding card only appears once:
+  // when the user hasn't bound a cue AND hasn't dismissed the prompt. Any
+  // explicit answer (save or skip) flips a marker that hides it permanently.
+  const showIfThenOnboarding =
+    settings.ifThenCue === undefined && !settings.ifThenOnboardingSeen;
+  const cueSentence = renderIfThenSentence(
+    settings.ifThenCue,
+    settings.ifThenPlace,
+  );
+  const showCueTile = shouldShowCueTile({
+    ...(settings.ifThenCue !== undefined ? { cue: settings.ifThenCue } : {}),
+    ...(lastSessionEndedAt !== undefined ? { lastSessionEndedAt } : {}),
+  });
+
+  // Audit §3.1 — exam-morning tile. Shown only on the exam date itself;
+  // the route it links to (/exam-morning) handles reappraisal + expressive
+  // writing + anchor retrieval in sequence.
+  const showExamMorningTile = examIn === 0;
+
   return (
     <div className="mx-auto max-w-lg space-y-4 p-4">
       <header className="pt-2">
@@ -63,6 +88,45 @@ export default function Today() {
       </header>
 
       <ReadinessBadge readiness={readiness} />
+
+      {/* Audit §3.1: exam-morning tile. Fires only on exam day; the route
+          walks reappraisal → expressive writing → anchor retrieval. */}
+      {showExamMorningTile && (
+        <section className="rounded-2xl border border-sky-600/60 bg-sky-950/40 p-4 text-sm text-sky-100">
+          <div className="text-xs uppercase tracking-wide text-sky-200/80">
+            Exam day
+          </div>
+          <p className="mt-1 font-medium">Today's the day. Start here.</p>
+          <p className="mt-1 text-xs text-sky-200/80">
+            A short pre-exam walkthrough: reappraise the nerves, unload the
+            worry, then re-read your anchors. About 15 minutes.
+          </p>
+          <button
+            className="mt-3 min-h-[44px] w-full rounded-xl bg-sky-600 px-3 py-3 font-semibold"
+            onClick={() => navigate("/exam-morning")}
+          >
+            Open exam-morning prep
+          </button>
+        </section>
+      )}
+
+      {/* Audit §3.2: first-run implementation-intention onboarding. */}
+      {showIfThenOnboarding && <IfThenOnboardingCard />}
+
+      {/* Audit §3.2: quiet reminder tile when the user enters their
+          committed cue window without having done a session lately. */}
+      {showCueTile && cueSentence && (
+        <section className="rounded-2xl border border-emerald-700/40 bg-emerald-950/30 p-4 text-sm text-emerald-100">
+          <div className="text-xs uppercase tracking-wide text-emerald-200/80">
+            Your cue
+          </div>
+          <p className="mt-1">{cueSentence}</p>
+          <p className="mt-1 text-xs text-emerald-200/70">
+            Now's the window you picked. A quick review here is worth more
+            than a long one later.
+          </p>
+        </section>
+      )}
 
       <InstallPrompt />
 
@@ -328,6 +392,139 @@ function FirstRunNudge({ memory }: { memory: Map<string, MemoryState> }) {
         Your catalog has {ITEMS.length} items. Tap <b>Start review</b> and a
         handful of new ones will appear. Memory store size: {memory.size}.
       </p>
+    </section>
+  );
+}
+
+/**
+ * Audit §3.2 — implementation-intention onboarding card.
+ *
+ * Gollwitzer's original work showed that binding an abstract goal ("I want
+ * to study more") to a concrete situational cue ("when I sit down at my
+ * desk after lunch") roughly doubles follow-through. We ask for two stems:
+ * the cue (temporal or activity-based) and the place (where the user
+ * imagines themselves doing it). Two questions keeps the card under a
+ * screen-height and respects the "onboarding cannot tax the learner" rule
+ * from the audit. Both have an "other" escape hatch so users with
+ * idiosyncratic routines aren't forced into our buckets.
+ *
+ * Persistence: writing either settings.ifThenCue (with a cue selection) or
+ * settings.ifThenOnboardingSeen=true (skip) flips the gate. No re-prompt.
+ */
+function IfThenOnboardingCard() {
+  const save = useStore((s) => s.saveSettings);
+  const [cue, setCue] = useState<string>("");
+  const [place, setPlace] = useState<string>("");
+  const [cueOther, setCueOther] = useState<string>("");
+  const [placeOther, setPlaceOther] = useState<string>("");
+  const [saving, setSaving] = useState(false);
+
+  async function onSave() {
+    const resolvedCue =
+      cue === "other" ? cueOther.trim() || "other" : cue;
+    const resolvedPlace =
+      place === "other" ? placeOther.trim() || "other" : place;
+    if (!resolvedCue) return;
+    setSaving(true);
+    await save({
+      ifThenCue: resolvedCue,
+      ...(resolvedPlace ? { ifThenPlace: resolvedPlace } : {}),
+      ifThenOnboardingSeen: true,
+    });
+    setSaving(false);
+  }
+
+  async function onSkip() {
+    await save({ ifThenOnboardingSeen: true });
+  }
+
+  const canSave = cue !== "" && (cue !== "other" || cueOther.trim() !== "");
+
+  return (
+    <section className="rounded-2xl border border-slate-800 bg-slate-900 p-4 text-sm">
+      <div className="text-xs uppercase tracking-wide text-slate-400">
+        One-time setup · 20 seconds
+      </div>
+      <p className="mt-1 font-medium text-slate-100">
+        When do you want to review?
+      </p>
+      <p className="mt-1 text-xs text-slate-400">
+        Pinning a specific trigger roughly doubles follow-through. Pick the
+        cue and place that fit your week — you can edit this later in
+        Settings.
+      </p>
+
+      <fieldset className="mt-3">
+        <legend className="mb-1 text-xs text-slate-400">Cue</legend>
+        <div className="space-y-1">
+          {IF_THEN_CUES.map((c) => (
+            <label key={c} className="flex items-center gap-2 text-sm">
+              <input
+                type="radio"
+                name="ifThenCue"
+                value={c}
+                checked={cue === c}
+                onChange={() => setCue(c)}
+              />
+              <span>{c === "other" ? "Other…" : c}</span>
+            </label>
+          ))}
+          {cue === "other" && (
+            <input
+              type="text"
+              placeholder="describe your cue"
+              value={cueOther}
+              onChange={(e) => setCueOther(e.target.value)}
+              className="mt-1 w-full rounded-lg bg-slate-800 px-3 py-2 text-sm"
+            />
+          )}
+        </div>
+      </fieldset>
+
+      <fieldset className="mt-3">
+        <legend className="mb-1 text-xs text-slate-400">Place (optional)</legend>
+        <div className="space-y-1">
+          {IF_THEN_PLACES.map((p) => (
+            <label key={p} className="flex items-center gap-2 text-sm">
+              <input
+                type="radio"
+                name="ifThenPlace"
+                value={p}
+                checked={place === p}
+                onChange={() => setPlace(p)}
+              />
+              <span>{p === "other" ? "Other…" : p}</span>
+            </label>
+          ))}
+          {place === "other" && (
+            <input
+              type="text"
+              placeholder="describe the place"
+              value={placeOther}
+              onChange={(e) => setPlaceOther(e.target.value)}
+              className="mt-1 w-full rounded-lg bg-slate-800 px-3 py-2 text-sm"
+            />
+          )}
+        </div>
+      </fieldset>
+
+      <div className="mt-3 flex gap-2">
+        <button
+          type="button"
+          onClick={() => void onSave()}
+          disabled={!canSave || saving}
+          className="min-h-[44px] flex-1 rounded-xl bg-sky-600 px-3 py-3 text-sm font-semibold disabled:opacity-50"
+        >
+          Save my plan
+        </button>
+        <button
+          type="button"
+          onClick={() => void onSkip()}
+          className="min-h-[44px] rounded-xl bg-slate-800 px-3 py-3 text-sm"
+        >
+          Skip
+        </button>
+      </div>
     </section>
   );
 }

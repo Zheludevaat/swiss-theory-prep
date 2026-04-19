@@ -63,6 +63,23 @@ export type Settings = {
   /** Chunk 13: which language to render question/rationale/rule strings in.
    *  Items without a DE overlay fall back to English even when set to "de". */
   contentLang: "en" | "de";       // default "en"
+  /** Chunk B (§3.2 — implementation-intention onboarding, Gollwitzer).
+   *  A named situational cue the user bound to "open the app and start a
+   *  review." When both fields are set, Today renders a gentle one-line
+   *  reminder during the cue window. Absence of the fields hides the UI
+   *  and suppresses the first-run onboarding prompt (user has already
+   *  answered or explicitly skipped). */
+  ifThenCue?: string;
+  ifThenPlace?: string;
+  /** Marker: set to true when the user dismisses the onboarding without
+   *  answering. Prevents re-prompting on every launch. */
+  ifThenOnboardingSeen?: boolean;
+  /** Chunk C (§3.1 — exam-morning reappraisal).
+   *  Three short anchor statements the user pre-writes. Retrieved on
+   *  exam morning as a commitment/retrieval reinforcement step. */
+  anchorWhy?: string;
+  anchorFallback?: string;
+  anchorGoodEnough?: string;
 };
 
 export const DEFAULT_SETTINGS: Settings = {

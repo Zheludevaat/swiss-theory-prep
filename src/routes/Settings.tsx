@@ -18,6 +18,7 @@ import {
   wipeAll,
 } from "@/db";
 import type { Backup } from "@/db/types";
+import { IF_THEN_CUES, IF_THEN_PLACES } from "@/lib/ifThen";
 import { useStore } from "@/store";
 
 export default function Settings() {
@@ -192,6 +193,96 @@ export default function Settings() {
           />
           Keep surfacing mastered items at long intervals
         </label>
+      </Field>
+
+      {/* Audit §3.2: implementation-intention plan. Editable after the
+          first-run onboarding; clearing either field silently hides the
+          Today cue tile until a cue is set again. */}
+      <Field label="When I'll review (if-then plan)">
+        <div className="space-y-2">
+          <input
+            type="text"
+            list="ifThenCueOptions"
+            value={settings.ifThenCue ?? ""}
+            placeholder="cue (e.g. after morning coffee)"
+            onChange={(e) =>
+              void save({
+                ifThenCue: e.target.value.trim() || undefined,
+              })
+            }
+            className="w-full rounded-lg bg-slate-800 px-3 py-2 text-sm"
+          />
+          <datalist id="ifThenCueOptions">
+            {IF_THEN_CUES.filter((c) => c !== "other").map((c) => (
+              <option key={c} value={c} />
+            ))}
+          </datalist>
+          <input
+            type="text"
+            list="ifThenPlaceOptions"
+            value={settings.ifThenPlace ?? ""}
+            placeholder="place (optional)"
+            onChange={(e) =>
+              void save({
+                ifThenPlace: e.target.value.trim() || undefined,
+              })
+            }
+            className="w-full rounded-lg bg-slate-800 px-3 py-2 text-sm"
+          />
+          <datalist id="ifThenPlaceOptions">
+            {IF_THEN_PLACES.filter((p) => p !== "other").map((p) => (
+              <option key={p} value={p} />
+            ))}
+          </datalist>
+        </div>
+        <p className="mt-2 text-xs text-slate-400">
+          Today surfaces a gentle reminder when the cue window opens and
+          you haven't reviewed in a while. Leaving both blank hides the
+          tile — no nagging.
+        </p>
+      </Field>
+
+      {/* Audit §3.1: anchor statements for exam-morning reappraisal. */}
+      <Field label="Exam-day anchors (pre-write when calm)">
+        <div className="space-y-2">
+          <textarea
+            value={settings.anchorWhy ?? ""}
+            placeholder="Why I want this (one sentence)"
+            rows={2}
+            onChange={(e) =>
+              void save({
+                anchorWhy: e.target.value.trim() || undefined,
+              })
+            }
+            className="w-full rounded-lg bg-slate-800 px-3 py-2 text-sm"
+          />
+          <textarea
+            value={settings.anchorFallback ?? ""}
+            placeholder="If I fail: what I'll actually do (one sentence)"
+            rows={2}
+            onChange={(e) =>
+              void save({
+                anchorFallback: e.target.value.trim() || undefined,
+              })
+            }
+            className="w-full rounded-lg bg-slate-800 px-3 py-2 text-sm"
+          />
+          <textarea
+            value={settings.anchorGoodEnough ?? ""}
+            placeholder="What 'good enough' looks like for me"
+            rows={2}
+            onChange={(e) =>
+              void save({
+                anchorGoodEnough: e.target.value.trim() || undefined,
+              })
+            }
+            className="w-full rounded-lg bg-slate-800 px-3 py-2 text-sm"
+          />
+        </div>
+        <p className="mt-2 text-xs text-slate-400">
+          Written now, re-read on exam morning. Keep each one short and
+          specific — abstract anchors don't bite when adrenaline hits.
+        </p>
       </Field>
 
       <Field label="Claude helper (optional)">
