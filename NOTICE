@@ -1,0 +1,66 @@
+Swiss Theory Prep — third-party asset notices
+=============================================
+
+This project is a personal Swiss Cat. B driving theory prep PWA. The
+application code is original work. The third-party assets bundled in
+public/ are catalogued below with their upstream source and licence.
+No CC-BY-SA, CC-BY-NC, or all-rights-reserved assets are included —
+the entire asset graph is CC0 / public domain so the repo can ship
+without attribution-cascade obligations on derivative work.
+
+
+public/signs/  (88 Swiss SSV traffic signs)
+-------------------------------------------
+Source: Wikimedia Commons (Swiss Federal SSV Annex 2 sign set).
+Licence: Public domain in Switzerland — official works of Swiss
+federal authorities are exempted from copyright protection by
+Art. 5 URG (Bundesgesetz über das Urheberrecht).
+
+
+public/diagrams/  (Rettungsgasse / rescue corridor scenes)
+----------------------------------------------------------
+- rettungsgasse-2lane.svg — author: DJ3tausend, via Wikimedia
+  Commons, File:Rettungsgasse_Krankenwagen.svg, CC0 1.0 Universal.
+  https://commons.wikimedia.org/wiki/File:Rettungsgasse_Krankenwagen.svg
+
+- rettungsgasse-forming.svg — author: DJ3tausend, via Wikimedia
+  Commons, File:Rettungsgasse_bilden_bei_Stau_-_1.svg, CC0 1.0.
+  https://commons.wikimedia.org/wiki/File:Rettungsgasse_bilden_bei_Stau_-_1.svg
+
+- rettungsgasse-3lane.svg — author: DJ3tausend, via Wikimedia
+  Commons, File:Rettungsgasse_Krankenwagen_-_3_Spuren.svg, CC0 1.0.
+  https://commons.wikimedia.org/wiki/File:Rettungsgasse_Krankenwagen_-_3_Spuren.svg
+
+
+public/diagrams/_kit/  (CC0 component kit for composing scenes)
+---------------------------------------------------------------
+Components used to compose original scenario diagrams. Each composed
+diagram in public/diagrams/ is a derivative work dedicated to the
+public domain under CC0 1.0.
+
+- car-top.svg — via Wikimedia Commons, File:Car_pictogram.svg, CC0.
+  https://commons.wikimedia.org/wiki/File:Car_pictogram.svg
+
+- ambulance.svg — via Wikimedia Commons,
+  File:Emergency_vehicle_colouring_page.svg, CC0.
+  https://commons.wikimedia.org/wiki/File:Emergency_vehicle_colouring_page.svg
+
+- t-junction-base.svg — via Openclipart, "Three Way Intersection"
+  (detail/89353), Public Domain (Openclipart is 100% public domain
+  per https://openclipart.org/share).
+  https://openclipart.org/detail/89353/three-way-intersection
+
+
+Composed scenario diagrams
+--------------------------
+Any SVG in public/diagrams/ that is not listed above (i.e. not a raw
+upstream file) is an original composition by Swiss Theory Prep
+contributors, dedicated to the public domain under CC0 1.0 Universal:
+https://creativecommons.org/publicdomain/zero/1.0/
+
+
+Application code
+----------------
+The TypeScript / React / scheduler / content code in src/ is licensed
+separately under the terms in LICENSE (if present) or copyright of
+the project author. This NOTICE concerns only bundled assets.

@@ -98,6 +98,9 @@ export const seedItems: Item[] = [
     ruleIds: ["priority.rescue-corridor"],
     question:
       "Traffic on a three-lane motorway slows to a crawl. How is the rescue corridor formed?",
+    diagramAssetId: "rettungsgasse-3lane.svg",
+    imageAlt:
+      "Top view of a three-lane motorway in slow traffic: leftmost lane has moved fully left and the centre + right lanes have moved fully right, opening a corridor for an ambulance to pass between them.",
     options: [
       { text: "Left lane moves fully left; middle and right lanes move fully right", correct: true },
       { text: "All lanes move to the right shoulder", correct: false },
@@ -1888,6 +1891,9 @@ export const seedItems: Item[] = [
     ruleIds: ["priority.emergency-vehicles", "priority.rescue-corridor"],
     question:
       "Traffic on a two-lane motorway tunnel comes to a stop. To allow emergency vehicles through you should:",
+    diagramAssetId: "rettungsgasse-2lane.svg",
+    imageAlt:
+      "Top view of a two-lane motorway: left-lane vehicles have moved fully left, right-lane vehicles fully right, opening a clear central corridor for an ambulance.",
     options: [
       { text: "Form a rescue corridor — left lane to the left edge, right lane to the right edge", correct: true },
       { text: "All vehicles move to the right onto the breakdown shoulder", correct: false },
@@ -3001,6 +3007,9 @@ export const seedItems: Item[] = [
     ruleIds: ["priority.rescue-corridor", "maneuvers.tunnel-behavior"],
     question:
       "Exiting a motorway tunnel into a sudden standstill, the safest sequence is:",
+    diagramAssetId: "rettungsgasse-forming.svg",
+    imageAlt:
+      "Top view of a two-lane motorway in building traffic: vehicles in the left lane are steering fully left and vehicles in the right lane fully right so that a central corridor is beginning to form for emergency vehicles.",
     options: [
       { text: "Hazards on early, brake progressively, leave space ahead, then form the rescue corridor", correct: true },
       { text: "Brake hard immediately and stop in lane with no space ahead", correct: false },
