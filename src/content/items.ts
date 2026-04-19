@@ -1798,4 +1798,1517 @@ export const seedItems: Item[] = [
     tags: ["insurance"],
     difficulty: 2,
   },
+
+  // ==========================================================================
+  // Chunk 6 — Authentic Swiss theory content batch
+  // Citations: SVG (Strassenverkehrsgesetz SR 741.01), VRV (Verkehrsregeln-
+  // verordnung SR 741.11), SSV (Signalisationsverordnung SR 741.21).
+  // No items copied from the licensed ASA catalogue; everything is authored
+  // from primary law and asa.ch / astra.admin.ch published guidance.
+  // ==========================================================================
+
+  // ---------- priority scenarios ----------
+  {
+    id: "q.priority.right-hand.tied",
+    ruleIds: ["priority.right-hand.default"],
+    question:
+      "At an unmarked four-way intersection three cars arrive at exactly the same instant: you, a car directly opposite you, and a car on your right. Who goes first?",
+    options: [
+      { text: "The car on your right — it has priority over you and the opposite car", correct: true },
+      { text: "All three may proceed simultaneously since arrival was tied", correct: false },
+      { text: "The car opposite you, because it is straight ahead", correct: false },
+    ],
+    rationale:
+      "Priority always flows from the right (VRV Art. 36). Your opposite-direction neighbour is irrelevant until the right-hand car has cleared.",
+    tags: ["intersection", "priority"],
+    difficulty: 3,
+  },
+  {
+    id: "q.priority.right-hand.opposite-left-turn",
+    ruleIds: ["priority.right-hand.default"],
+    question:
+      "You and an oncoming car are both at an unmarked intersection. The oncoming driver wants to turn left across your path. You want to go straight. Who has priority?",
+    options: [
+      { text: "You — straight-ahead has priority over a turning oncoming car", correct: true },
+      { text: "The oncoming car, because it arrived first", correct: false },
+      { text: "Whichever of you signals first", correct: false },
+    ],
+    rationale:
+      "A left-turner must yield to oncoming traffic going straight or turning right (VRV Art. 36 Abs. 3).",
+    tags: ["intersection", "left-turn"],
+    difficulty: 3,
+  },
+  {
+    id: "q.priority.right-hand.driveway",
+    ruleIds: ["priority.right-hand.default"],
+    question:
+      "You are leaving a private driveway onto a normal residential street. Traffic on the street is approaching from your left. You:",
+    options: [
+      { text: "Must yield to all traffic on the street", correct: true },
+      { text: "Have priority because traffic on the street is on your left", correct: false },
+      { text: "Have priority once you have signalled", correct: false },
+    ],
+    rationale:
+      "Vehicles entering the road from a driveway, parking lot, field path, or footway must always yield (VRV Art. 15) — the right-hand rule does not apply here.",
+    tags: ["driveway", "priority"],
+    difficulty: 2,
+  },
+  {
+    id: "q.priority.tram.tight",
+    ruleIds: ["priority.tram"],
+    question:
+      "On a narrow town street a tram is approaching from behind you. You should:",
+    options: [
+      { text: "Pull aside to the right where possible to let the tram pass", correct: true },
+      { text: "Speed up to stay ahead until the next side street", correct: false },
+      { text: "Stop in the middle of the road and wait", correct: false },
+    ],
+    rationale:
+      "Trams have absolute priority on rails (VRV Art. 38). Where the road is too narrow to share, a private vehicle must yield by pulling aside.",
+    tags: ["tram", "priority"],
+    difficulty: 3,
+  },
+  {
+    id: "q.priority.emergency.intersection",
+    ruleIds: ["priority.emergency-vehicles"],
+    question:
+      "An ambulance with blue lights and siren approaches the intersection where you are stopped first in line at a red light. You should:",
+    options: [
+      { text: "Move into the intersection only as far as needed to let it pass, even if your light is red", correct: true },
+      { text: "Stay at the line and wait — running a red is always illegal", correct: false },
+      { text: "Reverse to clear the lane behind you", correct: false },
+    ],
+    rationale:
+      "VRV Art. 27 Abs. 2 obliges all road users to make way for emergency vehicles, including by entering an intersection on red when needed and safe.",
+    tags: ["emergency", "priority"],
+    difficulty: 3,
+  },
+  {
+    id: "q.priority.emergency.tunnel",
+    ruleIds: ["priority.emergency-vehicles", "priority.rescue-corridor"],
+    question:
+      "Traffic on a two-lane motorway tunnel comes to a stop. To allow emergency vehicles through you should:",
+    options: [
+      { text: "Form a rescue corridor — left lane to the left edge, right lane to the right edge", correct: true },
+      { text: "All vehicles move to the right onto the breakdown shoulder", correct: false },
+      { text: "Wait in lane until you actually see flashing lights", correct: false },
+    ],
+    rationale:
+      "Switzerland adopted the Rettungsgasse rule on motorways: stop in the standstill itself splits left and right lanes outward, regardless of whether emergency vehicles are visible yet.",
+    tags: ["rescue-corridor", "motorway"],
+    difficulty: 3,
+  },
+  {
+    id: "q.priority.school-bus.stopped",
+    ruleIds: ["priority.school-bus"],
+    question:
+      "A school bus is stopped at the kerb with its hazard lights flashing and children visible in the doorway. You should:",
+    options: [
+      { text: "Pass at walking pace, ready to stop, leaving extra clearance", correct: true },
+      { text: "Maintain the posted speed since it is the bus driver's responsibility to keep children safe", correct: false },
+      { text: "Stop completely and wait until all hazard lights are off", correct: false },
+    ],
+    rationale:
+      "VRV Art. 6 requires drivers to pass stopped public-transport vehicles slowly and with care, especially where children are present.",
+    tags: ["school-bus", "children"],
+    difficulty: 3,
+  },
+  {
+    id: "q.priority.bus-leaving-stop",
+    ruleIds: ["priority.school-bus"],
+    question:
+      "You are passing a town bus stop. The bus has just signalled left to rejoin traffic. You should:",
+    options: [
+      { text: "Reduce speed and let the bus rejoin — it has priority on built-up streets", correct: true },
+      { text: "Maintain speed; signalling alone does not transfer priority", correct: false },
+      { text: "Sound the horn so the bus driver knows you are passing", correct: false },
+    ],
+    rationale:
+      "On built-up roads (under 50 km/h limit) a bus signalling to leave a stop has priority (VRV Art. 26 Abs. 4). On faster roads only courtesy applies.",
+    tags: ["bus", "priority"],
+    difficulty: 3,
+  },
+  {
+    id: "q.priority.roundabout.two-lane",
+    ruleIds: ["priority.roundabout"],
+    question:
+      "On a two-lane roundabout, which of these are correct?",
+    options: [
+      { text: "Choose the lane that matches your exit before entering", correct: true },
+      { text: "Signal right just before the exit you take", correct: true },
+      { text: "Always pick the inner lane to keep the outer lane free", correct: false },
+    ],
+    rationale:
+      "Lane choice on entry should reflect intended exit. Signal right immediately before exiting; never signal left while inside.",
+    tags: ["roundabout"],
+    difficulty: 3,
+  },
+  {
+    id: "q.priority.yielding.entry-from-rest",
+    ruleIds: ["priority.yielding-on-entry"],
+    question:
+      "You are stopped at a give-way line. Two cars are approaching on the priority road but are still 200 m away. You may:",
+    options: [
+      { text: "Enter only if you can complete the manoeuvre without forcing the approaching cars to brake", correct: true },
+      { text: "Enter immediately since the cars are far away", correct: false },
+      { text: "Enter only after both cars have passed the line", correct: false },
+    ],
+    rationale:
+      "Yield at the line means you may join only if you do not impede priority traffic (VRV Art. 14). Distance alone is not the test — required braking is.",
+    tags: ["give-way", "intersection"],
+    difficulty: 4,
+  },
+  {
+    id: "q.priority.snowy-mountain.descent",
+    ruleIds: ["mountain.ascending", "mountain.heavy-vehicle-priority", "adverse.winter-tires"],
+    question:
+      "On a narrow mountain road in winter you are descending. An ascending lorry on chains and a small ascending bus meet you at a passing place. Who must yield first?",
+    options: [
+      { text: "You — descending vehicles yield to ascending vehicles, regardless of size", correct: true },
+      { text: "The lorry — it is the heaviest vehicle", correct: false },
+      { text: "The bus — it can manoeuvre most easily", correct: false },
+    ],
+    rationale:
+      "The mountain rule (VRV Art. 38) is that descending traffic yields. Among ascending vehicles, a heavier vehicle in turn has priority over a lighter one if both are climbing.",
+    tags: ["mountain", "priority"],
+    difficulty: 5,
+  },
+  {
+    id: "q.priority.tram.left-turn",
+    ruleIds: ["priority.tram"],
+    question:
+      "You want to turn left at an intersection. A tram is approaching head-on, signalling for the same crossing. You:",
+    options: [
+      { text: "Wait — the tram has priority and your left turn must yield", correct: true },
+      { text: "Turn first because the tram has further to travel", correct: false },
+      { text: "Proceed at walking pace next to the tram", correct: false },
+    ],
+    rationale:
+      "Trams always have priority. A left turn additionally must yield to oncoming traffic, so this is doubly clear.",
+    tags: ["tram", "left-turn"],
+    difficulty: 3,
+  },
+
+  // ---------- maneuvers ----------
+  {
+    id: "q.maneuvers.parking.crossing",
+    ruleIds: ["maneuvers.parking-distances"],
+    question:
+      "Within how many metres of a pedestrian crossing is parking forbidden on the same side of the road?",
+    options: [
+      { text: "5 metres before the crossing", correct: true },
+      { text: "10 metres before the crossing", correct: false },
+      { text: "Whatever distance keeps the crossing visible", correct: false },
+    ],
+    rationale:
+      "VRV Art. 18 forbids parking and stopping within 5 m before a pedestrian crossing on the same side; visibility from the kerb must remain unobstructed.",
+    tags: ["parking", "crossing"],
+    difficulty: 2,
+  },
+  {
+    id: "q.maneuvers.parking.intersection",
+    ruleIds: ["maneuvers.parking-distances"],
+    question:
+      "How close to an intersection may you stop or park?",
+    options: [
+      { text: "No closer than 5 m from the prolonged kerb line", correct: true },
+      { text: "No closer than 10 m if the side road is wider than 5 m", correct: false },
+      { text: "Right up to the intersection if the road is wide enough", correct: false },
+    ],
+    rationale:
+      "VRV Art. 18 Abs. 2 forbids stopping within 5 m of the prolonged kerb line on either side of an intersection.",
+    tags: ["parking", "intersection"],
+    difficulty: 2,
+  },
+  {
+    id: "q.maneuvers.parking.fire-hydrant",
+    ruleIds: ["maneuvers.parking-distances"],
+    question:
+      "You may not park within how many metres of a fire hydrant?",
+    options: [
+      { text: "1.5 metres", correct: false },
+      { text: "5 metres", correct: false },
+      { text: "Within the marked yellow band — usually about 1.5 m on each side", correct: true },
+    ],
+    rationale:
+      "Hydrant zones in Switzerland are signalled by yellow paint; parking within the marked band is forbidden so the fire service can connect quickly.",
+    tags: ["parking", "hydrant"],
+    difficulty: 4,
+  },
+  {
+    id: "q.maneuvers.parking.bus-stop",
+    ruleIds: ["maneuvers.parking-distances"],
+    question:
+      "Outside marked bus-stop bays you may not stop or park within how many metres of the stop sign?",
+    options: [
+      { text: "15 metres on either side of the stop", correct: true },
+      { text: "5 metres on either side", correct: false },
+      { text: "10 metres on either side", correct: false },
+    ],
+    rationale:
+      "VRV Art. 18 keeps a 15 m clearance on each side of a bus-stop sign so buses can pull in unimpeded.",
+    tags: ["parking", "bus"],
+    difficulty: 3,
+  },
+  {
+    id: "q.maneuvers.parking.diagonal",
+    ruleIds: ["maneuvers.parking-distances"],
+    question:
+      "Where may you park on a road with no marked spaces?",
+    options: [
+      { text: "Parallel to the kerb on the right side, in the direction of travel", correct: true },
+      { text: "Diagonally on either side, as long as you are clear of traffic", correct: false },
+      { text: "On the left side only when you arrived from that direction", correct: false },
+    ],
+    rationale:
+      "Parking on unmarked roads is parallel to the right kerb in the direction of travel. One-way streets allow parking on either side parallel to the kerb.",
+    tags: ["parking"],
+    difficulty: 2,
+  },
+  {
+    id: "q.maneuvers.u-turn.where-forbidden",
+    ruleIds: ["maneuvers.u-turn"],
+    question:
+      "U-turns are forbidden in all of these locations except one. Which is permitted?",
+    options: [
+      { text: "On a town road posted at 50 km/h with clear visibility and no oncoming traffic", correct: true },
+      { text: "At a level crossing", correct: false },
+      { text: "Inside a tunnel", correct: false },
+    ],
+    rationale:
+      "U-turns are prohibited on motorways, expressways, level crossings, in tunnels, near hilltops, and within unsighted curves (VRV Art. 17). On a 50 km/h town road they are legal where visibility allows.",
+    tags: ["u-turn"],
+    difficulty: 3,
+  },
+  {
+    id: "q.maneuvers.reversing.school-zone",
+    ruleIds: ["maneuvers.reversing"],
+    question:
+      "You missed your turn into a side street. Which of these is the safest legal option?",
+    options: [
+      { text: "Continue to the next junction and turn around there", correct: true },
+      { text: "Reverse along the road for 30 m to reach the side street", correct: false },
+      { text: "Make an immediate U-turn regardless of traffic", correct: false },
+    ],
+    rationale:
+      "Reversing on a public road is permitted only over very short distances and never on motorways or where vision is poor. Continuing on is almost always safer (VRV Art. 17).",
+    tags: ["reversing"],
+    difficulty: 2,
+  },
+  {
+    id: "q.maneuvers.tunnel.breakdown",
+    ruleIds: ["maneuvers.tunnel-behavior"],
+    question:
+      "Your car loses power in a long motorway tunnel. The right action is to:",
+    options: [
+      { text: "Coast to the breakdown bay if reachable; otherwise stop on the right, switch on hazard lights, leave the engine running for ventilation, and get all passengers out on the side away from traffic", correct: true },
+      { text: "Leave the car in lane and walk to the next emergency phone", correct: false },
+      { text: "Switch off the engine and lights to save the battery", correct: false },
+    ],
+    rationale:
+      "Tunnel-safety guidance: use a breakdown bay where possible, hazards on, evacuate uphill on the safe side, and call from an emergency phone or SOS niche. Engine running keeps ventilation; lights stay on.",
+    tags: ["tunnel", "breakdown"],
+    difficulty: 4,
+  },
+  {
+    id: "q.maneuvers.tunnel.distance",
+    ruleIds: ["maneuvers.tunnel-behavior"],
+    question:
+      "What following distance is recommended in a long road tunnel?",
+    options: [
+      { text: "At least 50 m at usual cruising speed; double it on inclines", correct: true },
+      { text: "The same one-second rule as outside the tunnel", correct: false },
+      { text: "Whatever the vehicle in front signals as comfortable", correct: false },
+    ],
+    rationale:
+      "Tunnel guidance from ASTRA recommends a minimum of 50 m at typical speeds — close enough to keep the queue tight, far enough to react to a fire or breakdown ahead.",
+    tags: ["tunnel"],
+    difficulty: 3,
+  },
+  {
+    id: "q.maneuvers.hazard-lights.stop",
+    ruleIds: ["maneuvers.hazard-lights"],
+    question:
+      "When should you switch on hazard (4-way) flashers?",
+    options: [
+      { text: "When approaching the back of a sudden traffic jam at speed", correct: true },
+      { text: "When parked illegally to 'excuse' it", correct: false },
+      { text: "Whenever towing a trailer", correct: false },
+    ],
+    rationale:
+      "Hazards are for warning others of an unexpected hazard — sudden tailback, breakdown, scene of an accident. They never legalise illegal parking.",
+    tags: ["hazard-lights"],
+    difficulty: 2,
+  },
+  {
+    id: "q.maneuvers.hazard-lights.tow",
+    ruleIds: ["maneuvers.hazard-lights"],
+    question:
+      "You are being towed because of breakdown. You should:",
+    options: [
+      { text: "Switch on the hazard lights of the towed vehicle", correct: true },
+      { text: "Switch on the high-beam headlights of the towed vehicle", correct: false },
+      { text: "Switch off all lights — the towing car's lights are sufficient", correct: false },
+    ],
+    rationale:
+      "VRV Art. 30 requires hazards on a towed vehicle so following traffic understands the unusual configuration.",
+    tags: ["hazard-lights", "tow"],
+    difficulty: 3,
+  },
+  {
+    id: "q.maneuvers.signalling.lane-change",
+    ruleIds: ["maneuvers.signalling", "maneuvers.lane-change"],
+    question:
+      "You want to change lanes on the motorway. The correct sequence is:",
+    options: [
+      { text: "Mirror, signal, blind-spot check, change", correct: true },
+      { text: "Signal, accelerate, change", correct: false },
+      { text: "Change, then signal so other drivers know to brake", correct: false },
+    ],
+    rationale:
+      "VRV Art. 13 requires drivers to signal before — and observe before signalling. The blind-spot check after signalling closes the loop on what the mirror could not show.",
+    tags: ["lane-change", "signalling"],
+    difficulty: 2,
+  },
+  {
+    id: "q.maneuvers.seatbelt.exempt",
+    ruleIds: ["maneuvers.seatbelt"],
+    question:
+      "Which of these is exempt from the seatbelt requirement in a private car?",
+    options: [
+      { text: "A driver delivering goods who must repeatedly stop in a 50 km/h zone", correct: false },
+      { text: "Holders of a medical exemption certificate", correct: true },
+      { text: "Children under 12 sitting in the back", correct: false },
+    ],
+    rationale:
+      "Seatbelts are mandatory for all occupants (VRV Art. 3a). Medical exemption is the only personal exception; delivery drivers must still belt up between stops.",
+    tags: ["seatbelt"],
+    difficulty: 3,
+  },
+  {
+    id: "q.maneuvers.child-seat.cutoff",
+    ruleIds: ["vehicle.child-seat"],
+    question:
+      "Which children must sit in an approved child restraint?",
+    options: [
+      { text: "Children under 12 years AND under 150 cm tall", correct: true },
+      { text: "Children under 7 years only", correct: false },
+      { text: "Children under 12 years OR under 150 cm tall — whichever is reached first", correct: false },
+    ],
+    rationale:
+      "VRV Art. 3a Abs. 4 requires a child seat until the child is 12 years old AND 150 cm tall. Both thresholds must be met before an adult belt alone is permitted.",
+    tags: ["child-seat"],
+    difficulty: 3,
+  },
+  {
+    id: "q.maneuvers.overtaking.zebra",
+    ruleIds: ["maneuvers.pedestrian-crossing", "maneuvers.overtaking-left"],
+    question:
+      "On a town road approaching an unsignalised pedestrian crossing, you may overtake the car ahead:",
+    options: [
+      { text: "Only if you can complete the overtake well before the crossing and clearly see no pedestrians waiting", correct: false },
+      { text: "Never — overtaking is forbidden on the approach to a pedestrian crossing", correct: true },
+      { text: "Only if the car ahead is moving below 30 km/h", correct: false },
+    ],
+    rationale:
+      "VRV Art. 33 forbids overtaking near unsignalised crossings to ensure pedestrians remain visible to all approaching drivers.",
+    tags: ["overtaking", "crossing"],
+    difficulty: 3,
+  },
+
+  // ---------- speeds & limits facts ----------
+  {
+    id: "q.speeds.defaults.country",
+    ruleIds: ["speeds.default-limits"],
+    question:
+      "On a normal country road outside built-up areas with no signs, the default maximum speed for a passenger car is:",
+    options: [
+      { text: "80 km/h", correct: true },
+      { text: "90 km/h", correct: false },
+      { text: "100 km/h", correct: false },
+    ],
+    rationale:
+      "Default Swiss limits: 50 in town, 80 country, 100 expressway, 120 motorway (SVG Art. 32, VRV Art. 4a).",
+    tags: ["speed", "defaults"],
+    difficulty: 1,
+  },
+  {
+    id: "q.speeds.defaults.expressway",
+    ruleIds: ["speeds.default-limits"],
+    question:
+      "On a Swiss expressway (Autostrasse, white-on-green sign) the default maximum is:",
+    options: [
+      { text: "100 km/h", correct: true },
+      { text: "120 km/h", correct: false },
+      { text: "80 km/h", correct: false },
+    ],
+    rationale:
+      "Autostrasse defaults to 100 km/h. Only Autobahn (motorway, white-on-green) allows 120.",
+    tags: ["speed", "expressway"],
+    difficulty: 2,
+  },
+  {
+    id: "q.speeds.defaults.motorway",
+    ruleIds: ["speeds.default-limits"],
+    question:
+      "On a Swiss motorway (Autobahn) with no posted limit and no trailer, your maximum speed is:",
+    options: [
+      { text: "120 km/h", correct: true },
+      { text: "130 km/h", correct: false },
+      { text: "100 km/h", correct: false },
+    ],
+    rationale:
+      "Switzerland's motorway default is 120 km/h. Variable signs may lower it; no posted sign means 120.",
+    tags: ["speed", "motorway"],
+    difficulty: 1,
+  },
+  {
+    id: "q.speeds.tempo30.applies",
+    ruleIds: ["speeds.tempo30"],
+    question:
+      "Inside a Tempo-30 zone the right-hand rule applies and the limit is 30 km/h. Which is also true?",
+    options: [
+      { text: "There are no marked pedestrian crossings inside the zone unless specifically signed", correct: true },
+      { text: "Trams may not enter a Tempo-30 zone", correct: false },
+      { text: "Only residents may park inside the zone", correct: false },
+    ],
+    rationale:
+      "Tempo-30 zones generally suppress marked zebras: pedestrians may cross anywhere, drivers must adapt.",
+    tags: ["tempo30"],
+    difficulty: 3,
+  },
+  {
+    id: "q.speeds.begegnungszone.limit",
+    ruleIds: ["speeds.begegnungszone"],
+    question:
+      "Inside a Begegnungszone (encounter zone) the rules include:",
+    options: [
+      { text: "Limit 20 km/h, pedestrians have priority over all vehicles", correct: true },
+      { text: "Pedestrians may use the road but cars still have priority", correct: false },
+      { text: "Limit 30 km/h, same rules as a Tempo-30 zone", correct: false },
+    ],
+    rationale:
+      "Begegnungszone (SSV Art. 22b): 20 km/h, pedestrians may use the entire road and have priority over vehicles.",
+    tags: ["zone", "pedestrian"],
+    difficulty: 2,
+  },
+  {
+    id: "q.speeds.trailer.car",
+    ruleIds: ["speeds.trailer-reduced"],
+    question:
+      "You tow a trailer behind a passenger car on a Swiss motorway. Your maximum speed is:",
+    options: [
+      { text: "80 km/h", correct: true },
+      { text: "100 km/h", correct: false },
+      { text: "120 km/h", correct: false },
+    ],
+    rationale:
+      "Cars towing a trailer are capped at 80 km/h on motorways and expressways alike (VRV Art. 5).",
+    tags: ["speed", "trailer"],
+    difficulty: 2,
+  },
+  {
+    id: "q.speeds.trailer.country",
+    ruleIds: ["speeds.trailer-reduced"],
+    question:
+      "On a country road, a passenger car towing a small trailer (≤ 3.5 t) is limited to:",
+    options: [
+      { text: "80 km/h", correct: true },
+      { text: "100 km/h", correct: false },
+      { text: "60 km/h", correct: false },
+    ],
+    rationale:
+      "Country-road default 80 km/h applies to car + small trailer; 60 km/h applies only to specific heavier combinations and to caravans on certain inclines.",
+    tags: ["speed", "trailer"],
+    difficulty: 3,
+  },
+  {
+    id: "q.speeds.school.adapt",
+    ruleIds: ["speeds.school-approach", "speeds.adapted-speed"],
+    question:
+      "Approaching a primary school at 08:00 on a school day, the posted limit is 50 km/h. You should:",
+    options: [
+      { text: "Drop well below 50 km/h, ready to stop for a child stepping out", correct: true },
+      { text: "Continue at 50 km/h — the limit is the limit", correct: false },
+      { text: "Stop completely until you can see the school yard is empty", correct: false },
+    ],
+    rationale:
+      "VRV Art. 4 requires speed adapted to conditions. Posted limits are maximums, not targets — children near a school easily justify 30 km/h.",
+    tags: ["school", "speed"],
+    difficulty: 2,
+  },
+  {
+    id: "q.speeds.motorway.minimum",
+    ruleIds: ["speeds.motorway-minimum"],
+    question:
+      "Vehicles using the Swiss motorway must be capable of at least:",
+    options: [
+      { text: "80 km/h on level ground under their own power", correct: true },
+      { text: "60 km/h on level ground", correct: false },
+      { text: "Whatever speed they can sustain — there is no minimum", correct: false },
+    ],
+    rationale:
+      "VRV Art. 35: motorways may only be used by vehicles capable of at least 80 km/h on level ground. Mopeds, bicycles, slow tractors are excluded.",
+    tags: ["speed", "motorway"],
+    difficulty: 3,
+  },
+  {
+    id: "q.speeds.fog.rule",
+    ruleIds: ["speeds.adapted-speed", "adverse.fog-lights"],
+    question:
+      "In dense fog with visibility around 30 m, the safe maximum speed is roughly:",
+    options: [
+      { text: "30 km/h — match speed to braking distance plus a margin", correct: true },
+      { text: "Whatever the posted limit allows", correct: false },
+      { text: "60 km/h with rear fog lamp on", correct: false },
+    ],
+    rationale:
+      "Rule of thumb: kilometre-per-hour speed should not exceed the visibility in metres in poor conditions. 30 m visibility → 30 km/h, regardless of the posted limit.",
+    tags: ["fog", "speed"],
+    difficulty: 4,
+  },
+
+  // ---------- BAC, drugs, fitness ----------
+  {
+    id: "q.fitness.bac.general",
+    ruleIds: ["fitness.bac-general"],
+    question:
+      "The general blood alcohol limit for a Cat. B driver in Switzerland is:",
+    options: [
+      { text: "0.5 ‰ (per mille)", correct: true },
+      { text: "0.8 ‰", correct: false },
+      { text: "0.0 ‰", correct: false },
+    ],
+    rationale:
+      "SVG Art. 31 sets the general BAC limit at 0.5 ‰. 0.0 ‰ applies to novices, learners, and professional drivers in service.",
+    tags: ["bac"],
+    difficulty: 1,
+  },
+  {
+    id: "q.fitness.bac.novice-probation",
+    ruleIds: ["fitness.bac-novice"],
+    question:
+      "During the three-year probation period a Cat. B driver must observe a BAC limit of:",
+    options: [
+      { text: "0.0 ‰ — effectively zero tolerance", correct: true },
+      { text: "0.1 ‰", correct: false },
+      { text: "0.3 ‰", correct: false },
+    ],
+    rationale:
+      "Probation drivers, learners, professional drivers in service, and instructors face a 0.0 ‰ limit (VTS Art. 2).",
+    tags: ["bac", "novice"],
+    difficulty: 1,
+  },
+  {
+    id: "q.fitness.bac.grave",
+    ruleIds: ["penalties.bac-grave"],
+    question:
+      "A driver caught at 0.85 ‰ BAC is treated as a 'grave' offence (qualifizierte Blutalkoholkonzentration). The legal threshold is:",
+    options: [
+      { text: "0.8 ‰ and above", correct: true },
+      { text: "1.0 ‰ and above", correct: false },
+      { text: "0.5 ‰ and above", correct: false },
+    ],
+    rationale:
+      "From 0.8 ‰ the offence is qualified: minimum 3-month licence withdrawal, criminal penalties, and obligatory medical assessment.",
+    tags: ["bac", "penalties"],
+    difficulty: 3,
+  },
+  {
+    id: "q.fitness.medications.warning",
+    ruleIds: ["fitness.medications"],
+    question:
+      "The pharmacy gives you a sleeping aid with a warning triangle on the box. You should:",
+    options: [
+      { text: "Treat yourself as unfit to drive while taking it, even if you 'feel fine'", correct: true },
+      { text: "Drive at reduced speed only", correct: false },
+      { text: "Drive normally if the dose is small", correct: false },
+    ],
+    rationale:
+      "The triangle marks medication that impairs driving. SVG Art. 31 forbids driving when fitness is reduced; subjective feeling is not the test.",
+    tags: ["medication", "fitness"],
+    difficulty: 2,
+  },
+  {
+    id: "q.fitness.drugs.cannabis",
+    ruleIds: ["penalties.drug-impairment"],
+    question:
+      "Driving with detectable THC, cocaine, opiates, or amphetamines is treated as:",
+    options: [
+      { text: "Zero tolerance — any detectable amount triggers the same sanctions as 0.8 ‰ BAC", correct: true },
+      { text: "Tolerated below a low threshold, like alcohol", correct: false },
+      { text: "Permitted with a medical prescription regardless of dose", correct: false },
+    ],
+    rationale:
+      "VRV Art. 2 sets zero tolerance for the seven listed substances. Penalties match grave alcohol cases.",
+    tags: ["drugs", "fitness"],
+    difficulty: 3,
+  },
+  {
+    id: "q.fitness.fatigue.signal",
+    ruleIds: ["fitness.fatigue-break"],
+    question:
+      "Which of these is the most reliable warning sign of dangerous fatigue?",
+    options: [
+      { text: "Difficulty keeping a steady lane and rapid eye blinks", correct: true },
+      { text: "A noticeable urge to open the window", correct: false },
+      { text: "Tapping the steering wheel to a song", correct: false },
+    ],
+    rationale:
+      "Lane drift and increased blink rate are the classic warning signs. The only effective response is a break and 20-minute nap; coffee alone is insufficient.",
+    tags: ["fatigue", "fitness"],
+    difficulty: 3,
+  },
+  {
+    id: "q.fitness.fatigue.break-rule",
+    ruleIds: ["fitness.max-driving-hours", "fitness.fatigue-break"],
+    question:
+      "On a long Sunday drive how often should you plan a real rest break?",
+    options: [
+      { text: "Every 2 hours, even if you don't feel tired", correct: true },
+      { text: "Once after 5 hours of driving", correct: false },
+      { text: "Only when fatigue becomes obvious", correct: false },
+    ],
+    rationale:
+      "ASTRA road-safety guidance: a 15-minute break every 2 hours keeps reaction times steady. Waiting for symptoms is too late.",
+    tags: ["fatigue", "breaks"],
+    difficulty: 2,
+  },
+  {
+    id: "q.fitness.eyewear.must-carry",
+    ruleIds: ["fitness.eyewear"],
+    question:
+      "Your driving licence has the eyewear restriction code 01. You must:",
+    options: [
+      { text: "Wear suitable glasses or contact lenses while driving", correct: true },
+      { text: "Carry a spare pair of glasses but only wear them on motorways", correct: false },
+      { text: "Always carry sunglasses for daytime driving", correct: false },
+    ],
+    rationale:
+      "Code 01 obliges the holder to wear vision correction. Driving without it is treated as licence breach (SVG Art. 95).",
+    tags: ["eyewear", "fitness"],
+    difficulty: 2,
+  },
+  {
+    id: "q.fitness.illness.cold",
+    ruleIds: ["fitness.illness"],
+    question:
+      "You have a heavy cold with reduced concentration and reaction time. You should:",
+    options: [
+      { text: "Postpone non-urgent driving and use public transport", correct: true },
+      { text: "Drive only on familiar town routes", correct: false },
+      { text: "Drive normally — a cold is not a legal impairment", correct: false },
+    ],
+    rationale:
+      "SVG Art. 31 forbids driving when impaired. Reduced concentration and reaction time from illness are themselves the impairment.",
+    tags: ["illness", "fitness"],
+    difficulty: 2,
+  },
+  {
+    id: "q.fitness.distraction.phone",
+    ruleIds: ["fitness.distraction-phone"],
+    question:
+      "Holding a smartphone briefly to read a navigation prompt while moving:",
+    options: [
+      { text: "Is forbidden — drivers may only use a hand-held phone when stationary with the engine off", correct: true },
+      { text: "Is permitted at low speed in town", correct: false },
+      { text: "Is permitted with hazard lights on", correct: false },
+    ],
+    rationale:
+      "VRV Art. 3 forbids any task that distracts from driving. Hand-held phone use is criminal regardless of duration; hands-free is permitted with care.",
+    tags: ["phone", "distraction"],
+    difficulty: 2,
+  },
+  {
+    id: "q.fitness.fatigue.coffee",
+    ruleIds: ["fitness.fatigue-break"],
+    question:
+      "After three hours of motorway driving you are yawning. Which is the best response?",
+    options: [
+      { text: "Pull into the next rest area and take a 20-minute nap", correct: true },
+      { text: "Drink an energy drink and keep going", correct: false },
+      { text: "Open the windows and turn up the music", correct: false },
+    ],
+    rationale:
+      "The only sleep-replacement that actually works is a short nap. Caffeine helps marginally; cold air and music do not.",
+    tags: ["fatigue"],
+    difficulty: 3,
+  },
+
+  // ---------- adverse conditions ----------
+  {
+    id: "q.adverse.fog-lights.rear",
+    ruleIds: ["adverse.fog-lights"],
+    question:
+      "The rear fog lamp may be switched on:",
+    options: [
+      { text: "Only when visibility falls below 50 m", correct: true },
+      { text: "Whenever it is raining", correct: false },
+      { text: "Whenever you tow a trailer", correct: false },
+    ],
+    rationale:
+      "VRV Art. 31 limits rear fog use to visibility below 50 m to avoid dazzling following drivers.",
+    tags: ["fog", "lights"],
+    difficulty: 2,
+  },
+  {
+    id: "q.adverse.aquaplaning.action",
+    ruleIds: ["adverse.aquaplaning"],
+    question:
+      "You feel the steering go light on a wet motorway — the front tyres are aquaplaning. You should:",
+    options: [
+      { text: "Hold the wheel straight, ease off the throttle, do not brake or steer suddenly", correct: true },
+      { text: "Brake firmly to clear the water", correct: false },
+      { text: "Steer hard to the left to break the water film", correct: false },
+    ],
+    rationale:
+      "Steering and braking inputs during aquaplaning amplify the loss of control once the tyre regains grip. Throttle off, hold straight, wait for grip.",
+    tags: ["aquaplaning"],
+    difficulty: 4,
+  },
+  {
+    id: "q.adverse.winter.tires-when",
+    ruleIds: ["adverse.winter-tires"],
+    question:
+      "Switzerland does not have a calendar-based winter-tyre rule. Instead:",
+    options: [
+      { text: "Drivers are responsible for tyres adapted to conditions; an accident with summer tyres in snow can be treated as fault", correct: true },
+      { text: "Winter tyres are mandatory from 1 November to 31 March", correct: false },
+      { text: "Winter tyres are only required on mountain roads", correct: false },
+    ],
+    rationale:
+      "VRV Art. 29: the driver answers for adequate vehicle condition, including tyres. Insurance can be reduced or refused after winter accidents on summer tyres.",
+    tags: ["winter-tires"],
+    difficulty: 3,
+  },
+  {
+    id: "q.adverse.black-ice.spots",
+    ruleIds: ["adverse.black-ice"],
+    question:
+      "Black ice is most likely to appear first:",
+    options: [
+      { text: "On bridges and shaded sections of road", correct: true },
+      { text: "On flat stretches in direct sunshine", correct: false },
+      { text: "Inside tunnels", correct: false },
+    ],
+    rationale:
+      "Bridges lose heat from above and below; shade keeps frost long after open road has thawed. Approach both with extra care in winter.",
+    tags: ["black-ice"],
+    difficulty: 3,
+  },
+  {
+    id: "q.adverse.night-glare.response",
+    ruleIds: ["adverse.night-glare"],
+    question:
+      "You are dazzled by an oncoming car with high beams. You should:",
+    options: [
+      { text: "Look at the right edge of the road and reduce speed", correct: true },
+      { text: "Flash your high beams in retaliation", correct: false },
+      { text: "Close one eye to preserve night vision", correct: false },
+    ],
+    rationale:
+      "Looking right keeps you on line and protects pupil dilation. Flashing back compounds the dazzle for both drivers.",
+    tags: ["night", "lights"],
+    difficulty: 2,
+  },
+
+  // ---------- vehicle & equipment ----------
+  {
+    id: "q.vehicle.headlights.day",
+    ruleIds: ["vehicle.headlights-day"],
+    question:
+      "Daytime running lights or dipped headlights are required on a Swiss public road:",
+    options: [
+      { text: "At all times the vehicle is in motion", correct: true },
+      { text: "Only between sunset and sunrise", correct: false },
+      { text: "Only on motorways", correct: false },
+    ],
+    rationale:
+      "Since 1 January 2014, daytime headlights or DRL are mandatory all day on cars (SVG Art. 41).",
+    tags: ["lights"],
+    difficulty: 1,
+  },
+  {
+    id: "q.vehicle.tyre.tread",
+    ruleIds: ["vehicle.tyre-tread-minimum"],
+    question:
+      "The legal minimum tread depth for a passenger-car tyre is:",
+    options: [
+      { text: "1.6 mm across the main tread groove", correct: true },
+      { text: "3.0 mm across the main tread groove", correct: false },
+      { text: "2.0 mm at any single point", correct: false },
+    ],
+    rationale:
+      "VTS Art. 58 sets 1.6 mm. Tyre safety experts recommend replacement well before, especially for winter tyres (≥ 4 mm).",
+    tags: ["tyres"],
+    difficulty: 2,
+  },
+  {
+    id: "q.vehicle.warning-triangle.country",
+    ruleIds: ["vehicle.warning-triangle"],
+    question:
+      "After breakdown on an open country road you must place the warning triangle:",
+    options: [
+      { text: "At least 50 m behind the vehicle, on the same side of the road", correct: true },
+      { text: "Directly behind the vehicle for visibility", correct: false },
+      { text: "100 m in front of the vehicle to warn oncoming drivers", correct: false },
+    ],
+    rationale:
+      "VRV Art. 23: at least 50 m behind on country roads, 100 m on motorways, before any other recovery action.",
+    tags: ["warning-triangle"],
+    difficulty: 2,
+  },
+  {
+    id: "q.vehicle.warning-triangle.motorway",
+    ruleIds: ["vehicle.warning-triangle"],
+    question:
+      "The warning triangle on a motorway breakdown should be placed:",
+    options: [
+      { text: "At least 100 m behind the vehicle, on the hard shoulder", correct: true },
+      { text: "Directly behind the vehicle in lane", correct: false },
+      { text: "50 m behind the vehicle in the centre of the lane", correct: false },
+    ],
+    rationale:
+      "Higher speeds need longer warning. 100 m behind on the hard shoulder, hazards on, occupants behind the safety barrier.",
+    tags: ["warning-triangle", "motorway"],
+    difficulty: 3,
+  },
+  {
+    id: "q.vehicle.lighting.inspection",
+    ruleIds: ["vehicle.lighting-inspection"],
+    question:
+      "Before every long trip you should personally check at least:",
+    options: [
+      { text: "Lights front and rear, indicators, brake lights, tyre pressure, washer fluid", correct: true },
+      { text: "Engine oil only — modern cars manage everything else", correct: false },
+      { text: "Nothing — annual MFK inspection is enough", correct: false },
+    ],
+    rationale:
+      "MFK is annual at most; the driver remains responsible for visible safety items every day (VRV Art. 29).",
+    tags: ["inspection"],
+    difficulty: 2,
+  },
+  {
+    id: "q.vehicle.load.weight",
+    ruleIds: ["vehicle.load-securing"],
+    question:
+      "When loading a roof box, which of these is correct?",
+    options: [
+      { text: "Total weight must stay within the vehicle's permitted gross weight and the box's stated limit", correct: true },
+      { text: "Roof loads do not count towards the vehicle's gross weight", correct: false },
+      { text: "Wider items may overhang sideways up to 50 cm if marked", correct: false },
+    ],
+    rationale:
+      "Roof loads count toward gross weight and shift the centre of gravity upward; manufacturers' roof load limit (often 50–75 kg) is binding.",
+    tags: ["load"],
+    difficulty: 3,
+  },
+  {
+    id: "q.vehicle.mirrors.blindspot",
+    ruleIds: ["vehicle.mirrors-blindspot"],
+    question:
+      "Even with correctly set mirrors a blind spot remains. Where is it most dangerous?",
+    options: [
+      { text: "Roughly between the driver's shoulder line and the rear corner of the car on each side", correct: true },
+      { text: "Directly behind the rear bumper", correct: false },
+      { text: "Above the windscreen", correct: false },
+    ],
+    rationale:
+      "Side blind spots near the rear corners hide overtaking traffic and cyclists. A shoulder check before any lane change addresses this.",
+    tags: ["mirrors"],
+    difficulty: 2,
+  },
+  {
+    id: "q.vehicle.insurance.minimum",
+    ruleIds: ["vehicle.insurance-minimum"],
+    question:
+      "Mandatory insurance for a Swiss-registered car covers:",
+    options: [
+      { text: "Third-party liability for personal injury and property damage to others", correct: true },
+      { text: "Damage to your own car in any accident", correct: false },
+      { text: "Theft and vandalism of your own car", correct: false },
+    ],
+    rationale:
+      "Haftpflicht (third-party liability) is compulsory; Kasko is voluntary (SVG Art. 63).",
+    tags: ["insurance"],
+    difficulty: 1,
+  },
+  {
+    id: "q.vehicle.registration",
+    ruleIds: ["vehicle.registration-card"],
+    question:
+      "Documents you must carry whenever driving in Switzerland include:",
+    options: [
+      { text: "Driving licence", correct: true },
+      { text: "Vehicle registration certificate (Fahrzeugausweis)", correct: true },
+      { text: "Vehicle inspection report (MFK)", correct: false },
+    ],
+    rationale:
+      "Both licence and Fahrzeugausweis must be present. The MFK report is filed at home; only the registration entry confirming MFK validity is needed in the vehicle.",
+    tags: ["documents"],
+    difficulty: 2,
+  },
+
+  // ---------- accidents & insurance ----------
+  {
+    id: "q.accidents.scene.first-step",
+    ruleIds: ["accidents.secure-scene"],
+    question:
+      "The very first action at the scene of a crash with injured people is to:",
+    options: [
+      { text: "Secure the scene — hazards on, warning triangle out, then check for injuries", correct: true },
+      { text: "Move the casualties to the verge so they don't block traffic", correct: false },
+      { text: "Take photos for insurance before anything moves", correct: false },
+    ],
+    rationale:
+      "First the scene, then the people: an unsecured scene multiplies casualties. Move the injured only if there is a fire or other immediate threat.",
+    tags: ["accident", "scene"],
+    difficulty: 3,
+  },
+  {
+    id: "q.accidents.aid.unconscious",
+    ruleIds: ["accidents.aid"],
+    question:
+      "A casualty is unconscious but breathing normally. The right immediate action is:",
+    options: [
+      { text: "Place them in the recovery position (lateral safety position) and monitor breathing", correct: true },
+      { text: "Start chest compressions immediately", correct: false },
+      { text: "Sit them up against the kerb", correct: false },
+    ],
+    rationale:
+      "Unconscious + breathing → recovery position to keep airway clear. Compressions are only for someone NOT breathing normally.",
+    tags: ["first-aid"],
+    difficulty: 3,
+  },
+  {
+    id: "q.accidents.notification.minor",
+    ruleIds: ["accidents.notification"],
+    question:
+      "You scratch a parked car and the owner is not present. You must:",
+    options: [
+      { text: "Wait a reasonable time, then notify the police if the owner does not appear", correct: true },
+      { text: "Leave a note with your number — that satisfies the law", correct: false },
+      { text: "Drive on if no one saw you", correct: false },
+    ],
+    rationale:
+      "SVG Art. 51 obliges you to identify yourself to the damaged party. If they cannot be reached, the police must be informed without delay; a note alone is insufficient.",
+    tags: ["accident", "notification"],
+    difficulty: 4,
+  },
+  {
+    id: "q.accidents.european-form.purpose",
+    ruleIds: ["accidents.european-form"],
+    question:
+      "The European Accident Statement (Europäisches Unfallprotokoll) is used to:",
+    options: [
+      { text: "Document facts, sketches, and witnesses; insurers later determine fault from the evidence", correct: true },
+      { text: "Officially attribute fault on the spot", correct: false },
+      { text: "Replace the obligation to notify the police", correct: false },
+    ],
+    rationale:
+      "The form records facts only. Signing does NOT admit fault — that is decided by insurers and, where needed, courts.",
+    tags: ["accident", "form"],
+    difficulty: 2,
+  },
+  {
+    id: "q.accidents.documentation.photos",
+    ruleIds: ["accidents.documentation"],
+    question:
+      "When documenting a minor crash you should photograph:",
+    options: [
+      { text: "Damage close-up, both vehicles in context, road markings, and any skid marks", correct: true },
+      { text: "Only the damaged area of your own car", correct: false },
+      { text: "The other driver's licence — for the insurer", correct: false },
+    ],
+    rationale:
+      "Insurers reconstruct the scene from contextual photos. Avoid intruding into others' personal documents — exchange names and insurance details verbally.",
+    tags: ["accident", "documentation"],
+    difficulty: 3,
+  },
+  {
+    id: "q.accidents.casco-haftpflicht.choice",
+    ruleIds: ["accidents.casco-haftpflicht"],
+    question:
+      "A hailstorm dents your car overnight. Which insurance pays?",
+    options: [
+      { text: "Teilkasko (partial comprehensive) — weather damage is included", correct: true },
+      { text: "Haftpflicht — third-party liability covers natural events", correct: false },
+      { text: "No insurance — weather damage is always your own loss", correct: false },
+    ],
+    rationale:
+      "Teilkasko covers theft, glass, animal collisions, and weather. Haftpflicht only pays others. Vollkasko adds self-caused collision damage.",
+    tags: ["insurance"],
+    difficulty: 2,
+  },
+
+  // ---------- penalties / cadenced edge cases ----------
+  {
+    id: "q.penalties.speeding.town",
+    ruleIds: ["penalties.speeding-katalog"],
+    question:
+      "Inside a built-up area, exceeding the limit by 25 km/h or more triggers:",
+    options: [
+      { text: "A driving-licence withdrawal in addition to a fine", correct: true },
+      { text: "A fine only, with points added later", correct: false },
+      { text: "A warning letter for first offence", correct: false },
+    ],
+    rationale:
+      "Within town the threshold for licence withdrawal under VTS Art. 16a is 25 km/h. Outside town it is 30; on motorway 35.",
+    tags: ["speeding", "penalties"],
+    difficulty: 3,
+  },
+  {
+    id: "q.penalties.speeding.via-sicura",
+    ruleIds: ["penalties.speeding-katalog"],
+    question:
+      "Which extreme speeding cases trigger 'Raser' (reckless driver) sanctions including up to 4 years prison?",
+    options: [
+      { text: "≥ 40 km/h over the limit in town, ≥ 50 outside town, ≥ 60 on motorway", correct: true },
+      { text: "Any speeding ≥ 30 km/h over the limit", correct: false },
+      { text: "Only speeds above 200 km/h", correct: false },
+    ],
+    rationale:
+      "Via sicura's 'Raser' provision (SVG Art. 90 Abs. 3) targets gross excess: 40/50/60 thresholds, with mandatory minimum 1-year prison and 2-year licence loss.",
+    tags: ["raser", "penalties"],
+    difficulty: 5,
+  },
+  {
+    id: "q.penalties.bac.first-grave",
+    ruleIds: ["penalties.bac-grave"],
+    question:
+      "A first-time grave alcohol offence (≥ 0.8 ‰) leads to a minimum licence withdrawal of:",
+    options: [
+      { text: "3 months", correct: true },
+      { text: "1 month", correct: false },
+      { text: "6 months", correct: false },
+    ],
+    rationale:
+      "VTS Art. 16c: minimum 3-month withdrawal for first qualified BAC offence. Repetition triggers longer minimums and obligatory medical examination.",
+    tags: ["bac", "penalties"],
+    difficulty: 4,
+  },
+
+  // ---------- mountain & adverse edge cases ----------
+  {
+    id: "q.mountain.descending.gear",
+    ruleIds: ["mountain.descending-gear"],
+    question:
+      "Descending a long alpine pass with an automatic gearbox you should:",
+    options: [
+      { text: "Engage a lower gear (D2/M2 or paddle-shift) so engine braking does most of the work", correct: true },
+      { text: "Stay in D and use the brake pedal continuously", correct: false },
+      { text: "Shift to N to coast freely", correct: false },
+    ],
+    rationale:
+      "Continuous brake use overheats discs and risks fade. Engine braking via low gear keeps brakes cool and reserves them for emergencies.",
+    tags: ["mountain", "descent"],
+    difficulty: 3,
+  },
+  {
+    id: "q.mountain.headlights.tunnel",
+    ruleIds: ["mountain.headlights"],
+    question:
+      "A pass road with frequent short tunnels requires:",
+    options: [
+      { text: "Dipped headlights remain on continuously through and between tunnels", correct: true },
+      { text: "Headlights off between tunnels to save fuel", correct: false },
+      { text: "High beams inside any tunnel", correct: false },
+    ],
+    rationale:
+      "Dipped headlights are mandatory in tunnels. Switching off between short tunnels causes glare for others adapting to changing light; leave them on.",
+    tags: ["mountain", "lights"],
+    difficulty: 3,
+  },
+  {
+    id: "q.mountain.heavy-vehicle.priority",
+    ruleIds: ["mountain.heavy-vehicle-priority"],
+    question:
+      "On a narrow alpine road two ascending vehicles meet at a passing place: a passenger car and a heavy lorry. Who has priority?",
+    options: [
+      { text: "The lorry — heavier ascending vehicle has priority over a lighter ascending vehicle", correct: true },
+      { text: "The car — passenger vehicles always have priority", correct: false },
+      { text: "Whoever reached the passing place first", correct: false },
+    ],
+    rationale:
+      "On unpaved or narrow mountain roads, the heavier ascending vehicle has priority over the lighter ascending vehicle.",
+    tags: ["mountain", "priority"],
+    difficulty: 4,
+  },
+  {
+    id: "q.mountain.chains-mandatory.who",
+    ruleIds: ["mountain.chains-mandatory", "signs.snow-chains"],
+    question:
+      "A pass road shows the snow-chains sign and a 4×4 SUV approaches the start. Which is correct?",
+    options: [
+      { text: "The 4×4 must also fit chains on at least two driving wheels", correct: true },
+      { text: "The 4×4 is exempt because all four wheels drive", correct: false },
+      { text: "The 4×4 may continue without chains if winter tyres are fitted", correct: false },
+    ],
+    rationale:
+      "The mandatory-chains sign applies to all motor vehicles regardless of drive layout. Only chains satisfy it; tyres alone do not.",
+    tags: ["mountain", "winter"],
+    difficulty: 3,
+  },
+
+  // ---------- difficulty-5 edge cases & overlap items ----------
+  {
+    id: "q.priority.snow-bus-stopped",
+    ruleIds: ["priority.school-bus", "speeds.adapted-speed", "adverse.winter-tires"],
+    question:
+      "On a snowy mountain road a school bus is stopped with hazards on; children are visible at the kerb side. You are descending and your tyres are summer tyres. The right approach is to:",
+    options: [
+      { text: "Slow well below safe stopping speed for the surface, prepare to stop, and pass at walking pace if at all", correct: true },
+      { text: "Pass at the posted limit since the bus is stopped on the verge", correct: false },
+      { text: "Sound the horn so the children move back", correct: false },
+    ],
+    rationale:
+      "Three rules pile up: pass stopped public-transport vehicles slowly, descending vehicle yields, tyres impose extra braking distance. Walking pace is the only safe answer.",
+    tags: ["edge-case", "winter", "school-bus"],
+    difficulty: 5,
+  },
+  {
+    id: "q.scenario.zebra-tram-merge",
+    ruleIds: ["maneuvers.pedestrian-crossing", "priority.tram"],
+    question:
+      "At a marked town crossing a pedestrian is mid-crossing while a tram is also approaching at low speed. You are stopped before the crossing. You may move on when:",
+    options: [
+      { text: "The pedestrian is clearly off the crossing AND the tram is no longer a hazard", correct: true },
+      { text: "The pedestrian has stepped off your half of the road", correct: false },
+      { text: "The tram driver waves you on", correct: false },
+    ],
+    rationale:
+      "Both pedestrian (VRV Art. 33) and tram (Art. 38) priorities must clear before you move. Hand signals from a tram driver have no legal effect on your obligations.",
+    tags: ["edge-case", "tram", "pedestrian"],
+    difficulty: 5,
+  },
+  {
+    id: "q.scenario.fog-night-zebra",
+    ruleIds: ["maneuvers.pedestrian-crossing", "speeds.adapted-speed", "adverse.fog-lights"],
+    question:
+      "On a foggy night with 30 m visibility you approach an unsignalised town zebra crossing. Which combination of actions is correct?",
+    options: [
+      { text: "Drop to ~30 km/h, dipped headlights only (no high beams), be ready to brake to a full stop", correct: true },
+      { text: "Maintain 50 km/h with high beams on for visibility", correct: false },
+      { text: "Sound the horn continuously through the crossing zone", correct: false },
+    ],
+    rationale:
+      "Speed ≈ visibility in metres rule, high beams cause whiteout in fog, and pedestrians may already be in the crossing. Three constraints, one safe answer.",
+    tags: ["edge-case", "fog", "pedestrian"],
+    difficulty: 5,
+  },
+  {
+    id: "q.scenario.motorway-jam-after-tunnel",
+    ruleIds: ["priority.rescue-corridor", "maneuvers.tunnel-behavior"],
+    question:
+      "Exiting a motorway tunnel into a sudden standstill, the safest sequence is:",
+    options: [
+      { text: "Hazards on early, brake progressively, leave space ahead, then form the rescue corridor", correct: true },
+      { text: "Brake hard immediately and stop in lane with no space ahead", correct: false },
+      { text: "Cross to the hard shoulder so others can pass on the right", correct: false },
+    ],
+    rationale:
+      "Two priorities at once: warn following drivers (hazards), and form Rettungsgasse from the standstill outwards. Leaving space ahead also gives a path out if the queue moves.",
+    tags: ["edge-case", "tunnel", "motorway"],
+    difficulty: 4,
+  },
+  {
+    id: "q.scenario.descending-overtake-cyclist",
+    ruleIds: ["maneuvers.overtaking-left", "mountain.descending-gear", "speeds.adapted-speed"],
+    question:
+      "On a winding descent you catch a cyclist climbing slowly into a blind right-hand bend. You should:",
+    options: [
+      { text: "Hold back behind the cyclist until the road opens up beyond the bend", correct: true },
+      { text: "Overtake quickly while the cyclist is still slow", correct: false },
+      { text: "Sound the horn and pass close to keep the manoeuvre brief", correct: false },
+    ],
+    rationale:
+      "Overtaking around a blind bend on a descent piles three risks: oncoming traffic, cyclist instability, descent commit-distance. Patience is the only safe answer.",
+    tags: ["edge-case", "mountain", "cyclist"],
+    difficulty: 5,
+  },
+  {
+    id: "q.scenario.aquaplaning-cruise",
+    ruleIds: ["adverse.aquaplaning", "speeds.adapted-speed"],
+    question:
+      "You enter heavy rain on a motorway with cruise control engaged at 120 km/h. The right action is:",
+    options: [
+      { text: "Disengage cruise control immediately and reduce speed to a level safe for visibility and standing water", correct: true },
+      { text: "Keep cruise on so the speed remains constant", correct: false },
+      { text: "Set cruise to a slightly lower speed and continue", correct: false },
+    ],
+    rationale:
+      "Cruise can mask aquaplaning and tries to maintain speed across a slippery patch. Disengage in heavy rain; control speed manually.",
+    tags: ["edge-case", "aquaplaning"],
+    difficulty: 4,
+  },
+  {
+    id: "q.scenario.novice-bac-energy",
+    ruleIds: ["fitness.bac-novice", "fitness.medications"],
+    question:
+      "You are on probation Cat. B and have taken cough syrup containing alcohol. After two doses you feel fine. You may drive:",
+    options: [
+      { text: "Only after waiting until any alcohol has fully cleared — your limit is 0.0 ‰", correct: true },
+      { text: "Yes, because the alcohol is medical and not a beverage", correct: false },
+      { text: "Yes, if you stay below 0.5 ‰", correct: false },
+    ],
+    rationale:
+      "0.0 ‰ means zero; the source of the alcohol is irrelevant. Many cough syrups contain enough ethanol to put a novice over.",
+    tags: ["edge-case", "bac", "novice"],
+    difficulty: 5,
+  },
+  {
+    id: "q.scenario.unprotected-left-tram",
+    ruleIds: ["priority.tram", "priority.right-hand.default"],
+    question:
+      "At an unsignalised intersection you want to turn left. A tram is approaching from your left, and a car is approaching from your right. You should:",
+    options: [
+      { text: "Yield to both — the tram has priority over you AND the car from your right does too", correct: true },
+      { text: "Yield only to the tram", correct: false },
+      { text: "Turn first because the tram has further to come", correct: false },
+    ],
+    rationale:
+      "Tram priority + right-hand rule + left-turn-yields-to-oncoming all stack against you. Wait for both.",
+    tags: ["edge-case", "tram", "intersection"],
+    difficulty: 5,
+  },
+
+  // ---------- close-out items: defaults & confirmations ----------
+  {
+    id: "q.facts.bac-zero-who",
+    ruleIds: ["fitness.bac-novice", "fitness.bac-general"],
+    question:
+      "Which group must observe a 0.0 ‰ BAC limit in Switzerland?",
+    options: [
+      { text: "Holders of a probationary licence (first 3 years)", correct: true },
+      { text: "Professional drivers in service (e.g., bus, taxi, lorry)", correct: true },
+      { text: "All drivers under 25 years of age", correct: false },
+    ],
+    rationale:
+      "0.0 ‰ applies to learners, probation drivers, professionals in service, and driving instructors. Age alone is not a criterion.",
+    tags: ["bac"],
+    difficulty: 2,
+  },
+  {
+    id: "q.facts.headlights-tunnel",
+    ruleIds: ["mountain.headlights", "vehicle.headlights-day"],
+    question:
+      "Headlights inside a road tunnel must be:",
+    options: [
+      { text: "Switched on (dipped) regardless of the tunnel's own lighting", correct: true },
+      { text: "Switched off if the tunnel has continuous overhead lighting", correct: false },
+      { text: "Set to high beam for safety", correct: false },
+    ],
+    rationale:
+      "VRV Art. 30: dipped headlights are obligatory in any tunnel, day or night, regardless of installed lighting.",
+    tags: ["lights", "tunnel"],
+    difficulty: 1,
+  },
+  {
+    id: "q.facts.motorway-no-stopping",
+    ruleIds: ["maneuvers.tunnel-behavior", "speeds.motorway-minimum"],
+    question:
+      "On a Swiss motorway you may stop:",
+    options: [
+      { text: "Only in an emergency, on the hard shoulder, with hazards on", correct: true },
+      { text: "To check the map briefly", correct: false },
+      { text: "If the passenger needs to swap with the driver", correct: false },
+    ],
+    rationale:
+      "Stopping on a motorway is forbidden except for breakdown or accident; the hard shoulder is for emergencies only (VRV Art. 36).",
+    tags: ["motorway"],
+    difficulty: 2,
+  },
+
+  // ---------- additional difficulty-4 ----------
+  {
+    id: "q.priority.tram-vs-emergency",
+    ruleIds: ["priority.tram", "priority.emergency-vehicles"],
+    question:
+      "A tram is approaching a junction with priority when an ambulance behind you switches on siren and blue lights. What takes precedence?",
+    options: [
+      { text: "Make way for the ambulance first, even if it means delaying the tram's path", correct: true },
+      { text: "Finish yielding to the tram before reacting to the ambulance", correct: false },
+      { text: "Emergency vehicles must wait for trams under all circumstances", correct: false },
+    ],
+    rationale:
+      "SVG Art. 27(2) requires all road users — including drivers interacting with trams — to yield to emergency vehicles with siren and blue lights. Clear the path immediately; the tram driver will manage its own response.",
+    tags: ["priority", "tram", "emergency"],
+    difficulty: 4,
+  },
+  {
+    id: "q.priority.roundabout-entering-overtaking",
+    ruleIds: ["priority.roundabout", "maneuvers.overtaking-left"],
+    question:
+      "Two-lane roundabout: you entered in the outer lane but want the second exit. A cyclist is riding near the outer edge ahead of you.",
+    options: [
+      { text: "Stay behind the cyclist, hold the outer lane, and take the second exit without overtaking in the roundabout", correct: true },
+      { text: "Swing to the inner lane to pass, then cross back for the exit", correct: false },
+      { text: "Signal and overtake on the right within the roundabout", correct: false },
+    ],
+    rationale:
+      "Overtaking cyclists inside a roundabout with tight radii is extremely dangerous; you have no room and lane-changing puts riders at risk. VRV Art. 41b: stay patient, keep the outer lane for exit, signal just before leaving.",
+    tags: ["roundabout", "bicycles"],
+    difficulty: 4,
+  },
+  {
+    id: "q.maneuvers.overtaking-truck-uphill",
+    ruleIds: ["maneuvers.overtaking-left", "mountain.ascending"],
+    question:
+      "You want to overtake a slow-moving truck on a two-lane mountain road going uphill, with a solid single line converting to a dashed line ahead after a blind rise.",
+    options: [
+      { text: "Wait until after the rise with clear long sight distance before committing", correct: true },
+      { text: "Begin the overtake now — the line will be dashed by the time you're alongside", correct: false },
+      { text: "Overtake quickly before the rise while visibility is still partial", correct: false },
+    ],
+    rationale:
+      "Overtaking must be completed in fully observed sight distance (SVG Art. 35). A blind rise masks oncoming traffic even when the marking permits; the marking shows where you *may* overtake, not where it is *safe*.",
+    tags: ["overtaking", "mountain", "sight-distance"],
+    difficulty: 4,
+  },
+  {
+    id: "q.adverse.aquaplaning-response",
+    ruleIds: ["adverse.aquaplaning"],
+    question:
+      "At 100 km/h on motorway in heavy rain you feel the steering go light and hear a sudden change in tyre noise — classic aquaplaning.",
+    options: [
+      { text: "Ease off the accelerator smoothly and keep the wheel straight", correct: true },
+      { text: "Brake hard to reduce speed immediately", correct: false },
+      { text: "Steer firmly to re-establish grip", correct: false },
+    ],
+    rationale:
+      "During aquaplaning the tyres ride on a water film: braking or steering inputs translate into skids. Release the throttle so the wheels slow with the water flow, keep the wheel straight, reapply control once noise returns.",
+    tags: ["aquaplaning", "adverse"],
+    difficulty: 4,
+  },
+  {
+    id: "q.fitness.medication-label",
+    ruleIds: ["fitness.medications"],
+    question:
+      "You are prescribed a new allergy medication. The package insert warns 'may affect reaction time; do not drive or operate machinery until you know how it affects you.' You feel fine. You should:",
+    options: [
+      { text: "Not drive until you've observed your personal reaction across at least one full dosing cycle", correct: true },
+      { text: "Drive as usual — the warning is precautionary boilerplate", correct: false },
+      { text: "Drive only if you've taken less than half the dose", correct: false },
+    ],
+    rationale:
+      "SVG Art. 31 makes fitness-to-drive the driver's own responsibility. The label warning is legally binding context: if an accident occurs, ignoring it is negligent regardless of how you feel subjectively.",
+    tags: ["medication", "fitness"],
+    difficulty: 4,
+  },
+  {
+    id: "q.penalties.speeding-inner-town-serious",
+    ruleIds: ["penalties.speeding-katalog"],
+    question:
+      "Inside an urban 50 km/h zone you are clocked at 78 km/h (28 over). This falls under:",
+    options: [
+      { text: "A serious offence triggering mandatory licence withdrawal", correct: true },
+      { text: "A minor infringement punishable by fine only", correct: false },
+      { text: "The Raser threshold triggering criminal prosecution", correct: false },
+    ],
+    rationale:
+      "The speeding catalogue (ASTRA) treats +25 km/h or more in a 50 zone as a grave offence with minimum one-month licence withdrawal. Raser begins at +50 km/h in 50-zone territory.",
+    tags: ["penalties", "speeding"],
+    difficulty: 4,
+  },
+  {
+    id: "q.accidents.european-form-use",
+    ruleIds: ["accidents.european-form", "accidents.documentation"],
+    question:
+      "Minor rear-end collision in a supermarket parking lot, no injuries, both drivers agreed on facts. You should:",
+    options: [
+      { text: "Complete the European Accident Statement (Europäischer Unfallbericht) together and each take a signed copy", correct: true },
+      { text: "Exchange insurance cards verbally and drive off", correct: false },
+      { text: "Wait for police — they must attend every collision", correct: false },
+    ],
+    rationale:
+      "For minor property-damage collisions with agreement, the European form is the Swiss insurance industry's standard documentation. Police attendance is only mandatory for injury, disputed facts, or State-owned-vehicle involvement.",
+    tags: ["accidents", "documentation"],
+    difficulty: 4,
+  },
+  {
+    id: "q.mountain.ascending-priority-narrow",
+    ruleIds: ["mountain.ascending", "priority.yielding-on-entry"],
+    question:
+      "Narrow Swiss alpine single-track. You are descending and meet a vehicle coming up. There is a passing bay 40 m behind you and another 20 m behind the uphill car.",
+    options: [
+      { text: "You (descending) reverse to the nearer passing bay to let the uphill vehicle through", correct: true },
+      { text: "The uphill vehicle reverses — they have the clearer sight line", correct: false },
+      { text: "Whichever driver is closer to a bay takes it, regardless of direction", correct: false },
+    ],
+    rationale:
+      "VRV Art. 9 and SVG Art. 10: on narrow mountain roads, descending traffic yields to ascending traffic. Reversing uphill is harder and heavy-vehicle-unfriendly; the rule is direction-based, not distance-based.",
+    tags: ["mountain", "priority"],
+    difficulty: 4,
+  },
+  {
+    id: "q.vehicle.load-overhanging",
+    ruleIds: ["vehicle.load-securing"],
+    question:
+      "You're transporting a 4.8 m ladder on a roof rack. The load:",
+    options: [
+      { text: "May overhang the rear up to 1 m without marking, beyond that it must be marked with a red flag (day) or red light (night)", correct: true },
+      { text: "Must never overhang the silhouette of the vehicle", correct: false },
+      { text: "May overhang freely as long as it is strapped down", correct: false },
+    ],
+    rationale:
+      "VTS / VRV load-securing rules allow up to 1 m rear overhang unmarked; beyond 1 m requires the marker; total overhang plus vehicle length must stay within the vehicle class's permitted length. Side overhang is far more restrictive.",
+    tags: ["load", "vehicle"],
+    difficulty: 4,
+  },
+  {
+    id: "q.fitness.fatigue-alcohol-interaction",
+    ruleIds: ["fitness.fatigue-break", "fitness.bac-general"],
+    question:
+      "Legally you are at 0.4 ‰ BAC (below 0.5 ‰) but you have slept only four hours. You should:",
+    options: [
+      { text: "Not drive — fatigue multiplies alcohol impairment and you may still be unfit under SVG Art. 31", correct: true },
+      { text: "Drive because the legal BAC limit is not exceeded", correct: false },
+      { text: "Drive if you drink coffee first", correct: false },
+    ],
+    rationale:
+      "SVG Art. 31 makes the driver responsible for being *fit*, independent of any single legal threshold. Fatigue + sub-threshold alcohol can objectively make you impaired; an accident at 0.4 ‰ with fatigue can still trigger a 'driving unfit' charge.",
+    tags: ["fitness", "alcohol", "fatigue"],
+    difficulty: 4,
+  },
+
+  // ---------- additional difficulty-5 edge cases ----------
+  {
+    id: "q.edge.tram-emergency-child",
+    ruleIds: [
+      "priority.tram",
+      "priority.emergency-vehicles",
+      "maneuvers.pedestrian-crossing",
+    ],
+    question:
+      "You have green at an intersection. A tram is approaching from the left (also green), an ambulance behind you is sounding siren, AND a child has just stepped onto the pedestrian crossing to your right. You must:",
+    options: [
+      { text: "Stop for the child — pedestrian life takes absolute precedence over any other priority", correct: true },
+      { text: "Proceed so the ambulance can use your clear corridor, since life-and-death overrides pedestrian right of way", correct: false },
+      { text: "Yield to the tram first as it has track priority", correct: false },
+    ],
+    rationale:
+      "Pedestrian protection at marked crossings (SVG Art. 33) is inviolable — you cannot 'trade' a child's safety for faster emergency passage. Stop; the ambulance driver is trained to work around stopped vehicles; the tram will see the pedestrian cause and hold.",
+    tags: ["priority", "pedestrian", "edge-case"],
+    difficulty: 5,
+  },
+  {
+    id: "q.edge.mountain-snow-bus-descending",
+    ruleIds: [
+      "mountain.ascending",
+      "mountain.chains-mandatory",
+      "priority.school-bus",
+      "adverse.winter-tires",
+    ],
+    question:
+      "Single-lane alpine road, fresh snow, 'chains mandatory' sign at the base. You are ascending (with chains). A descending postal bus flashes its yellow lights to signal it is about to pull out of a layby at the switchback above you. Behind the bus a queue of four cars waits. You must:",
+    options: [
+      { text: "Stop, yield the uphill priority to the postal bus queue on this designated postal-route section, and pull into the nearest widening", correct: true },
+      { text: "Hold your uphill priority — the bus must wait until your ascent is clear", correct: false },
+      { text: "Reverse all the way to the base — mixed traffic should not meet on a chained single-lane", correct: false },
+    ],
+    rationale:
+      "On postal-bus signalised mountain routes (SVG Art. 38) the yellow horn / lights and PostAuto priority override the general 'ascending has priority' rule. In snow with chains, ascending traffic is actually more stable than a loaded descending bus, and the postal-route priority exists precisely for this case.",
+    tags: ["mountain", "priority", "edge-case", "winter"],
+    difficulty: 5,
+  },
 ];
