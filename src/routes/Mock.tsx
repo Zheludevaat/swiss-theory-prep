@@ -311,6 +311,7 @@ export default function Mock() {
               .map((rid) => ruleById.get(rid))
               .filter(Boolean) as never
           }
+          lang={settings.contentLang}
           counter=""
           minimalActions
           hideRationale={mode === "strict"}

@@ -60,6 +60,9 @@ export type Settings = {
   bedtimeReminder?: string;       // local-time HH:mm; undefined = off
   examDate?: string;              // YYYY-MM-DD; undefined = unset
   mockAudibleTick: boolean;       // final-5-minutes 1Hz beep; default true
+  /** Chunk 13: which language to render question/rationale/rule strings in.
+   *  Items without a DE overlay fall back to English even when set to "de". */
+  contentLang: "en" | "de";       // default "en"
 };
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -69,6 +72,7 @@ export const DEFAULT_SETTINGS: Settings = {
   sampleConfidenceEvery: 5,
   useLLM: false,
   mockAudibleTick: true,
+  contentLang: "en",
 };
 
 export type FlaggedRule = {

@@ -46,6 +46,17 @@ export const CATEGORY_WEIGHTS: Record<Category, number> = {
   "accidents-insurance": 0.05,
 };
 
+/** Chunk 13: optional German overlay for a rule. Translation block — only the
+ *  user-visible strings need to be mirrored; structural fields (id, category,
+ *  legalRefs, examWeight, tags) stay language-agnostic. */
+export const RuleTranslationSchema = z.object({
+  title: z.string(),
+  statement: z.string(),
+  /** Optional — falls back to the English workedExamples when omitted. */
+  workedExamples: z.array(z.string()).optional(),
+});
+export type RuleTranslation = z.infer<typeof RuleTranslationSchema>;
+
 export const RuleSchema = z.object({
   id: z.string(),
   title: z.string(),
@@ -56,6 +67,8 @@ export const RuleSchema = z.object({
   examWeight: z.number().min(0).max(1),
   workedExamples: z.array(z.string()).default([]),
   notes: z.string().optional(),
+  /** Chunk 13: optional German overlay. */
+  de: RuleTranslationSchema.optional(),
 });
 export type Rule = z.infer<typeof RuleSchema>;
 
@@ -64,6 +77,17 @@ export const OptionSchema = z.object({
   correct: z.boolean(),
 });
 export type Option = z.infer<typeof OptionSchema>;
+
+/** Chunk 13: option correctness is language-agnostic, so only mirror the
+ *  visible text. The 3-tuple shape locks DE option count to the EN tuple. */
+export const ItemTranslationSchema = z.object({
+  question: z.string(),
+  options: z.tuple([z.string(), z.string(), z.string()]),
+  rationale: z.string(),
+  /** Optional override for the image/diagram alt text. */
+  imageAlt: z.string().optional(),
+});
+export type ItemTranslation = z.infer<typeof ItemTranslationSchema>;
 
 export const ItemSchema = z
   .object({
@@ -79,6 +103,8 @@ export const ItemSchema = z
     rationale: z.string(),
     tags: z.array(z.string()).default([]),
     difficulty: z.number().int().min(1).max(5).default(3),
+    /** Chunk 13: optional German overlay. */
+    de: ItemTranslationSchema.optional(),
   })
   .refine(
     (it) => {

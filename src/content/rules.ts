@@ -24,6 +24,15 @@ export const seedRules: Rule[] = [
       "Unmarked four-way in a residential area, a car approaches from your right: you yield.",
       "T-intersection on a side street: the vehicle on the through road has no marked priority, and a car coming from your right still has priority.",
     ],
+    de: {
+      title: "Rechtsvortritt",
+      statement:
+        "An Verzweigungen ohne Signale oder Markierungen, die den Vortritt regeln, hat das von rechts kommende Fahrzeug den Vortritt.",
+      workedExamples: [
+        "Unsignalisierte Kreuzung im Wohnquartier, ein Fahrzeug nähert sich von rechts: Sie gewähren ihm den Vortritt.",
+        "T-Kreuzung in einer Nebenstrasse: das Fahrzeug auf der durchgehenden Strasse hat keinen markierten Vortritt — ein von rechts kommendes Fahrzeug hat trotzdem Vortritt.",
+      ],
+    },
   },
   {
     id: "priority.roundabout",
@@ -52,6 +61,15 @@ export const seedRules: Rule[] = [
       "At an unmarked intersection where a tram approaches from the left: you yield to the tram.",
       "A tram stops at a safety island: you pass slowly on the right at walking pace and give way to boarding/alighting passengers.",
     ],
+    de: {
+      title: "Strassenbahnen haben Vortritt",
+      statement:
+        "Strassenbahnen (Trams) haben gegenüber dem übrigen Verkehr immer Vortritt, auch gegenüber Fahrzeugen, die sonst Rechtsvortritt hätten.",
+      workedExamples: [
+        "An einer unsignalisierten Kreuzung nähert sich ein Tram von links: Sie gewähren dem Tram den Vortritt.",
+        "Ein Tram hält bei einer Schutzinsel: Sie fahren rechts im Schritttempo vorbei und gewähren ein- und aussteigenden Fahrgästen den Vortritt.",
+      ],
+    },
   },
   {
     id: "priority.emergency-vehicles",
@@ -94,6 +112,15 @@ export const seedRules: Rule[] = [
       "Traffic in front of you brakes to a standstill on a three-lane motorway: the left lane moves fully left, the middle and right lanes move fully right — the gap is between left and middle.",
       "You must form the corridor as soon as traffic slows, not only when you hear sirens — emergency services can approach from behind without warning.",
     ],
+    de: {
+      title: "Rettungsgasse auf mehrspurigen Strassen",
+      statement:
+        "Auf Autobahnen und mehrspurigen Strassen bilden Fahrzeuge, sobald der Verkehr zum Stillstand kommt oder nur noch im Schritttempo rollt, eine Rettungsgasse: Fahrzeuge auf der linken Spur fahren ganz nach links, Fahrzeuge auf den übrigen Spuren ganz nach rechts. So entsteht zwischen der linken und der zweitlinken Spur eine durchgehende Gasse für die Einsatzfahrzeuge.",
+      workedExamples: [
+        "Der Verkehr vor Ihnen bremst auf einer dreispurigen Autobahn bis zum Stillstand ab: die linke Spur rückt ganz nach links, die mittlere und rechte Spur rücken ganz nach rechts — die Gasse liegt zwischen linker und mittlerer Spur.",
+        "Sie müssen die Rettungsgasse bilden, sobald der Verkehr ins Stocken gerät — nicht erst, wenn Sie Sirenen hören. Einsatzfahrzeuge können sich ohne Vorwarnung von hinten nähern.",
+      ],
+    },
   },
   {
     id: "priority.school-bus",
@@ -1314,6 +1341,15 @@ export const seedRules: Rule[] = [
       "After one beer at lunch: a probationary driver should not drive for several hours and even then a breath test may exceed 0.1‰.",
       "A probationary driver caught at 0.11‰ loses the probationary licence — the probationary period restarts from zero after a new psychological review.",
     ],
+    de: {
+      title: "Promillegrenze während der Probezeit (0,1‰)",
+      statement:
+        "Inhaber eines Führerausweises auf Probe (die ersten drei Jahre) müssen mit einer Blutalkoholkonzentration unter 0,1‰ fahren — das entspricht praktisch einer Null-Promille-Grenze.",
+      workedExamples: [
+        "Nach einem Bier am Mittag: ein Fahrer in der Probezeit sollte mehrere Stunden nicht fahren — und selbst dann kann eine Atemprobe 0,1‰ überschreiten.",
+        "Ein Probezeit-Fahrer wird mit 0,11‰ erwischt: der Führerausweis auf Probe wird entzogen, und die Probezeit beginnt nach einer verkehrspsychologischen Begutachtung von neuem.",
+      ],
+    },
   },
   {
     id: "fitness.bac-general",
@@ -1328,6 +1364,15 @@ export const seedRules: Rule[] = [
       "Reading 0.6‰: at minimum a warning and a fine. At 0.85‰: licence withdrawal of at least 3 months.",
       "A driver at 0.4‰ is technically legal but any accident they cause will still be aggravated by detectable alcohol in blood tests.",
     ],
+    de: {
+      title: "Allgemeine Promillegrenze (0,5‰)",
+      statement:
+        "Ausserhalb der Probezeit liegt die gesetzliche Grenze unter 0,5‰. Werte von 0,5‰ bis 0,79‰ gelten als leichte Widerhandlung, ab 0,8‰ als schwere Widerhandlung.",
+      workedExamples: [
+        "Wert 0,6‰: mindestens eine Verwarnung und eine Busse. Bei 0,85‰: Führerausweisentzug von mindestens 3 Monaten.",
+        "Ein Fahrer mit 0,4‰ ist zwar rechtlich erlaubt unterwegs, aber bei einem von ihm verursachten Unfall wird der nachweisbare Alkohol im Blut die Schuldfrage verschärfen.",
+      ],
+    },
   },
   {
     id: "penalties.bac-grave",

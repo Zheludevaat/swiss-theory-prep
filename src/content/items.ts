@@ -20,6 +20,17 @@ export const seedItems: Item[] = [
       "Unless signs or markings say otherwise, traffic from the right has priority at all intersections (VRV Art. 36).",
     tags: ["intersection"],
     difficulty: 2,
+    de: {
+      question:
+        "An einer unsignalisierten Vier-Wege-Kreuzung im Wohnquartier — wer hat Vortritt?",
+      options: [
+        "Das von rechts kommende Fahrzeug",
+        "Das Fahrzeug auf der breiteren Strasse",
+        "Wer zuerst da war",
+      ],
+      rationale:
+        "Solange keine Signale oder Markierungen etwas anderes vorschreiben, gilt an allen Verzweigungen der Rechtsvortritt (VRV Art. 36).",
+    },
   },
   {
     id: "q.priority.roundabout.yield",
@@ -62,6 +73,17 @@ export const seedItems: Item[] = [
       "Trams always have priority, which overrides the right-hand rule (SVG Art. 38).",
     tags: ["tram"],
     difficulty: 3,
+    de: {
+      question:
+        "An einer unsignalisierten Kreuzung nähert sich von links ein Tram. Sie:",
+      options: [
+        "Haben Vortritt, weil das Tram von links kommt",
+        "Müssen dem Tram den Vortritt gewähren",
+        "Fahren nur weiter, wenn das Tram angehalten hat",
+      ],
+      rationale:
+        "Strassenbahnen haben immer Vortritt — das geht dem Rechtsvortritt vor (SVG Art. 38).",
+    },
   },
   {
     id: "q.priority.emergency-vehicles",
@@ -110,6 +132,19 @@ export const seedItems: Item[] = [
       "Rettungsgasse: corridor opens between the leftmost and the next-to-leftmost lane, formed as soon as traffic slows — not when sirens arrive (VRV Art. 36 Abs. 1bis).",
     tags: ["emergency", "highway"],
     difficulty: 3,
+    de: {
+      question:
+        "Der Verkehr auf einer dreispurigen Autobahn stockt. Wie wird die Rettungsgasse gebildet?",
+      options: [
+        "Die linke Spur fährt ganz nach links; die mittlere und rechte Spur fahren ganz nach rechts",
+        "Alle Spuren weichen auf den rechten Pannenstreifen aus",
+        "Man wartet mit dem Ausweichen, bis man Sirenen hört",
+      ],
+      rationale:
+        "Rettungsgasse: die Gasse öffnet sich zwischen der linken und der zweitlinken Spur, und zwar sobald der Verkehr ins Stocken gerät — nicht erst, wenn Einsatzfahrzeuge zu hören sind (VRV Art. 36 Abs. 1bis).",
+      imageAlt:
+        "Draufsicht auf eine dreispurige Autobahn im stockenden Verkehr: die linke Spur ist ganz nach links gerückt, die mittlere und rechte Spur sind ganz nach rechts gerückt — dazwischen öffnet sich eine Gasse, durch die ein Rettungswagen vorbeifährt.",
+    },
   },
   {
     id: "q.priority.school-bus",
@@ -1650,6 +1685,17 @@ export const seedItems: Item[] = [
       "Probationary drivers (first three years) must be below 0.1‰. Read this as: do not drink and drive at all.",
     tags: ["alcohol", "novice"],
     difficulty: 1,
+    de: {
+      question:
+        "Sie besitzen einen Führerausweis auf Probe. Welche Promillegrenze gilt für Sie?",
+      options: [
+        "Unter 0,1‰ — praktisch null",
+        "Unter 0,5‰ wie bei Fahrern ohne Probezeit",
+        "Unter 0,8‰",
+      ],
+      rationale:
+        "In der Probezeit (die ersten drei Jahre) gilt eine Grenze unter 0,1‰. Sinngemäss: gar nicht trinken und fahren.",
+    },
   },
   {
     id: "q.fitness.bac.thresholds",
@@ -1664,6 +1710,16 @@ export const seedItems: Item[] = [
       "From 0.8‰ the offence is classified as grave (qualifiziert) with mandatory licence withdrawal.",
     tags: ["alcohol"],
     difficulty: 3,
+    de: {
+      question: "Bei einer Blutalkoholkonzentration von 0,85‰ — welche Folgen treffen zu?",
+      options: [
+        "Führerausweisentzug von mindestens 3 Monaten",
+        "Gilt als schwere (qualifizierte) Widerhandlung",
+        "Nur eine Busse — keine Auswirkung auf den Ausweis",
+      ],
+      rationale:
+        "Ab 0,8‰ wird die Widerhandlung als qualifiziert (schwer) eingestuft; der Führerausweisentzug ist obligatorisch.",
+    },
   },
   {
     id: "q.penalties.bac-grave",
@@ -1825,6 +1881,17 @@ export const seedItems: Item[] = [
       "Priority always flows from the right (VRV Art. 36). Your opposite-direction neighbour is irrelevant until the right-hand car has cleared.",
     tags: ["intersection", "priority"],
     difficulty: 3,
+    de: {
+      question:
+        "An einer unsignalisierten Vier-Wege-Kreuzung treffen drei Fahrzeuge gleichzeitig ein: Sie, ein Fahrzeug genau gegenüber und ein Fahrzeug von rechts. Wer fährt zuerst?",
+      options: [
+        "Das Fahrzeug von rechts — es hat Vortritt vor Ihnen und vor dem Fahrzeug gegenüber",
+        "Alle drei dürfen gleichzeitig losfahren, weil sie gleichzeitig ankamen",
+        "Das Fahrzeug gegenüber, weil es geradeaus fährt",
+      ],
+      rationale:
+        "Der Vortritt kommt immer von rechts (VRV Art. 36). Das entgegenkommende Fahrzeug ist solange irrelevant, bis das Fahrzeug von rechts die Kreuzung freigegeben hat.",
+    },
   },
   {
     id: "q.priority.right-hand.opposite-left-turn",
@@ -1855,6 +1922,17 @@ export const seedItems: Item[] = [
       "Vehicles entering the road from a driveway, parking lot, field path, or footway must always yield (VRV Art. 15) — the right-hand rule does not apply here.",
     tags: ["driveway", "priority"],
     difficulty: 2,
+    de: {
+      question:
+        "Sie verlassen eine private Einfahrt auf eine normale Quartierstrasse. Auf der Strasse nähert sich von links Verkehr. Sie:",
+      options: [
+        "Müssen dem gesamten Verkehr auf der Strasse den Vortritt gewähren",
+        "Haben Vortritt, weil der Verkehr auf der Strasse von links kommt",
+        "Haben Vortritt, sobald Sie geblinkt haben",
+      ],
+      rationale:
+        "Wer aus einer Einfahrt, einem Parkplatz, einem Feldweg oder einem Trottoir auf die Strasse fährt, muss immer Vortritt gewähren (VRV Art. 15) — der Rechtsvortritt gilt hier nicht.",
+    },
   },
   {
     id: "q.priority.tram.tight",
@@ -1870,6 +1948,17 @@ export const seedItems: Item[] = [
       "Trams have absolute priority on rails (VRV Art. 38). Where the road is too narrow to share, a private vehicle must yield by pulling aside.",
     tags: ["tram", "priority"],
     difficulty: 3,
+    de: {
+      question:
+        "In einer engen Strasse in der Stadt nähert sich ein Tram von hinten. Sie sollten:",
+      options: [
+        "Wo möglich nach rechts ausweichen und das Tram vorbeilassen",
+        "Beschleunigen und bis zur nächsten Querstrasse vorausfahren",
+        "Mitten auf der Strasse anhalten und warten",
+      ],
+      rationale:
+        "Strassenbahnen haben auf den Schienen absoluten Vortritt (VRV Art. 38). Ist die Strasse zu schmal, muss das Privatfahrzeug ausweichen.",
+    },
   },
   {
     id: "q.priority.emergency.intersection",
@@ -1903,6 +1992,19 @@ export const seedItems: Item[] = [
       "Switzerland adopted the Rettungsgasse rule on motorways: stop in the standstill itself splits left and right lanes outward, regardless of whether emergency vehicles are visible yet.",
     tags: ["rescue-corridor", "motorway"],
     difficulty: 3,
+    de: {
+      question:
+        "Der Verkehr in einem zweispurigen Autobahntunnel kommt zum Stillstand. Wie verschaffen Sie Einsatzfahrzeugen freie Fahrt?",
+      options: [
+        "Eine Rettungsgasse bilden — linke Spur an den linken Fahrbahnrand, rechte Spur an den rechten Rand",
+        "Alle Fahrzeuge weichen nach rechts auf den Pannenstreifen aus",
+        "In der Spur warten, bis man tatsächlich Blaulicht sieht",
+      ],
+      rationale:
+        "In der Schweiz gilt die Rettungsgasse-Pflicht auf Autobahnen: schon beim Zustandekommen des Staus fahren die linke und rechte Spur nach aussen auseinander, unabhängig davon, ob Einsatzfahrzeuge bereits sichtbar sind.",
+      imageAlt:
+        "Draufsicht auf eine zweispurige Autobahn: Fahrzeuge auf der linken Spur sind ganz nach links gefahren, jene auf der rechten Spur ganz nach rechts — dazwischen entsteht eine freie Gasse für den Rettungswagen.",
+    },
   },
   {
     id: "q.priority.school-bus.stopped",
@@ -3019,6 +3121,19 @@ export const seedItems: Item[] = [
       "Two priorities at once: warn following drivers (hazards), and form Rettungsgasse from the standstill outwards. Leaving space ahead also gives a path out if the queue moves.",
     tags: ["edge-case", "tunnel", "motorway"],
     difficulty: 4,
+    de: {
+      question:
+        "Sie verlassen einen Autobahntunnel und geraten unvermittelt in einen Stau. Welche Reihenfolge ist am sichersten?",
+      options: [
+        "Frühzeitig Warnblinker, gleichmässig bremsen, Abstand nach vorne lassen und dann die Rettungsgasse bilden",
+        "Sofort scharf bremsen und ohne Abstand nach vorne in der Spur stehenbleiben",
+        "Auf den Pannenstreifen ausweichen, damit andere rechts vorbeifahren können",
+      ],
+      rationale:
+        "Zwei Prioritäten gleichzeitig: nachfolgende Fahrer warnen (Warnblinker) und aus dem Stillstand heraus eine Rettungsgasse bilden. Abstand nach vorne schafft zudem einen Ausweg, falls die Kolonne weiterrollt.",
+      imageAlt:
+        "Draufsicht auf eine zweispurige Autobahn in stockendem Verkehr: Fahrzeuge auf der linken Spur lenken nach links, Fahrzeuge auf der rechten Spur nach rechts — dazwischen öffnet sich die Rettungsgasse für Einsatzfahrzeuge.",
+    },
   },
   {
     id: "q.scenario.descending-overtake-cyclist",

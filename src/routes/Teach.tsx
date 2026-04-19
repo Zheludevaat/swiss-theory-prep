@@ -6,12 +6,14 @@
 
 import { useNavigate, useParams } from "react-router-dom";
 import { ruleById } from "@/content/bundle";
+import { localizeRule } from "@/content/localize";
 import { useStore } from "@/store";
 
 export default function Teach() {
   const { ruleId = "" } = useParams();
   const navigate = useNavigate();
   const rule = ruleById.get(ruleId);
+  const lang = useStore((s) => s.settings.contentLang);
   const clearFlag = useStore((s) => s.clearFlag);
 
   if (!rule) {
@@ -30,6 +32,11 @@ export default function Teach() {
     );
   }
 
+  // Chunk 13: resolve user-visible strings to the active language with
+  // English fallback. Computed after the early-return so TS knows `rule`
+  // is non-null.
+  const lr = localizeRule(rule, lang);
+
   return (
     <div className="mx-auto max-w-lg space-y-4 p-4">
       <button
@@ -38,7 +45,7 @@ export default function Teach() {
       >
         ← back
       </button>
-      <h1 className="text-xl font-semibold">{rule.title}</h1>
+      <h1 className="text-xl font-semibold">{lr.title}</h1>
       {rule.legalRefs.length > 0 && (
         <p className="text-xs text-slate-400">
           {rule.legalRefs.join(", ")}
@@ -47,14 +54,14 @@ export default function Teach() {
 
       <section className="rounded-2xl border border-slate-800 bg-slate-900 p-4">
         <h2 className="mb-2 text-sm font-medium">The rule</h2>
-        <p className="text-sm text-slate-200">{rule.statement}</p>
+        <p className="text-sm text-slate-200">{lr.statement}</p>
       </section>
 
-      {rule.workedExamples.length > 0 && (
+      {lr.workedExamples.length > 0 && (
         <section className="rounded-2xl border border-slate-800 bg-slate-900 p-4">
           <h2 className="mb-2 text-sm font-medium">Worked examples</h2>
           <ol className="ml-4 list-decimal space-y-2 text-sm text-slate-200">
-            {rule.workedExamples.map((ex, i) => (
+            {lr.workedExamples.map((ex, i) => (
               <li key={i}>{ex}</li>
             ))}
           </ol>

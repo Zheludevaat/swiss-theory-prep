@@ -220,7 +220,11 @@ export async function recentSessions(limit = 30): Promise<Session[]> {
 
 export async function getSettings(): Promise<Settings> {
   const s = await (await db()).get("settings", "singleton");
-  return s ?? DEFAULT_SETTINGS;
+  // Merge persisted settings on top of defaults so older installs get
+  // sensible values for newly-introduced fields (e.g. Chunk 13's
+  // contentLang). Without this, any user who first installed before
+  // the field existed would render with `undefined` and break Settings UI.
+  return { ...DEFAULT_SETTINGS, ...(s ?? {}) };
 }
 
 export async function putSettings(s: Settings): Promise<void> {

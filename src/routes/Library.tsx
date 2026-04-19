@@ -5,6 +5,12 @@
 import { useMemo, useState } from "react";
 import { CATEGORY_LABELS, type Category, type Item, type Rule } from "@/content/schema";
 import { ITEMS, RULES } from "@/content/bundle";
+import {
+  itemHasLang,
+  localizeItem,
+  localizeRule,
+  ruleHasLang,
+} from "@/content/localize";
 import { SIGN_FAMILY_LABELS, SIGN_MANIFEST, type SignManifestEntry } from "@/content/signs";
 import { useStore } from "@/store";
 import { isGraduated } from "@/scheduler/fsrs";
@@ -53,6 +59,7 @@ function TabButton({
 
 function RulesView() {
   const memory = useStore((s) => s.memory);
+  const lang = useStore((s) => s.settings.contentLang);
   const [allOpen, setAllOpen] = useState(false);
   const grouped = useMemo(() => {
     const buckets = new Map<Category, Rule[]>();
@@ -90,6 +97,9 @@ function RulesView() {
           </div>
           <ul className="divide-y divide-slate-800">
             {rules.map((r) => {
+              const lr = localizeRule(r, lang);
+              const hasDe = ruleHasLang(r, "de");
+              const missingTranslation = lang === "de" && !hasDe;
               const items = ITEMS.filter((it) => it.ruleIds.includes(r.id));
               const grad = items.filter((it) => {
                 const m = memory.get(it.id);
@@ -98,22 +108,32 @@ function RulesView() {
               return (
                 <li key={r.id} className="px-4 py-3">
                   <details open={allOpen}>
-                    <summary className="flex cursor-pointer items-center justify-between text-sm">
-                      <span className="font-medium">{r.title}</span>
+                    <summary className="flex cursor-pointer items-center justify-between gap-2 text-sm">
+                      <span className="flex items-center gap-2">
+                        <span className="font-medium">{lr.title}</span>
+                        {missingTranslation && (
+                          <span
+                            className="rounded bg-slate-800 px-1.5 py-0.5 text-[9px] uppercase tracking-wide text-slate-400"
+                            title="No German translation yet — showing English."
+                          >
+                            EN
+                          </span>
+                        )}
+                      </span>
                       <span className="text-xs text-slate-400">
                         {grad}/{items.length}
                       </span>
                     </summary>
                     <div className="mt-2 space-y-2 text-xs text-slate-300">
-                      <p>{r.statement}</p>
+                      <p>{lr.statement}</p>
                       {r.legalRefs.length > 0 && (
                         <p className="text-slate-400">
                           Refs: {r.legalRefs.join(", ")}
                         </p>
                       )}
-                      {r.workedExamples.length > 0 && (
+                      {lr.workedExamples.length > 0 && (
                         <ul className="ml-4 list-disc space-y-1">
-                          {r.workedExamples.map((ex, i) => (
+                          {lr.workedExamples.map((ex, i) => (
                             <li key={i}>{ex}</li>
                           ))}
                         </ul>
@@ -125,15 +145,27 @@ function RulesView() {
                             {items.map((it) => {
                               const m = memory.get(it.id);
                               const mastery = describeMastery(m);
+                              const li = localizeItem(it, lang);
+                              const itemMissing = lang === "de" && !itemHasLang(it, "de");
                               return (
                                 <li
                                   key={it.id}
                                   className="flex items-center justify-between gap-2 rounded bg-slate-950/40 px-2 py-1"
                                 >
-                                  <span className="truncate">
-                                    {it.question.length > 60
-                                      ? `${it.question.slice(0, 60)}…`
-                                      : it.question}
+                                  <span className="flex min-w-0 flex-1 items-center gap-2">
+                                    <span className="truncate">
+                                      {li.question.length > 60
+                                        ? `${li.question.slice(0, 60)}…`
+                                        : li.question}
+                                    </span>
+                                    {itemMissing && (
+                                      <span
+                                        className="shrink-0 rounded bg-slate-800 px-1 py-0.5 text-[9px] uppercase tracking-wide text-slate-500"
+                                        title="No German translation yet — showing English."
+                                      >
+                                        EN
+                                      </span>
+                                    )}
                                   </span>
                                   <span
                                     className={`shrink-0 rounded px-2 py-0.5 text-[10px] uppercase tracking-wide ${mastery.cls}`}

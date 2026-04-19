@@ -180,6 +180,7 @@ export default function Review() {
       key={currentId}
       item={item}
       rules={ruleObjects}
+      lang={settings.contentLang}
       counter={`${idx + 1} / ${totalToServe}`}
       askConfidence={askConfidence}
       isLast={idx === totalToServe - 1}

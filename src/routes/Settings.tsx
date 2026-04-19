@@ -161,6 +161,28 @@ export default function Settings() {
         />
       </Field>
 
+      <Field label="Question language">
+        <select
+          value={settings.contentLang}
+          onChange={(e) =>
+            void save({ contentLang: e.target.value as "en" | "de" })
+          }
+          className="w-full rounded-lg bg-slate-800 px-3 py-2"
+        >
+          <option value="en">English</option>
+          <option value="de">Deutsch</option>
+        </select>
+        <p className="mt-1 text-xs text-slate-400">
+          The real Swiss exam is delivered in DE / FR / IT. Training in the
+          exam language helps you parse legalese under time pressure. Items
+          without a German translation fall back to English with an{" "}
+          <span className="rounded bg-slate-800 px-1 text-[10px] uppercase tracking-wide text-slate-400">
+            EN
+          </span>{" "}
+          badge in Library.
+        </p>
+      </Field>
+
       <Field label="Overlearn mastered items">
         <label className="flex items-center gap-2 text-sm">
           <input

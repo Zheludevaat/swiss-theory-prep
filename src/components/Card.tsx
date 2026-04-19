@@ -6,6 +6,11 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Item, Rule } from "@/content/schema";
+import {
+  localizeItem,
+  localizeRule,
+  type ContentLang,
+} from "@/content/localize";
 import type { GradingInput } from "@/scheduler/grading";
 import { gradeAnswer } from "@/scheduler/grading";
 
@@ -18,6 +23,11 @@ export type CardSubmission = {
 type Props = {
   item: Item;
   rules: Rule[];
+  /** Chunk 13: which language to render question/options/rationale in.
+   *  Defaults to "en" so every existing caller keeps working. Option
+   *  correctness is read from the primary Item tuple, so grading is
+   *  independent of this prop. */
+  lang?: ContentLang;
   /** When true, gate the answer reveal — used by mock exam (§8). */
   hideRationale?: boolean;
   /** When true, ask for confidence before Submit (§7.2). */
@@ -42,6 +52,7 @@ type Props = {
 export default function Card({
   item,
   rules,
+  lang = "en",
   hideRationale = false,
   askConfidence = false,
   minimalActions = false,
@@ -51,6 +62,9 @@ export default function Card({
   counter,
   isLast = false,
 }: Props) {
+  // Chunk 13: resolve the user-visible strings up-front. Memo keyed on
+  // item.id + lang so we don't reallocate on every render.
+  const localized = useMemo(() => localizeItem(item, lang), [item, lang]);
   const [ticks, setTicks] = useState<[boolean, boolean, boolean]>([
     false,
     false,
@@ -194,14 +208,14 @@ export default function Card({
             {item.imageAssetId && (
               <img
                 src={`./signs/${item.imageAssetId}`}
-                alt={item.imageAlt ?? `Swiss road sign ${item.imageAssetId.replace(/\.svg$/, "")}`}
+                alt={localized.imageAlt ?? `Swiss road sign ${item.imageAssetId.replace(/\.svg$/, "")}`}
                 className="max-h-80 w-auto"
               />
             )}
             {item.diagramAssetId && (
               <img
                 src={`./diagrams/${item.diagramAssetId}`}
-                alt={item.imageAlt ?? `Scenario diagram ${item.diagramAssetId.replace(/\.svg$/, "")}`}
+                alt={localized.imageAlt ?? `Scenario diagram ${item.diagramAssetId.replace(/\.svg$/, "")}`}
                 className="max-h-80 w-auto"
               />
             )}
@@ -209,11 +223,11 @@ export default function Card({
         </div>
       )}
 
-      <h2 className="mb-3 text-lg font-medium leading-snug">{item.question}</h2>
+      <h2 className="mb-3 text-lg font-medium leading-snug">{localized.question}</h2>
 
       {/* Options */}
       <div className="space-y-2">
-        {item.options.map((opt, idx) => {
+        {localized.options.map((opt, idx) => {
           const i = idx as 0 | 1 | 2;
           const checked = ticks[i];
           const isTruth = truth[i];
@@ -356,6 +370,8 @@ export default function Card({
           result={result}
           item={item}
           rules={rules}
+          lang={lang}
+          localized={localized}
           totalCorrectInTruth={totalCorrectInTruth}
           userCorrectMatches={userCorrectMatches}
           userTicks={ticks}
@@ -371,7 +387,7 @@ export default function Card({
               : `./diagrams/${item.diagramAssetId}`
           }
           alt={
-            item.imageAlt ??
+            localized.imageAlt ??
             (item.imageAssetId
               ? `Swiss road sign ${item.imageAssetId.replace(/\.svg$/, "")}`
               : `Scenario diagram ${item.diagramAssetId?.replace(/\.svg$/, "") ?? ""}`)
@@ -427,6 +443,8 @@ function ResultBlock({
   result,
   item,
   rules,
+  lang,
+  localized,
   totalCorrectInTruth,
   userCorrectMatches,
   userTicks,
@@ -434,6 +452,8 @@ function ResultBlock({
   result: ReturnType<typeof gradeAnswer>;
   item: Item;
   rules: Rule[];
+  lang: ContentLang;
+  localized: ReturnType<typeof localizeItem>;
   totalCorrectInTruth: number;
   userCorrectMatches: number;
   userTicks: [boolean, boolean, boolean];
@@ -444,9 +464,12 @@ function ResultBlock({
       ? { cls: "bg-yellow-950/50 border-warn text-yellow-200", label: `${result.matched} of 3 points` }
       : { cls: "bg-red-950/50 border-bad text-red-200", label: `${result.matched} of 3 points` };
 
-  const ruleSummaries = item.ruleIds
+  // Chunk 13: pull rule titles in the active language so the "Tests: …"
+  // strip matches the question/rationale language above it.
+  const ruleTitles = item.ruleIds
     .map((rid) => rules.find((r) => r.id === rid))
-    .filter(Boolean) as Rule[];
+    .filter((r): r is Rule => r !== undefined)
+    .map((r) => localizeRule(r, lang).title);
 
   return (
     <div className="mt-4 space-y-3">
@@ -458,15 +481,15 @@ function ResultBlock({
         </div>
       </div>
       <div className="rounded-xl border border-slate-800 bg-slate-900 p-3 text-sm text-slate-200">
-        <p className="leading-relaxed">{item.rationale}</p>
-        {ruleSummaries.length > 0 && (
+        <p className="leading-relaxed">{localized.rationale}</p>
+        {ruleTitles.length > 0 && (
           <div className="mt-2 text-xs text-slate-400">
-            Tests: {ruleSummaries.map((r) => r.title).join(" · ")}
+            Tests: {ruleTitles.join(" · ")}
           </div>
         )}
       </div>
       {!result.correct && (
-        <AskClaudeButton item={item} userTicks={userTicks} />
+        <AskClaudeButton localized={localized} userTicks={userTicks} />
       )}
     </div>
   );
@@ -481,31 +504,36 @@ function ResultBlock({
  * rationale is visible (so it's hidden in mock strict mode).
  */
 function AskClaudeButton({
-  item,
+  localized,
   userTicks,
 }: {
-  item: Item;
+  localized: ReturnType<typeof localizeItem>;
   userTicks: [boolean, boolean, boolean];
 }) {
   const [copied, setCopied] = useState(false);
 
+  // Chunk 13: pull the *active-language* strings into the Ask-Claude prompt
+  // so a user reviewing in German doesn't get an English transcription of
+  // a German question. The framing line stays in English because the user
+  // pastes this into claude.ai which is fluent in either; English keeps
+  // the prompt structure machine-readable for future automation.
   const prompt = useMemo(() => {
     const lines: string[] = [];
     lines.push(
-      "I'm preparing for the Swiss Cat. B driving theory exam and got this multiple-choice question wrong. Please explain it clearly, in plain English, and tell me what mental rule will help me get similar questions right next time.",
+      "I'm preparing for the Swiss Cat. B driving theory exam and got this multiple-choice question wrong. Please explain it clearly and tell me what mental rule will help me get similar questions right next time.",
       "",
-      `Question: ${item.question}`,
+      `Question: ${localized.question}`,
       "",
       "Options (multi-select; any number can be correct):",
     );
-    item.options.forEach((opt, i) => {
+    localized.options.forEach((opt, i) => {
       const ticked = userTicks[i] ? "I ticked" : "I did not tick";
       const truth = opt.correct ? "actually correct" : "actually incorrect";
       lines.push(`  ${i + 1}. ${opt.text}  —  ${ticked}; ${truth}`);
     });
-    lines.push("", `Official rationale: ${item.rationale}`);
+    lines.push("", `Official rationale: ${localized.rationale}`);
     return lines.join("\n");
-  }, [item, userTicks]);
+  }, [localized, userTicks]);
 
   async function handleClick() {
     try {
