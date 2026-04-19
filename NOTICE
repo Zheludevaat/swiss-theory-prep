@@ -58,6 +58,17 @@ upstream file) is an original composition by Swiss Theory Prep
 contributors, dedicated to the public domain under CC0 1.0 Universal:
 https://creativecommons.org/publicdomain/zero/1.0/
 
+As of Chunk 14b this covers 17 priority/intersection schematics:
+  priority-4way-unmarked.svg, priority-4way-tied.svg,
+  priority-left-turn-oncoming.svg, priority-driveway.svg,
+  priority-yield-line.svg, roundabout-1lane-yield.svg,
+  roundabout-signal-exit.svg, roundabout-2lane-lane-choice.svg,
+  roundabout-2lane-cyclist.svg, tram-cross-from-left.svg,
+  tram-left-turn.svg, tram-narrow-street.svg,
+  emergency-approach-rear.svg, emergency-at-red.svg,
+  school-bus-stopped.svg, bus-leaving-stop.svg,
+  mountain-descend-ascend.svg.
+
 
 Application code
 ----------------

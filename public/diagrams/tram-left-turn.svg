@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-labelledby="t d">
+  <title id="t">Left turn across a tram — tram has priority</title>
+  <desc id="d">Blue car from the bottom wants to turn left across the crossing. An amber tram is coming straight on from the top along the same rails. Both tram priority and the left-turn-yields-to-oncoming rule put the blue car in wait status.</desc>
+  <rect width="400" height="400" fill="#0f172a"/>
+  <rect x="0" y="0" width="140" height="140" fill="#1e293b"/>
+  <rect x="260" y="0" width="140" height="140" fill="#1e293b"/>
+  <rect x="0" y="260" width="140" height="140" fill="#1e293b"/>
+  <rect x="260" y="260" width="140" height="140" fill="#1e293b"/>
+  <rect x="140" y="0" width="120" height="400" fill="#475569"/>
+  <rect x="0" y="140" width="400" height="120" fill="#475569"/>
+  <g stroke="#e2e8f0" stroke-width="3" stroke-dasharray="12 10" fill="none">
+    <line x1="0" y1="200" x2="140" y2="200"/>
+    <line x1="260" y1="200" x2="400" y2="200"/>
+  </g>
+  <!-- central tram tracks (vertical) -->
+  <g stroke="#1e293b" stroke-width="3" fill="none">
+    <line x1="188" y1="0" x2="188" y2="400"/>
+    <line x1="212" y1="0" x2="212" y2="400"/>
+  </g>
+  <g stroke="#94a3b8" stroke-width="1" stroke-dasharray="6 6" fill="none">
+    <line x1="188" y1="0" x2="188" y2="400"/>
+    <line x1="212" y1="0" x2="212" y2="400"/>
+  </g>
+  <!-- tram from top -->
+  <g transform="translate(170 20)">
+    <rect x="0" y="0" width="60" height="140" rx="6" fill="#f59e0b" stroke="#92400e" stroke-width="2"/>
+    <rect x="8" y="10" width="44" height="120" fill="#fde68a"/>
+    <rect x="22" y="132" width="16" height="8" fill="#7f1d1d"/>
+    <text x="30" y="78" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" font-size="14" fill="#7f1d1d">TRAM</text>
+  </g>
+  <!-- blue you from bottom, left blinker on -->
+  <g transform="translate(160 300)">
+    <rect x="0" y="0" width="40" height="60" rx="8" fill="#2563eb" stroke="#1e3a8a" stroke-width="2"/>
+    <rect x="6" y="8" width="28" height="14" fill="#bfdbfe"/>
+    <rect x="6" y="38" width="28" height="14" fill="#bfdbfe"/>
+    <polygon points="20,-6 12,6 28,6" fill="#fbbf24"/>
+    <circle cx="2" cy="5" r="5" fill="#fde047" stroke="#ca8a04" stroke-width="1.5"/>
+    <text x="20" y="34" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="700" font-size="14" fill="#fff">YOU</text>
+  </g>
+  <!-- waiting left-turn path (dashed) -->
+  <g fill="none" stroke="#f87171" stroke-width="4" stroke-dasharray="8 6" stroke-linecap="round">
+    <path d="M 180,300 Q 180,200 60,200"/>
+  </g>
+  <text x="30" y="175" font-family="system-ui,sans-serif" font-weight="700" font-size="13" fill="#f87171">wait</text>
+  <!-- tram priority arrow -->
+  <g fill="none" stroke="#fbbf24" stroke-width="5" stroke-linecap="round">
+    <path d="M 200,160 L 200,260"/>
+    <polygon points="200,272 190,256 210,256" fill="#fbbf24" stroke="none"/>
+  </g>
+</svg>

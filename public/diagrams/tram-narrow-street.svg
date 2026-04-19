@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-labelledby="t d">
+  <title id="t">Narrow town street — car pulls aside to let a tram pass</title>
+  <desc id="d">A narrow one-way-ish street with tram tracks running up the centre. An amber tram approaches from behind. The blue car in front has steered to the right gap to let the tram pass.</desc>
+  <rect width="400" height="400" fill="#0f172a"/>
+  <!-- narrow road -->
+  <rect x="80" y="0" width="240" height="400" fill="#475569"/>
+  <!-- pavement -->
+  <rect x="60" y="0" width="20" height="400" fill="#1e293b"/>
+  <rect x="320" y="0" width="20" height="400" fill="#1e293b"/>
+  <!-- shopfronts hint -->
+  <g fill="#0f172a" stroke="#334155" stroke-width="1">
+    <rect x="0" y="40" width="60" height="50"/>
+    <rect x="0" y="110" width="60" height="50"/>
+    <rect x="0" y="180" width="60" height="50"/>
+    <rect x="0" y="250" width="60" height="50"/>
+    <rect x="340" y="40" width="60" height="50"/>
+    <rect x="340" y="110" width="60" height="50"/>
+    <rect x="340" y="180" width="60" height="50"/>
+    <rect x="340" y="250" width="60" height="50"/>
+  </g>
+  <!-- tram tracks centre -->
+  <g stroke="#1e293b" stroke-width="3" fill="none">
+    <line x1="188" y1="0" x2="188" y2="400"/>
+    <line x1="212" y1="0" x2="212" y2="400"/>
+  </g>
+  <g stroke="#94a3b8" stroke-width="1" stroke-dasharray="6 6" fill="none">
+    <line x1="188" y1="0" x2="188" y2="400"/>
+    <line x1="212" y1="0" x2="212" y2="400"/>
+  </g>
+  <!-- tram from rear (bottom), heading up -->
+  <g transform="translate(170 280)">
+    <rect x="0" y="0" width="60" height="120" rx="6" fill="#f59e0b" stroke="#92400e" stroke-width="2"/>
+    <rect x="8" y="10" width="44" height="100" fill="#fde68a"/>
+    <rect x="22" y="-6" width="16" height="8" fill="#7f1d1d"/>
+    <text x="30" y="68" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" font-size="14" fill="#7f1d1d">TRAM</text>
+  </g>
+  <!-- blue car pulled aside to the right -->
+  <g transform="translate(280 120)">
+    <rect x="0" y="0" width="40" height="60" rx="8" fill="#2563eb" stroke="#1e3a8a" stroke-width="2"/>
+    <rect x="6" y="8" width="28" height="14" fill="#bfdbfe"/>
+    <rect x="6" y="38" width="28" height="14" fill="#bfdbfe"/>
+    <polygon points="20,-6 12,6 28,6" fill="#fbbf24"/>
+    <text x="20" y="34" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="700" font-size="14" fill="#fff">YOU</text>
+  </g>
+  <!-- sidestep arrow -->
+  <g fill="none" stroke="#22c55e" stroke-width="4" stroke-linecap="round">
+    <path d="M 220,160 Q 260,160 280,150"/>
+    <polygon points="285,148 272,142 274,156" fill="#22c55e" stroke="none"/>
+  </g>
+  <!-- tram priority arrow -->
+  <g fill="none" stroke="#fbbf24" stroke-width="5" stroke-linecap="round">
+    <path d="M 200,270 L 200,70"/>
+    <polygon points="200,60 190,78 210,78" fill="#fbbf24" stroke="none"/>
+  </g>
+</svg>

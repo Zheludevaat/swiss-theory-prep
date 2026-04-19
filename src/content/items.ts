@@ -11,6 +11,9 @@ export const seedItems: Item[] = [
     ruleIds: ["priority.right-hand.default"],
     question:
       "At an unmarked four-way intersection in a residential area, who has priority?",
+    diagramAssetId: "priority-4way-unmarked.svg",
+    imageAlt:
+      "Top view of an unmarked four-way intersection. Your blue car enters from the bottom; a red car enters from the right. An amber priority arrow follows the red car straight across — right-of-way flows from the right.",
     options: [
       { text: "The vehicle approaching from your right", correct: true },
       { text: "The vehicle on the wider road", correct: false },
@@ -30,12 +33,17 @@ export const seedItems: Item[] = [
       ],
       rationale:
         "Solange keine Signale oder Markierungen etwas anderes vorschreiben, gilt an allen Verzweigungen der Rechtsvortritt (VRV Art. 36).",
+      imageAlt:
+        "Draufsicht auf eine unsignalisierte Vier-Wege-Kreuzung. Ihr blaues Fahrzeug kommt von unten; ein rotes Fahrzeug kommt von rechts. Ein gelber Vortrittspfeil folgt dem roten Fahrzeug quer durch die Kreuzung — der Vortritt kommt von rechts.",
     },
   },
   {
     id: "q.priority.roundabout.yield",
     ruleIds: ["priority.roundabout"],
     question: "You are approaching a single-lane roundabout. What applies?",
+    diagramAssetId: "roundabout-1lane-yield.svg",
+    imageAlt:
+      "Single-lane roundabout seen from above. Your blue car is stopped at a dashed yield line on the bottom approach. A red car is already circulating and carries the amber priority arrow.",
     options: [
       { text: "Traffic already inside the roundabout has priority", correct: true },
       { text: "You must stop even if the circle is empty", correct: false },
@@ -54,12 +62,17 @@ export const seedItems: Item[] = [
       ],
       rationale:
         "Der Verkehr im Kreisel hat Vortritt. Bei freiem Kreisel dürfen Sie ohne Halt einfahren; rechts blinken nur beim Verlassen.",
+      imageAlt:
+        "Einspuriger Kreisverkehr in der Draufsicht. Ihr blaues Fahrzeug steht an einer unterbrochenen Wartelinie auf der unteren Zufahrt. Ein rotes Fahrzeug fährt bereits im Kreisel und trägt den gelben Vortrittspfeil.",
     },
   },
   {
     id: "q.priority.roundabout.signal",
     ruleIds: ["priority.roundabout"],
     question: "Which statements about signalling in a roundabout are correct?",
+    diagramAssetId: "roundabout-signal-exit.svg",
+    imageAlt:
+      "Single-lane roundabout in top view. A blue car circulates anti-clockwise and is about to take the east exit. A yellow right-hand blinker is shown on the car, and a badge below reads 'no signal on entry'.",
     options: [
       { text: "Signal right just before the exit", correct: true },
       { text: "Signal left while circulating past exits you skip", correct: false },
@@ -78,12 +91,17 @@ export const seedItems: Item[] = [
       ],
       rationale:
         "Schweizer Praxis: kein Blinker bei der Einfahrt; rechts blinken erst unmittelbar vor der gewählten Ausfahrt.",
+      imageAlt:
+        "Einspuriger Kreisverkehr in der Draufsicht. Ein blaues Fahrzeug fährt gegen den Uhrzeigersinn und setzt unmittelbar vor der östlichen Ausfahrt den rechten Blinker. Ein Hinweisfeld darunter zeigt: kein Blinker bei der Einfahrt.",
     },
   },
   {
     id: "q.priority.tram.cross",
     ruleIds: ["priority.tram"],
     question: "A tram approaches from your left at an unmarked intersection. You:",
+    diagramAssetId: "tram-cross-from-left.svg",
+    imageAlt:
+      "Unsignalised crossroads. Rails cross the horizontal road; an amber tram is approaching from the left along the rails. Your blue car from the bottom carries a yield triangle and the amber priority arrow follows the tram across.",
     options: [
       { text: "Have priority because the tram is on your left", correct: false },
       { text: "Must yield to the tram", correct: true },
@@ -103,6 +121,8 @@ export const seedItems: Item[] = [
       ],
       rationale:
         "Strassenbahnen haben immer Vortritt — das geht dem Rechtsvortritt vor (SVG Art. 38).",
+      imageAlt:
+        "Unsignalisierte Kreuzung. Schienen queren die horizontale Strasse; von links nähert sich ein bernsteinfarbenes Tram. Ihr blaues Fahrzeug von unten trägt ein Vortrittsdreieck, der gelbe Vortrittspfeil folgt dem Tram.",
     },
   },
   {
@@ -110,6 +130,9 @@ export const seedItems: Item[] = [
     ruleIds: ["priority.emergency-vehicles"],
     question:
       "An emergency vehicle with blue lights and siren approaches from behind. You:",
+    diagramAssetId: "emergency-approach-rear.svg",
+    imageAlt:
+      "Two-lane road seen from above. A white ambulance with blue flashing lights is directly behind a blue car. The blue car has sidestepped right toward the lane edge so the ambulance can pass on the left.",
     options: [
       { text: "Pull over as far right as safe and let it pass", correct: true },
       { text: "Stop immediately in your lane", correct: false },
@@ -129,6 +152,8 @@ export const seedItems: Item[] = [
       ],
       rationale:
         "Einsatzfahrzeuge mit Blaulicht und Wechselklanghorn haben Vortritt. Platz machen durch Ausweichen nach rechts; Anhalten auf der Spur kann die Durchfahrt blockieren.",
+      imageAlt:
+        "Zweispurige Strasse in der Draufsicht. Hinter einem blauen Fahrzeug nähert sich ein weisser Rettungswagen mit Blaulicht. Das blaue Fahrzeug ist nach rechts an den Fahrbahnrand ausgewichen, damit der Rettungswagen links vorbeifahren kann.",
     },
   },
   {
@@ -136,6 +161,9 @@ export const seedItems: Item[] = [
     ruleIds: ["priority.yielding-on-entry"],
     question:
       "You are leaving a supermarket car park to join a busy main road. Which is correct?",
+    diagramAssetId: "priority-driveway.svg",
+    imageAlt:
+      "A through-road runs horizontally with cars in both directions. A blue car emerges from a private driveway stub at the bottom. A yield triangle on the blue car shows it must give way to every vehicle on the main road.",
     options: [
       { text: "Yield to all traffic on the priority road in both directions", correct: true },
       { text: "You may join if a 2-second gap exists, even if the approaching driver must brake", correct: false },
@@ -155,6 +183,8 @@ export const seedItems: Item[] = [
       ],
       rationale:
         "Beim Einfahren aus einem Privatgrundstück oder einer Nebenstrasse: Vortritt gewähren in beiden Richtungen. Einbiegen nur, wenn kein anderer Fahrzeuglenker bremsen muss (VRV Art. 15).",
+      imageAlt:
+        "Eine horizontale Durchgangsstrasse mit Fahrzeugen in beiden Richtungen. Ein blaues Fahrzeug kommt aus einer privaten Einfahrt von unten. Ein Vortrittsdreieck am blauen Fahrzeug zeigt: beiden Fahrtrichtungen auf der Hauptstrasse den Vortritt gewähren.",
     },
   },
   {
@@ -193,6 +223,9 @@ export const seedItems: Item[] = [
     ruleIds: ["priority.school-bus"],
     question:
       "A school bus is stopped at the roadside with flashing yellow warning lights. You:",
+    diagramAssetId: "school-bus-stopped.svg",
+    imageAlt:
+      "A yellow school bus is stopped against the right kerb with four amber hazard lights flashing and two child pictograms on the pavement. A blue car approaches in the left lane at walking pace, marked with a 5 km/h indicator.",
     options: [
       { text: "Pass at walking pace, ready to stop", correct: true },
       { text: "Maintain the posted speed if your lane is clear", correct: false },
@@ -212,6 +245,8 @@ export const seedItems: Item[] = [
       ],
       rationale:
         "Gelb blinkende Warnleuchten an einem stehenden Schulbus: in Schrittgeschwindigkeit vorbeifahren und mit plötzlich heraustretenden Kindern rechnen (VRV Art. 18).",
+      imageAlt:
+        "Ein gelber Schulbus steht am rechten Strassenrand mit vier bernsteinfarbenen Warnblinkleuchten und zwei Kinder-Piktogrammen auf dem Trottoir. Ein blaues Fahrzeug fährt auf der linken Spur in Schrittgeschwindigkeit vorbei; eine Tachoanzeige zeigt ~5 km/h.",
     },
   },
 
@@ -2156,6 +2191,9 @@ export const seedItems: Item[] = [
     ruleIds: ["priority.right-hand.default"],
     question:
       "At an unmarked four-way intersection three cars arrive at exactly the same instant: you, a car directly opposite you, and a car on your right. Who goes first?",
+    diagramAssetId: "priority-4way-tied.svg",
+    imageAlt:
+      "Top view of an unmarked four-way intersection. Your blue car enters from the south, a red car from the east (your right), a green car from the north (opposite you). Badges labelled 1, 2, 2 show the right-hand car goes first, then you and the opposite driver resolve the remainder.",
     options: [
       { text: "The car on your right — it has priority over you and the opposite car", correct: true },
       { text: "All three may proceed simultaneously since arrival was tied", correct: false },
@@ -2175,6 +2213,8 @@ export const seedItems: Item[] = [
       ],
       rationale:
         "Der Vortritt kommt immer von rechts (VRV Art. 36). Das entgegenkommende Fahrzeug ist solange irrelevant, bis das Fahrzeug von rechts die Kreuzung freigegeben hat.",
+      imageAlt:
+        "Draufsicht einer unsignalisierten Vier-Wege-Kreuzung. Ihr blaues Auto kommt von Süden, ein rotes Auto von Osten (von rechts), ein grünes Auto von Norden (gegenüber). Abzeichen 1, 2, 2 zeigen: das Fahrzeug von rechts fährt zuerst, Sie und das gegenüberliegende Fahrzeug lösen den Rest.",
     },
   },
   {
@@ -2182,6 +2222,9 @@ export const seedItems: Item[] = [
     ruleIds: ["priority.right-hand.default"],
     question:
       "You and an oncoming car are both at an unmarked intersection. The oncoming driver wants to turn left across your path. You want to go straight. Who has priority?",
+    diagramAssetId: "priority-left-turn-oncoming.svg",
+    imageAlt:
+      "Top view of an intersection. Your blue car (south) goes straight with an amber priority arrow. An oncoming red car (north) signals left and waits along a dashed turning path until you clear.",
     options: [
       { text: "You — straight-ahead has priority over a turning oncoming car", correct: true },
       { text: "The oncoming car, because it arrived first", correct: false },
@@ -2201,6 +2244,8 @@ export const seedItems: Item[] = [
       ],
       rationale:
         "Wer links abbiegt, muss dem entgegenkommenden Verkehr (geradeaus oder rechts abbiegend) den Vortritt gewähren (VRV Art. 36 Abs. 3).",
+      imageAlt:
+        "Draufsicht einer Kreuzung. Ihr blaues Auto (Süden) fährt geradeaus mit einem bernsteinfarbenen Vortrittspfeil. Ein entgegenkommendes rotes Auto (Norden) blinkt links und wartet auf einer gestrichelten Abbiegelinie, bis Sie die Kreuzung freigegeben haben.",
     },
   },
   {
@@ -2208,6 +2253,9 @@ export const seedItems: Item[] = [
     ruleIds: ["priority.right-hand.default"],
     question:
       "You are leaving a private driveway onto a normal residential street. Traffic on the street is approaching from your left. You:",
+    diagramAssetId: "priority-driveway.svg",
+    imageAlt:
+      "Top view: your blue car emerges from a paved driveway onto a residential street. Amber priority arrows show through-traffic travelling both directions on the main street; a white yield triangle sits in front of your car.",
     options: [
       { text: "Must yield to all traffic on the street", correct: true },
       { text: "Have priority because traffic on the street is on your left", correct: false },
@@ -2227,6 +2275,8 @@ export const seedItems: Item[] = [
       ],
       rationale:
         "Wer aus einer Einfahrt, einem Parkplatz, einem Feldweg oder einem Trottoir auf die Strasse fährt, muss immer Vortritt gewähren (VRV Art. 15) — der Rechtsvortritt gilt hier nicht.",
+      imageAlt:
+        "Draufsicht: Ihr blaues Auto verlässt eine Einfahrt und fährt auf eine Quartierstrasse. Bernsteinfarbene Vortrittspfeile zeigen den Durchgangsverkehr in beide Richtungen; ein weisses Vortrittsdreieck liegt vor Ihrem Fahrzeug.",
     },
   },
   {
@@ -2234,6 +2284,9 @@ export const seedItems: Item[] = [
     ruleIds: ["priority.tram"],
     question:
       "On a narrow town street a tram is approaching from behind you. You should:",
+    diagramAssetId: "tram-narrow-street.svg",
+    imageAlt:
+      "Narrow city street with tram rails down the middle. Your blue car has pulled partly to the right to free the rails; an amber tram follows on the rails with a priority arrow.",
     options: [
       { text: "Pull aside to the right where possible to let the tram pass", correct: true },
       { text: "Speed up to stay ahead until the next side street", correct: false },
@@ -2253,6 +2306,8 @@ export const seedItems: Item[] = [
       ],
       rationale:
         "Strassenbahnen haben auf den Schienen absoluten Vortritt (VRV Art. 38). Ist die Strasse zu schmal, muss das Privatfahrzeug ausweichen.",
+      imageAlt:
+        "Enge Stadtstrasse mit Tramschienen in der Mitte. Ihr blaues Auto hat leicht nach rechts ausgewichen, um die Schienen freizugeben; ein bernsteinfarbenes Tram folgt auf den Schienen mit Vortrittspfeil.",
     },
   },
   {
@@ -2260,6 +2315,9 @@ export const seedItems: Item[] = [
     ruleIds: ["priority.emergency-vehicles"],
     question:
       "An ambulance with blue lights and siren approaches the intersection where you are stopped first in line at a red light. You should:",
+    diagramAssetId: "emergency-at-red.svg",
+    imageAlt:
+      "Four-way intersection with a red signal. Your blue car eases forward past the stop line along a green dashed path so an ambulance waiting directly behind can pass straight through.",
     options: [
       { text: "Move into the intersection only as far as needed to let it pass, even if your light is red", correct: true },
       { text: "Stay at the line and wait — running a red is always illegal", correct: false },
@@ -2279,6 +2337,8 @@ export const seedItems: Item[] = [
       ],
       rationale:
         "VRV Art. 27 Abs. 2 verpflichtet alle Verkehrsteilnehmer, Einsatzfahrzeugen freie Fahrt zu verschaffen — wenn nötig und gefahrlos auch durch Einfahren in die Kreuzung bei Rot.",
+      imageAlt:
+        "Vier-Wege-Kreuzung mit Rotlicht. Ihr blaues Auto rollt leicht über die Haltelinie auf einer grün-gestrichelten Linie vor, damit ein direkt hinter Ihnen wartender Krankenwagen die Kreuzung passieren kann.",
     },
   },
   {
@@ -2317,6 +2377,9 @@ export const seedItems: Item[] = [
     ruleIds: ["priority.school-bus"],
     question:
       "A school bus is stopped at the kerb with its hazard lights flashing and children visible in the doorway. You should:",
+    diagramAssetId: "school-bus-stopped.svg",
+    imageAlt:
+      "A yellow school bus stopped at the right-hand kerb with four amber hazard lights blinking and two child pictograms beside the door. Your blue car approaches in the opposite lane at about 5 km/h — the slow-pace indicator is shown in green.",
     options: [
       { text: "Pass at walking pace, ready to stop, leaving extra clearance", correct: true },
       { text: "Maintain the posted speed since it is the bus driver's responsibility to keep children safe", correct: false },
@@ -2336,6 +2399,8 @@ export const seedItems: Item[] = [
       ],
       rationale:
         "VRV Art. 6 verpflichtet Sie, an haltenden Fahrzeugen des öffentlichen Verkehrs langsam und besonders vorsichtig vorbeizufahren, insbesondere wenn Kinder zugegen sind.",
+      imageAlt:
+        "Ein gelber Schulbus steht am rechten Strassenrand mit vier blinkenden Warnblinkleuchten und zwei Kinder-Piktogrammen neben der Tür. Ihr blaues Auto nähert sich in der Gegenspur mit etwa 5 km/h — der Schrittgeschwindigkeits-Indikator ist grün dargestellt.",
     },
   },
   {
@@ -2343,6 +2408,9 @@ export const seedItems: Item[] = [
     ruleIds: ["priority.school-bus"],
     question:
       "You are passing a town bus stop. The bus has just signalled left to rejoin traffic. You should:",
+    diagramAssetId: "bus-leaving-stop.svg",
+    imageAlt:
+      "Town street with a 50 km/h roundel and a yellow 'H' bus-stop sign. A city bus is at the kerb signalling left to pull away; your blue car is slowing behind it with a white yield triangle and an amber priority arrow showing the bus rejoining the lane.",
     options: [
       { text: "Reduce speed and let the bus rejoin — it has priority on built-up streets", correct: true },
       { text: "Maintain speed; signalling alone does not transfer priority", correct: false },
@@ -2358,6 +2426,9 @@ export const seedItems: Item[] = [
     ruleIds: ["priority.roundabout"],
     question:
       "On a two-lane roundabout, which of these are correct?",
+    diagramAssetId: "roundabout-2lane-lane-choice.svg",
+    imageAlt:
+      "Top view of a two-lane roundabout. Your blue car enters in the outer lane with a solid arrow to the first exit; a dashed green path shows the inner-lane route for a later exit.",
     options: [
       { text: "Choose the lane that matches your exit before entering", correct: true },
       { text: "Signal right just before the exit you take", correct: true },
@@ -2373,6 +2444,9 @@ export const seedItems: Item[] = [
     ruleIds: ["priority.yielding-on-entry"],
     question:
       "You are stopped at a give-way line. Two cars are approaching on the priority road but are still 200 m away. You may:",
+    diagramAssetId: "priority-yield-line.svg",
+    imageAlt:
+      "T-junction with a give-way triangle sign and a dashed yield line. Your blue car is stopped at the line on the side road while priority-road traffic flows across the top, marked with amber priority arrows.",
     options: [
       { text: "Enter only if you can complete the manoeuvre without forcing the approaching cars to brake", correct: true },
       { text: "Enter immediately since the cars are far away", correct: false },
@@ -2388,6 +2462,9 @@ export const seedItems: Item[] = [
     ruleIds: ["mountain.ascending", "mountain.heavy-vehicle-priority", "adverse.winter-tires"],
     question:
       "On a narrow mountain road in winter you are descending. An ascending lorry on chains and a small ascending bus meet you at a passing place. Who must yield first?",
+    diagramAssetId: "mountain-descend-ascend.svg",
+    imageAlt:
+      "Winding narrow mountain road with a small passing bulge. Your descending blue car has pulled into the passing place while an ascending red car continues up with an amber priority arrow.",
     options: [
       { text: "You — descending vehicles yield to ascending vehicles, regardless of size", correct: true },
       { text: "The lorry — it is the heaviest vehicle", correct: false },
@@ -2403,6 +2480,9 @@ export const seedItems: Item[] = [
     ruleIds: ["priority.tram"],
     question:
       "You want to turn left at an intersection. A tram is approaching head-on, signalling for the same crossing. You:",
+    diagramAssetId: "tram-left-turn.svg",
+    imageAlt:
+      "Intersection top view: your blue car signals a left turn and waits on a dashed turning path. An oncoming amber tram on rails advances with a priority arrow.",
     options: [
       { text: "Wait — the tram has priority and your left turn must yield", correct: true },
       { text: "Turn first because the tram has further to travel", correct: false },
@@ -3438,6 +3518,9 @@ export const seedItems: Item[] = [
     ruleIds: ["priority.school-bus", "speeds.adapted-speed", "adverse.winter-tires"],
     question:
       "On a snowy mountain road a school bus is stopped with hazards on; children are visible at the kerb side. You are descending and your tyres are summer tyres. The right approach is to:",
+    diagramAssetId: "school-bus-stopped.svg",
+    imageAlt:
+      "A yellow school bus stopped at the kerb with four amber hazard lights blinking and child pictograms beside the door. Your blue car approaches at about 5 km/h — the slow-pace indicator is shown in green.",
     options: [
       { text: "Slow well below safe stopping speed for the surface, prepare to stop, and pass at walking pace if at all", correct: true },
       { text: "Pass at the posted limit since the bus is stopped on the verge", correct: false },
@@ -3559,6 +3642,9 @@ export const seedItems: Item[] = [
     ruleIds: ["priority.tram", "priority.right-hand.default"],
     question:
       "At an unsignalised intersection you want to turn left. A tram is approaching from your left, and a car is approaching from your right. You should:",
+    diagramAssetId: "tram-left-turn.svg",
+    imageAlt:
+      "Intersection top view: your blue car signals a left turn and waits on a dashed turning path while an oncoming amber tram on rails advances with a priority arrow — an analogous yielding scenario.",
     options: [
       { text: "Yield to both — the tram has priority over you AND the car from your right does too", correct: true },
       { text: "Yield only to the tram", correct: false },
@@ -3634,6 +3720,9 @@ export const seedItems: Item[] = [
     ruleIds: ["priority.tram", "priority.emergency-vehicles"],
     question:
       "A tram is approaching a junction with priority when an ambulance behind you switches on siren and blue lights. What takes precedence?",
+    diagramAssetId: "emergency-approach-rear.svg",
+    imageAlt:
+      "Two-lane road top view: your blue car has pulled right to clear the inside lane; an ambulance with blue lights advances behind you with an amber priority arrow.",
     options: [
       { text: "Make way for the ambulance first, even if it means delaying the tram's path", correct: true },
       { text: "Finish yielding to the tram before reacting to the ambulance", correct: false },
@@ -3649,6 +3738,9 @@ export const seedItems: Item[] = [
     ruleIds: ["priority.roundabout", "maneuvers.overtaking-left"],
     question:
       "Two-lane roundabout: you entered in the outer lane but want the second exit. A cyclist is riding near the outer edge ahead of you.",
+    diagramAssetId: "roundabout-2lane-cyclist.svg",
+    imageAlt:
+      "Top view of a two-lane roundabout. Your blue car is behind a cyclist in the outer lane. A green arrow marks 'stay and exit'; a red crossed-out path marks 'do not change lanes to overtake'.",
     options: [
       { text: "Stay behind the cyclist, hold the outer lane, and take the second exit without overtaking in the roundabout", correct: true },
       { text: "Swing to the inner lane to pass, then cross back for the exit", correct: false },

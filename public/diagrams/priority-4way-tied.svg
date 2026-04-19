@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-labelledby="t d">
+  <title id="t">Three cars tied at an unmarked four-way — the right-hand car goes first</title>
+  <desc id="d">Blue car from the bottom, green car from the top, red car from the right all arrive at the same instant. Numbered arrows show order: 1 red (from right), 2 green and blue wait in sequence, because right-of-way flows from the right.</desc>
+  <rect width="400" height="400" fill="#0f172a"/>
+  <rect x="0" y="0" width="140" height="140" fill="#1e293b"/>
+  <rect x="260" y="0" width="140" height="140" fill="#1e293b"/>
+  <rect x="0" y="260" width="140" height="140" fill="#1e293b"/>
+  <rect x="260" y="260" width="140" height="140" fill="#1e293b"/>
+  <rect x="140" y="0" width="120" height="400" fill="#475569"/>
+  <rect x="0" y="140" width="400" height="120" fill="#475569"/>
+  <g stroke="#e2e8f0" stroke-width="3" stroke-dasharray="12 10" fill="none">
+    <line x1="200" y1="0" x2="200" y2="140"/>
+    <line x1="200" y1="260" x2="200" y2="400"/>
+    <line x1="0" y1="200" x2="140" y2="200"/>
+    <line x1="260" y1="200" x2="400" y2="200"/>
+  </g>
+  <!-- you (blue) from bottom -->
+  <g transform="translate(180 310)">
+    <rect x="0" y="0" width="40" height="60" rx="8" fill="#2563eb" stroke="#1e3a8a" stroke-width="2"/>
+    <rect x="6" y="8" width="28" height="14" fill="#bfdbfe"/>
+    <rect x="6" y="38" width="28" height="14" fill="#bfdbfe"/>
+    <polygon points="20,-6 12,6 28,6" fill="#fbbf24"/>
+    <text x="20" y="34" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="700" font-size="16" fill="#fff">YOU</text>
+  </g>
+  <!-- opposite (green) from top -->
+  <g transform="translate(180 30)">
+    <rect x="0" y="0" width="40" height="60" rx="8" fill="#16a34a" stroke="#14532d" stroke-width="2"/>
+    <rect x="6" y="8" width="28" height="14" fill="#bbf7d0"/>
+    <rect x="6" y="38" width="28" height="14" fill="#bbf7d0"/>
+    <polygon points="20,66 12,54 28,54" fill="#fbbf24"/>
+  </g>
+  <!-- right (red) from right -->
+  <g transform="translate(310 180)">
+    <rect x="0" y="0" width="60" height="40" rx="8" fill="#dc2626" stroke="#7f1d1d" stroke-width="2"/>
+    <rect x="8" y="6" width="14" height="28" fill="#fecaca"/>
+    <rect x="38" y="6" width="14" height="28" fill="#fecaca"/>
+    <polygon points="-6,20 6,12 6,28" fill="#fbbf24"/>
+  </g>
+  <!-- order badges -->
+  <g font-family="system-ui,sans-serif" font-weight="800" font-size="22" fill="#0f172a">
+    <circle cx="340" cy="160" r="18" fill="#fbbf24" stroke="#b45309" stroke-width="2"/>
+    <text x="340" y="168" text-anchor="middle">1</text>
+    <circle cx="230" cy="340" r="18" fill="#cbd5e1" stroke="#475569" stroke-width="2"/>
+    <text x="230" y="348" text-anchor="middle">2</text>
+    <circle cx="230" cy="60" r="18" fill="#cbd5e1" stroke="#475569" stroke-width="2"/>
+    <text x="230" y="68" text-anchor="middle">2</text>
+  </g>
+</svg>

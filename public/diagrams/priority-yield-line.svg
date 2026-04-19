@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-labelledby="t d">
+  <title id="t">Give-way at a yield line — may only enter if the priority road is not forced to brake</title>
+  <desc id="d">T-junction: priority road runs left to right across the top; a yield line and inverted-triangle give-way sign mark the minor road at the bottom. The blue car waits at the line. Two far-off cars are on the priority road.</desc>
+  <rect width="400" height="400" fill="#0f172a"/>
+  <rect x="0" y="0" width="140" height="140" fill="#1e293b"/>
+  <rect x="260" y="0" width="140" height="140" fill="#1e293b"/>
+  <rect x="0" y="260" width="140" height="400" fill="#1e293b"/>
+  <rect x="260" y="260" width="140" height="400" fill="#1e293b"/>
+  <!-- priority road horizontal -->
+  <rect x="0" y="140" width="400" height="120" fill="#475569"/>
+  <!-- minor road vertical (bottom stub) -->
+  <rect x="140" y="260" width="120" height="140" fill="#475569"/>
+  <g stroke="#e2e8f0" stroke-width="3" stroke-dasharray="12 10" fill="none">
+    <line x1="0" y1="200" x2="400" y2="200"/>
+    <line x1="200" y1="260" x2="200" y2="400"/>
+  </g>
+  <!-- yield line (double dashed) at the mouth of the minor road -->
+  <g stroke="#f8fafc" stroke-width="4" fill="none" stroke-dasharray="14 8">
+    <line x1="140" y1="263" x2="260" y2="263"/>
+    <line x1="140" y1="272" x2="260" y2="272"/>
+  </g>
+  <!-- give-way sign beside the line -->
+  <g transform="translate(270 270)">
+    <polygon points="0,-22 22,22 -22,22" fill="#f8fafc" stroke="#b91c1c" stroke-width="4"/>
+  </g>
+  <!-- blue car waiting -->
+  <g transform="translate(180 290)">
+    <rect x="0" y="0" width="40" height="60" rx="8" fill="#2563eb" stroke="#1e3a8a" stroke-width="2"/>
+    <rect x="6" y="8" width="28" height="14" fill="#bfdbfe"/>
+    <rect x="6" y="38" width="28" height="14" fill="#bfdbfe"/>
+    <polygon points="20,-6 12,6 28,6" fill="#fbbf24"/>
+    <text x="20" y="34" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="700" font-size="16" fill="#fff">YOU</text>
+  </g>
+  <!-- cars on priority road (far apart) -->
+  <g transform="translate(30 170)">
+    <rect x="0" y="0" width="60" height="40" rx="8" fill="#16a34a" stroke="#14532d" stroke-width="2"/>
+    <rect x="8" y="6" width="14" height="28" fill="#bbf7d0"/>
+    <rect x="38" y="6" width="14" height="28" fill="#bbf7d0"/>
+    <polygon points="66,20 54,12 54,28" fill="#fbbf24"/>
+  </g>
+  <g transform="translate(310 215)">
+    <rect x="0" y="0" width="60" height="40" rx="8" fill="#dc2626" stroke="#7f1d1d" stroke-width="2"/>
+    <rect x="8" y="6" width="14" height="28" fill="#fecaca"/>
+    <rect x="38" y="6" width="14" height="28" fill="#fecaca"/>
+    <polygon points="-6,20 6,12 6,28" fill="#fbbf24"/>
+  </g>
+  <!-- priority arrows -->
+  <g fill="#fbbf24" stroke="none">
+    <polygon points="100,190 120,200 100,210"/>
+    <polygon points="300,190 280,200 300,210"/>
+  </g>
+</svg>

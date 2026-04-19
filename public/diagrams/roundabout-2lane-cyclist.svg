@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-labelledby="t d">
+  <title id="t">Two-lane roundabout — do not overtake a cyclist inside the circle</title>
+  <desc id="d">Blue car is behind a cyclist in the outer lane of a two-lane roundabout. A red crossed-out arrow forbids switching to the inner lane to overtake; a green tick shows staying behind the cyclist to the next exit is the correct choice.</desc>
+  <rect width="400" height="400" fill="#0f172a"/>
+  <rect x="0" y="0" width="140" height="140" fill="#1e293b"/>
+  <rect x="260" y="0" width="140" height="140" fill="#1e293b"/>
+  <rect x="0" y="260" width="140" height="400" fill="#1e293b"/>
+  <rect x="260" y="260" width="140" height="400" fill="#1e293b"/>
+  <rect x="140" y="0" width="120" height="400" fill="#475569"/>
+  <rect x="0" y="140" width="400" height="120" fill="#475569"/>
+  <circle cx="200" cy="200" r="120" fill="#475569"/>
+  <circle cx="200" cy="200" r="85" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-dasharray="10 8"/>
+  <circle cx="200" cy="200" r="50" fill="#14532d"/>
+  <circle cx="200" cy="200" r="120" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-dasharray="14 10"/>
+  <!-- cyclist ahead in outer lane (at ~4 o'clock approaching exit) -->
+  <g transform="translate(285 265) rotate(-35)">
+    <!-- bike -->
+    <circle cx="-10" cy="0" r="8" fill="none" stroke="#e2e8f0" stroke-width="3"/>
+    <circle cx="12" cy="0" r="8" fill="none" stroke="#e2e8f0" stroke-width="3"/>
+    <!-- rider body -->
+    <circle cx="2" cy="-16" r="6" fill="#f59e0b"/>
+    <line x1="-2" y1="-10" x2="6" y2="2" stroke="#f59e0b" stroke-width="3"/>
+  </g>
+  <!-- blue car behind cyclist in outer lane -->
+  <g transform="translate(240 295) rotate(-20)">
+    <rect x="0" y="0" width="40" height="60" rx="8" fill="#2563eb" stroke="#1e3a8a" stroke-width="2"/>
+    <rect x="6" y="8" width="28" height="14" fill="#bfdbfe"/>
+    <rect x="6" y="38" width="28" height="14" fill="#bfdbfe"/>
+    <polygon points="20,-6 12,6 28,6" fill="#fbbf24"/>
+  </g>
+  <!-- forbidden lane-change arrow -->
+  <g fill="none" stroke="#ef4444" stroke-width="4" stroke-linecap="round">
+    <path d="M 250,280 L 210,220" stroke-dasharray="6 5"/>
+    <circle cx="230" cy="250" r="18" fill="none" stroke="#ef4444" stroke-width="4"/>
+    <line x1="216" y1="236" x2="244" y2="264" stroke="#ef4444" stroke-width="4"/>
+  </g>
+  <!-- correct: stay behind then exit -->
+  <g fill="none" stroke="#22c55e" stroke-width="5" stroke-linecap="round">
+    <path d="M 260,305 Q 320,260 370,230"/>
+    <polygon points="378,230 362,222 362,240" fill="#22c55e" stroke="none"/>
+  </g>
+  <text x="40" y="40" font-family="system-ui,sans-serif" font-weight="700" font-size="14" fill="#ef4444">don't lane-change</text>
+  <text x="220" y="60" font-family="system-ui,sans-serif" font-weight="700" font-size="14" fill="#22c55e">stay & exit →</text>
+</svg>

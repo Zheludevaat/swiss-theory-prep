@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-labelledby="t d">
+  <title id="t">Two-lane roundabout — pick the lane that matches your exit</title>
+  <desc id="d">Two-lane roundabout with dashed lane divider. Blue car in the outer lane follows a short arrow to the next (east) exit. A faint red path in the inner lane continues to a further exit. Rule: lane choice on entry should match intended exit.</desc>
+  <rect width="400" height="400" fill="#0f172a"/>
+  <rect x="0" y="0" width="140" height="140" fill="#1e293b"/>
+  <rect x="260" y="0" width="140" height="140" fill="#1e293b"/>
+  <rect x="0" y="260" width="140" height="400" fill="#1e293b"/>
+  <rect x="260" y="260" width="140" height="400" fill="#1e293b"/>
+  <rect x="140" y="0" width="120" height="400" fill="#475569"/>
+  <rect x="0" y="140" width="400" height="120" fill="#475569"/>
+  <!-- outer ring -->
+  <circle cx="200" cy="200" r="120" fill="#475569"/>
+  <!-- lane divider -->
+  <circle cx="200" cy="200" r="85" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-dasharray="10 8"/>
+  <!-- inner island -->
+  <circle cx="200" cy="200" r="50" fill="#14532d"/>
+  <!-- outer dashed ring mark -->
+  <circle cx="200" cy="200" r="120" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-dasharray="14 10"/>
+  <!-- blue car entering bottom in outer lane -->
+  <g transform="translate(215 300)">
+    <rect x="0" y="0" width="40" height="60" rx="8" fill="#2563eb" stroke="#1e3a8a" stroke-width="2"/>
+    <rect x="6" y="8" width="28" height="14" fill="#bfdbfe"/>
+    <rect x="6" y="38" width="28" height="14" fill="#bfdbfe"/>
+    <polygon points="20,-6 12,6 28,6" fill="#fbbf24"/>
+    <text x="20" y="34" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="700" font-size="14" fill="#fff">YOU</text>
+  </g>
+  <!-- arrow: outer lane → next exit (east) -->
+  <g fill="none" stroke="#fbbf24" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 235,300 A 105 105 0 0 1 300,240 L 380,210"/>
+    <polygon points="385,210 368,202 371,220" fill="#fbbf24" stroke="none"/>
+  </g>
+  <!-- inner dashed path suggestion -->
+  <g fill="none" stroke="#f87171" stroke-width="3" stroke-dasharray="8 6" stroke-linecap="round">
+    <path d="M 170,310 A 80 80 0 0 1 280,200 L 280,20"/>
+  </g>
+  <text x="290" y="40" font-family="system-ui,sans-serif" font-weight="600" font-size="13" fill="#f87171">inner → further</text>
+  <text x="290" y="180" font-family="system-ui,sans-serif" font-weight="600" font-size="13" fill="#fbbf24">outer → first exit</text>
+</svg>

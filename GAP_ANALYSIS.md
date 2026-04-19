@@ -78,8 +78,9 @@ If continuing past Phase 1, ordered by ROI per hour:
 **Chunk 13 — German-language overlay (1 day).**
 Add `lang` field to Item; author DE versions of priority + signs + BAC items; Settings toggle; Library shows both. Closes the highest-impact gap that is fully under our control.
 
-**Chunk 14 — Intersection diagrams for priority items (~2 days).**
-Hand-author 12–16 SVG intersection diagrams in `public/diagrams/` (similar pipeline to Chunk 5a), wire them via a new `diagramAssetId` field on Item, render in Card.
+**Chunk 14 — Intersection diagrams for priority items (~2 days). DONE.**
+- 14a (shipped): `diagramAssetId` schema + Card render path + fullscreen zoom + 3 CC0 Rettungsgasse scenes wired.
+- 14b (shipped, 2026-04-19): 17 hand-authored CC0 priority/intersection schematics composed and wired onto 22 priority items (right-hand, yielding, roundabout, tram, emergency, school-bus, mountain-descent scenarios) with EN + DE `imageAlt` where DE overlays exist.
 
 **Chunk 15 — Narrative theory book (~half-day).**
 Add `narrative` markdown field on Rule, expose in Teach route, write narratives for the 30 highest-weight rules.

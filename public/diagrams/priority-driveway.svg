@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-labelledby="t d">
+  <title id="t">Leaving a driveway or car park — always yield to both directions on the road</title>
+  <desc id="d">A horizontal through-road runs left-to-right with traffic in both directions. A blue car is emerging from a private driveway at the bottom. A dashed red wait zone at the driveway mouth marks that this car must yield to everyone on the main road.</desc>
+  <rect width="400" height="400" fill="#0f172a"/>
+  <!-- main road horizontal -->
+  <rect x="0" y="140" width="400" height="120" fill="#475569"/>
+  <g stroke="#e2e8f0" stroke-width="3" stroke-dasharray="12 10" fill="none">
+    <line x1="0" y1="200" x2="400" y2="200"/>
+  </g>
+  <!-- driveway / car park feeder -->
+  <rect x="170" y="260" width="60" height="140" fill="#64748b"/>
+  <!-- kerb line across (unbroken = main road priority) -->
+  <line x1="170" y1="260" x2="230" y2="260" stroke="#f8fafc" stroke-width="3"/>
+  <!-- "Einfahrt" label box -->
+  <rect x="140" y="370" width="120" height="22" fill="#1e293b" stroke="#94a3b8" stroke-width="1"/>
+  <text x="200" y="387" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="700" font-size="14" fill="#e2e8f0">private driveway</text>
+  <!-- car on main road (left-to-right, green) -->
+  <g transform="translate(50 170)">
+    <rect x="0" y="0" width="60" height="40" rx="8" fill="#16a34a" stroke="#14532d" stroke-width="2"/>
+    <rect x="8" y="6" width="14" height="28" fill="#bbf7d0"/>
+    <rect x="38" y="6" width="14" height="28" fill="#bbf7d0"/>
+    <polygon points="66,20 54,12 54,28" fill="#fbbf24"/>
+  </g>
+  <!-- car on main road (right-to-left, red) -->
+  <g transform="translate(280 215)">
+    <rect x="0" y="0" width="60" height="40" rx="8" fill="#dc2626" stroke="#7f1d1d" stroke-width="2"/>
+    <rect x="8" y="6" width="14" height="28" fill="#fecaca"/>
+    <rect x="38" y="6" width="14" height="28" fill="#fecaca"/>
+    <polygon points="-6,20 6,12 6,28" fill="#fbbf24"/>
+  </g>
+  <!-- your car emerging from driveway -->
+  <g transform="translate(180 290)">
+    <rect x="0" y="0" width="40" height="60" rx="8" fill="#2563eb" stroke="#1e3a8a" stroke-width="2"/>
+    <rect x="6" y="8" width="28" height="14" fill="#bfdbfe"/>
+    <rect x="6" y="38" width="28" height="14" fill="#bfdbfe"/>
+    <polygon points="20,-6 12,6 28,6" fill="#fbbf24"/>
+    <text x="20" y="34" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="700" font-size="16" fill="#fff">YOU</text>
+  </g>
+  <!-- yield triangle over your car -->
+  <g transform="translate(200 270)">
+    <polygon points="-16,-14 16,-14 0,14" fill="#f8fafc" stroke="#b91c1c" stroke-width="3"/>
+  </g>
+  <!-- priority arrows on main road -->
+  <g fill="#fbbf24" stroke="none">
+    <polygon points="120,190 140,200 120,210"/>
+    <polygon points="280,190 260,200 280,210"/>
+  </g>
+</svg>

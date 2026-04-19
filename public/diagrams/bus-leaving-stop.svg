@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-labelledby="t d">
+  <title id="t">City bus leaving a stop in a 50 km/h zone — bus has priority</title>
+  <desc id="d">A city bus at a marked bus stop is signalling left to pull away. A blue car behind is slowing to let the bus rejoin traffic, as required on roads with a 50 km/h limit or below.</desc>
+  <rect width="400" height="400" fill="#0f172a"/>
+  <rect x="0" y="140" width="400" height="220" fill="#475569"/>
+  <rect x="0" y="355" width="400" height="8" fill="#94a3b8"/>
+  <rect x="0" y="363" width="400" height="37" fill="#1e293b"/>
+  <g stroke="#e2e8f0" stroke-width="3" stroke-dasharray="12 10" fill="none">
+    <line x1="0" y1="220" x2="400" y2="220"/>
+  </g>
+  <!-- speed limit roundel (blue/white) "50" -->
+  <g transform="translate(50 50)">
+    <circle cx="0" cy="0" r="28" fill="#f8fafc" stroke="#b91c1c" stroke-width="4"/>
+    <text x="0" y="6" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" font-size="20" fill="#0f172a">50</text>
+  </g>
+  <!-- bus stop sign (H symbol on yellow) -->
+  <g transform="translate(360 240)">
+    <rect x="-14" y="-20" width="28" height="40" fill="#facc15" stroke="#713f12" stroke-width="2"/>
+    <text x="0" y="6" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" font-size="22" fill="#713f12">H</text>
+  </g>
+  <!-- bus pulling out -->
+  <g transform="translate(240 235)">
+    <rect x="0" y="0" width="120" height="85" rx="10" fill="#64748b" stroke="#0f172a" stroke-width="2"/>
+    <rect x="10" y="12" width="20" height="26" fill="#bae6fd"/>
+    <rect x="34" y="12" width="20" height="26" fill="#bae6fd"/>
+    <rect x="58" y="12" width="20" height="26" fill="#bae6fd"/>
+    <rect x="82" y="12" width="20" height="26" fill="#bae6fd"/>
+    <!-- left blinker (car-left = screen-right since bus is heading left-to-right? No — bus is heading to the left here, so its left side = top in this top-down view. Use front indicator on the left edge) -->
+    <circle cx="4" cy="8" r="5" fill="#fde047" stroke="#ca8a04" stroke-width="1.5"/>
+    <polygon points="-6,42 6,32 6,52" fill="#fbbf24"/>
+    <text x="60" y="70" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" font-size="16" fill="#f8fafc">BUS</text>
+  </g>
+  <text x="228" y="228" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="700" font-size="13" fill="#fde047">signal L</text>
+  <!-- blue car behind, slowing -->
+  <g transform="translate(90 170)">
+    <rect x="0" y="0" width="60" height="40" rx="8" fill="#2563eb" stroke="#1e3a8a" stroke-width="2"/>
+    <rect x="8" y="6" width="14" height="28" fill="#bfdbfe"/>
+    <rect x="38" y="6" width="14" height="28" fill="#bfdbfe"/>
+    <polygon points="66,20 54,12 54,28" fill="#fbbf24"/>
+    <text x="30" y="24" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="700" font-size="13" fill="#fff">YOU</text>
+  </g>
+  <!-- yield indicator -->
+  <g transform="translate(170 190)">
+    <polygon points="-14,-12 14,-12 0,14" fill="#f8fafc" stroke="#b91c1c" stroke-width="3"/>
+  </g>
+  <!-- bus priority arrow into lane -->
+  <g fill="none" stroke="#fbbf24" stroke-width="5" stroke-linecap="round">
+    <path d="M 235,260 Q 210,220 170,210"/>
+    <polygon points="162,210 178,202 176,218" fill="#fbbf24" stroke="none"/>
+  </g>
+</svg>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-labelledby="t d">
+  <title id="t">Left-turner yields to oncoming straight traffic</title>
+  <desc id="d">Blue car heading straight from the bottom has priority. The red oncoming car signalling left must wait. A straight amber arrow shows blue's through path; a dashed red curve shows the delayed left turn.</desc>
+  <rect width="400" height="400" fill="#0f172a"/>
+  <rect x="0" y="0" width="140" height="140" fill="#1e293b"/>
+  <rect x="260" y="0" width="140" height="140" fill="#1e293b"/>
+  <rect x="0" y="260" width="140" height="140" fill="#1e293b"/>
+  <rect x="260" y="260" width="140" height="140" fill="#1e293b"/>
+  <rect x="140" y="0" width="120" height="400" fill="#475569"/>
+  <rect x="0" y="140" width="400" height="120" fill="#475569"/>
+  <g stroke="#e2e8f0" stroke-width="3" stroke-dasharray="12 10" fill="none">
+    <line x1="200" y1="0" x2="200" y2="140"/>
+    <line x1="200" y1="260" x2="200" y2="400"/>
+    <line x1="0" y1="200" x2="140" y2="200"/>
+    <line x1="260" y1="200" x2="400" y2="200"/>
+  </g>
+  <!-- you (blue) going up -->
+  <g transform="translate(180 290)">
+    <rect x="0" y="0" width="40" height="60" rx="8" fill="#2563eb" stroke="#1e3a8a" stroke-width="2"/>
+    <rect x="6" y="8" width="28" height="14" fill="#bfdbfe"/>
+    <rect x="6" y="38" width="28" height="14" fill="#bfdbfe"/>
+    <polygon points="20,-6 12,6 28,6" fill="#fbbf24"/>
+    <text x="20" y="34" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="700" font-size="16" fill="#fff">YOU</text>
+  </g>
+  <!-- oncoming (red) going down, signalling left -->
+  <g transform="translate(180 50)">
+    <rect x="0" y="0" width="40" height="60" rx="8" fill="#dc2626" stroke="#7f1d1d" stroke-width="2"/>
+    <rect x="6" y="8" width="28" height="14" fill="#fecaca"/>
+    <rect x="6" y="38" width="28" height="14" fill="#fecaca"/>
+    <polygon points="20,66 12,54 28,54" fill="#fbbf24"/>
+    <!-- left signal blinker (relative to red going down → left is car's left = screen-right) -->
+    <circle cx="40" cy="55" r="5" fill="#fde047"/>
+  </g>
+  <!-- blue's straight-through arrow -->
+  <g fill="none" stroke="#fbbf24" stroke-width="5" stroke-linecap="round">
+    <line x1="200" y1="285" x2="200" y2="130"/>
+    <polygon points="200,118 190,138 210,138" fill="#fbbf24" stroke="none"/>
+  </g>
+  <!-- red's waiting left turn (dashed) -->
+  <g fill="none" stroke="#f87171" stroke-width="4" stroke-dasharray="8 6" stroke-linecap="round">
+    <path d="M200,110 Q200,200 320,200"/>
+  </g>
+  <text x="330" y="170" font-family="system-ui,sans-serif" font-weight="700" font-size="14" fill="#f87171">wait</text>
+</svg>

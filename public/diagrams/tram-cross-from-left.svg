@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-labelledby="t d">
+  <title id="t">Tram approaching from the left has priority, overriding the right-hand rule</title>
+  <desc id="d">At an unmarked intersection an amber tram approaches on rails from the left. The blue car from the bottom must yield even though the tram would normally lose to the right-hand rule, because trams always have priority.</desc>
+  <rect width="400" height="400" fill="#0f172a"/>
+  <rect x="0" y="0" width="140" height="140" fill="#1e293b"/>
+  <rect x="260" y="0" width="140" height="140" fill="#1e293b"/>
+  <rect x="0" y="260" width="140" height="140" fill="#1e293b"/>
+  <rect x="260" y="260" width="140" height="140" fill="#1e293b"/>
+  <rect x="140" y="0" width="120" height="400" fill="#475569"/>
+  <rect x="0" y="140" width="400" height="120" fill="#475569"/>
+  <g stroke="#e2e8f0" stroke-width="3" stroke-dasharray="12 10" fill="none">
+    <line x1="200" y1="0" x2="200" y2="140"/>
+    <line x1="200" y1="260" x2="200" y2="400"/>
+  </g>
+  <!-- tram tracks (two parallel lines across) -->
+  <g stroke="#1e293b" stroke-width="3" fill="none">
+    <line x1="0" y1="188" x2="400" y2="188"/>
+    <line x1="0" y1="212" x2="400" y2="212"/>
+  </g>
+  <g stroke="#94a3b8" stroke-width="1" stroke-dasharray="6 6" fill="none">
+    <line x1="0" y1="188" x2="400" y2="188"/>
+    <line x1="0" y1="212" x2="400" y2="212"/>
+  </g>
+  <!-- tram (amber, long rectangle coming from left) -->
+  <g transform="translate(40 170)">
+    <rect x="0" y="0" width="140" height="60" rx="6" fill="#f59e0b" stroke="#92400e" stroke-width="2"/>
+    <rect x="10" y="8" width="120" height="20" fill="#fde68a"/>
+    <rect x="130" y="22" width="8" height="16" fill="#7f1d1d"/>
+    <text x="70" y="50" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" font-size="14" fill="#7f1d1d">TRAM</text>
+  </g>
+  <!-- blue car from bottom yielding -->
+  <g transform="translate(180 310)">
+    <rect x="0" y="0" width="40" height="60" rx="8" fill="#2563eb" stroke="#1e3a8a" stroke-width="2"/>
+    <rect x="6" y="8" width="28" height="14" fill="#bfdbfe"/>
+    <rect x="6" y="38" width="28" height="14" fill="#bfdbfe"/>
+    <polygon points="20,-6 12,6 28,6" fill="#fbbf24"/>
+    <text x="20" y="34" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="700" font-size="16" fill="#fff">YOU</text>
+  </g>
+  <!-- priority arrow -->
+  <g fill="none" stroke="#fbbf24" stroke-width="5" stroke-linecap="round">
+    <path d="M 180,200 L 360,200"/>
+    <polygon points="368,200 352,190 352,210" fill="#fbbf24" stroke="none"/>
+  </g>
+  <!-- yield triangle over car -->
+  <g transform="translate(200 300)">
+    <polygon points="-16,-14 16,-14 0,14" fill="#f8fafc" stroke="#b91c1c" stroke-width="3"/>
+  </g>
+</svg>

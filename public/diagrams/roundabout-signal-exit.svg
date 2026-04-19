@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-labelledby="t d">
+  <title id="t">Roundabout exit — signal right just before leaving</title>
+  <desc id="d">Blue car circulates anti-clockwise inside a single-lane roundabout and reaches the east exit. A yellow blinker indicates the right turn signal engaged only just before the exit. No entry signal.</desc>
+  <rect width="400" height="400" fill="#0f172a"/>
+  <rect x="0" y="0" width="140" height="140" fill="#1e293b"/>
+  <rect x="260" y="0" width="140" height="140" fill="#1e293b"/>
+  <rect x="0" y="260" width="140" height="140" fill="#1e293b"/>
+  <rect x="260" y="260" width="140" height="140" fill="#1e293b"/>
+  <rect x="140" y="0" width="120" height="400" fill="#475569"/>
+  <rect x="0" y="140" width="400" height="120" fill="#475569"/>
+  <circle cx="200" cy="200" r="110" fill="#475569"/>
+  <circle cx="200" cy="200" r="60" fill="#14532d"/>
+  <circle cx="200" cy="200" r="110" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-dasharray="14 10"/>
+  <!-- blue car about to take the east exit -->
+  <g transform="translate(260 180) rotate(90)">
+    <rect x="0" y="0" width="40" height="60" rx="8" fill="#2563eb" stroke="#1e3a8a" stroke-width="2"/>
+    <rect x="6" y="8" width="28" height="14" fill="#bfdbfe"/>
+    <rect x="6" y="38" width="28" height="14" fill="#bfdbfe"/>
+    <!-- right-side blinker (car is rotated 90° so right = bottom relative to car = rendered as top in our rotated frame) -->
+    <circle cx="37" cy="6" r="5" fill="#fde047" stroke="#ca8a04" stroke-width="1.5"/>
+  </g>
+  <text x="302" y="258" font-family="system-ui,sans-serif" font-weight="700" font-size="13" fill="#fde047">signal R</text>
+  <!-- exit arrow pointing east -->
+  <g fill="none" stroke="#fbbf24" stroke-width="5" stroke-linecap="round">
+    <path d="M 260,200 L 380,200"/>
+    <polygon points="385,200 370,190 370,210" fill="#fbbf24" stroke="none"/>
+  </g>
+  <!-- "no signal on entry" badge at bottom -->
+  <g transform="translate(200 330)">
+    <rect x="-70" y="-14" width="140" height="28" rx="4" fill="#1e293b" stroke="#94a3b8" stroke-width="1"/>
+    <text x="0" y="4" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="600" font-size="13" fill="#e2e8f0">no signal on entry</text>
+  </g>
+</svg>

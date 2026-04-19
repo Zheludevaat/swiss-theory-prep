@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-labelledby="t d">
+  <title id="t">Single-lane roundabout — traffic already inside has priority</title>
+  <desc id="d">Single-lane roundabout with four approaches. A blue car on the bottom approach is at a dashed yield line. A red car is already circulating and has the amber priority arrow.</desc>
+  <rect width="400" height="400" fill="#0f172a"/>
+  <rect x="0" y="0" width="140" height="140" fill="#1e293b"/>
+  <rect x="260" y="0" width="140" height="140" fill="#1e293b"/>
+  <rect x="0" y="260" width="140" height="140" fill="#1e293b"/>
+  <rect x="260" y="260" width="140" height="140" fill="#1e293b"/>
+  <!-- cross road stubs -->
+  <rect x="140" y="0" width="120" height="400" fill="#475569"/>
+  <rect x="0" y="140" width="400" height="120" fill="#475569"/>
+  <!-- roundabout ring -->
+  <circle cx="200" cy="200" r="110" fill="#475569"/>
+  <circle cx="200" cy="200" r="60" fill="#14532d"/>
+  <circle cx="200" cy="200" r="110" fill="none" stroke="#e2e8f0" stroke-width="3" stroke-dasharray="14 10"/>
+  <!-- approach yield-line dashes at bottom approach -->
+  <g stroke="#f8fafc" stroke-width="4" stroke-dasharray="12 8" fill="none">
+    <line x1="140" y1="310" x2="260" y2="310"/>
+  </g>
+  <!-- your car on bottom approach -->
+  <g transform="translate(180 320)">
+    <rect x="0" y="0" width="40" height="60" rx="8" fill="#2563eb" stroke="#1e3a8a" stroke-width="2"/>
+    <rect x="6" y="8" width="28" height="14" fill="#bfdbfe"/>
+    <rect x="6" y="38" width="28" height="14" fill="#bfdbfe"/>
+    <polygon points="20,-6 12,6 28,6" fill="#fbbf24"/>
+    <text x="20" y="34" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="700" font-size="16" fill="#fff">YOU</text>
+  </g>
+  <!-- give-way triangle -->
+  <g transform="translate(150 300)">
+    <polygon points="0,-14 14,14 -14,14" fill="#f8fafc" stroke="#b91c1c" stroke-width="3"/>
+  </g>
+  <!-- circulating red car at 3 o'clock position (going anti-clockwise — European direction in roundabout) -->
+  <g transform="translate(260 180) rotate(90)">
+    <rect x="0" y="0" width="40" height="60" rx="8" fill="#dc2626" stroke="#7f1d1d" stroke-width="2"/>
+    <rect x="6" y="8" width="28" height="14" fill="#fecaca"/>
+    <rect x="6" y="38" width="28" height="14" fill="#fecaca"/>
+    <polygon points="20,-6 12,6 28,6" fill="#fbbf24"/>
+  </g>
+  <!-- circulating priority arrow -->
+  <g fill="none" stroke="#fbbf24" stroke-width="5" stroke-linecap="round">
+    <path d="M 200,90 A 110 110 0 0 1 310,200"/>
+    <polygon points="312,210 298,200 312,190" fill="#fbbf24" stroke="none"/>
+  </g>
+</svg>

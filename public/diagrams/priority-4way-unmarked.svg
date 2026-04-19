@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-labelledby="t d">
+  <title id="t">Unmarked four-way intersection — right-hand rule</title>
+  <desc id="d">Blue car enters from the bottom. Red car approaches from the right. An amber arrow from the red car over the centre shows the red car has priority because it comes from the right (Rechtsvortritt).</desc>
+  <!-- background -->
+  <rect width="400" height="400" fill="#0f172a"/>
+  <!-- buildings / verge hint -->
+  <rect x="0" y="0" width="140" height="140" fill="#1e293b"/>
+  <rect x="260" y="0" width="140" height="140" fill="#1e293b"/>
+  <rect x="0" y="260" width="140" height="140" fill="#1e293b"/>
+  <rect x="260" y="260" width="140" height="140" fill="#1e293b"/>
+  <!-- roads (crossing) -->
+  <rect x="140" y="0" width="120" height="400" fill="#475569"/>
+  <rect x="0" y="140" width="400" height="120" fill="#475569"/>
+  <!-- centre dashed lines -->
+  <g stroke="#e2e8f0" stroke-width="3" stroke-dasharray="12 10" fill="none">
+    <line x1="200" y1="0" x2="200" y2="140"/>
+    <line x1="200" y1="260" x2="200" y2="400"/>
+    <line x1="0" y1="200" x2="140" y2="200"/>
+    <line x1="260" y1="200" x2="400" y2="200"/>
+  </g>
+  <!-- your car (blue) coming from bottom, heading up -->
+  <g transform="translate(180 310)">
+    <rect x="0" y="0" width="40" height="60" rx="8" fill="#2563eb" stroke="#1e3a8a" stroke-width="2"/>
+    <rect x="6" y="8" width="28" height="14" fill="#bfdbfe" opacity="0.9"/>
+    <rect x="6" y="38" width="28" height="14" fill="#bfdbfe" opacity="0.9"/>
+    <polygon points="20,-6 12,6 28,6" fill="#fbbf24"/>
+    <text x="20" y="34" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="700" font-size="16" fill="#fff">YOU</text>
+  </g>
+  <!-- other car (red) coming from right, heading left -->
+  <g transform="translate(310 180)">
+    <rect x="0" y="0" width="60" height="40" rx="8" fill="#dc2626" stroke="#7f1d1d" stroke-width="2"/>
+    <rect x="8" y="6" width="14" height="28" fill="#fecaca" opacity="0.9"/>
+    <rect x="38" y="6" width="14" height="28" fill="#fecaca" opacity="0.9"/>
+    <polygon points="-6,20 6,12 6,28" fill="#fbbf24"/>
+  </g>
+  <!-- priority arrow: red car's path through the box -->
+  <g fill="none" stroke="#fbbf24" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M310,200 L160,200"/>
+    <polygon points="150,200 168,190 168,210" fill="#fbbf24" stroke="none"/>
+  </g>
+  <!-- yield indicator over your car -->
+  <g transform="translate(200 300)">
+    <polygon points="-16,-14 16,-14 0,14" fill="#f8fafc" stroke="#b91c1c" stroke-width="3"/>
+  </g>
+</svg>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-labelledby="t d">
+  <title id="t">Ambulance behind you at a red light — ease into the intersection to clear a path</title>
+  <desc id="d">Four-way intersection with a red traffic light. Blue car is stopped at the stop line. An ambulance is directly behind with blue lights. A green dashed path shows the blue car easing into the intersection just enough to open the lane, despite the red signal.</desc>
+  <rect width="400" height="400" fill="#0f172a"/>
+  <rect x="0" y="0" width="140" height="140" fill="#1e293b"/>
+  <rect x="260" y="0" width="140" height="140" fill="#1e293b"/>
+  <rect x="0" y="260" width="140" height="140" fill="#1e293b"/>
+  <rect x="260" y="260" width="140" height="140" fill="#1e293b"/>
+  <rect x="140" y="0" width="120" height="400" fill="#475569"/>
+  <rect x="0" y="140" width="400" height="120" fill="#475569"/>
+  <g stroke="#e2e8f0" stroke-width="3" stroke-dasharray="12 10" fill="none">
+    <line x1="200" y1="0" x2="200" y2="140"/>
+    <line x1="200" y1="260" x2="200" y2="400"/>
+    <line x1="0" y1="200" x2="140" y2="200"/>
+    <line x1="260" y1="200" x2="400" y2="200"/>
+  </g>
+  <!-- stop line at bottom approach -->
+  <rect x="140" y="263" width="120" height="8" fill="#f8fafc"/>
+  <!-- traffic light red -->
+  <g transform="translate(265 265)">
+    <rect x="0" y="0" width="26" height="60" rx="4" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+    <circle cx="13" cy="14" r="8" fill="#dc2626"/>
+    <circle cx="13" cy="32" r="8" fill="#374151"/>
+    <circle cx="13" cy="50" r="8" fill="#374151"/>
+  </g>
+  <!-- blue car easing into intersection (partially past the stop line) -->
+  <g transform="translate(180 240)">
+    <rect x="0" y="0" width="40" height="60" rx="8" fill="#2563eb" stroke="#1e3a8a" stroke-width="2"/>
+    <rect x="6" y="8" width="28" height="14" fill="#bfdbfe"/>
+    <rect x="6" y="38" width="28" height="14" fill="#bfdbfe"/>
+    <polygon points="20,-6 12,6 28,6" fill="#fbbf24"/>
+    <text x="20" y="34" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="700" font-size="14" fill="#fff">YOU</text>
+  </g>
+  <!-- ambulance behind -->
+  <g transform="translate(170 310)">
+    <rect x="0" y="0" width="60" height="80" rx="8" fill="#f8fafc" stroke="#1e293b" stroke-width="2"/>
+    <rect x="0" y="0" width="60" height="20" fill="#1e293b"/>
+    <rect x="25" y="34" width="10" height="30" fill="#dc2626"/>
+    <rect x="15" y="44" width="30" height="10" fill="#dc2626"/>
+    <circle cx="15" cy="-6" r="7" fill="#3b82f6" stroke="#1e40af" stroke-width="1.5"/>
+    <circle cx="45" cy="-6" r="7" fill="#3b82f6" stroke="#1e40af" stroke-width="1.5"/>
+    <text x="30" y="16" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" font-size="11" fill="#f8fafc">AMB</text>
+  </g>
+  <!-- dashed easing path -->
+  <g fill="none" stroke="#22c55e" stroke-width="4" stroke-dasharray="8 6" stroke-linecap="round">
+    <path d="M 200,305 L 200,170"/>
+    <polygon points="200,160 190,178 210,178" fill="#22c55e" stroke="none"/>
+  </g>
+  <text x="230" y="175" font-family="system-ui,sans-serif" font-weight="700" font-size="13" fill="#22c55e">clear path</text>
+</svg>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-labelledby="t d">
+  <title id="t">Narrow mountain road — descending vehicle yields to ascending</title>
+  <desc id="d">A narrow mountain road winds up the slope with a small passing place. A descending blue car meets an ascending red car. The descending car has pulled into the passing place to let the ascending car continue.</desc>
+  <rect width="400" height="400" fill="#0f172a"/>
+  <!-- mountain slope hint -->
+  <polygon points="0,0 400,0 400,400 0,400" fill="#1e293b"/>
+  <polygon points="0,400 200,120 400,400" fill="#0f2f1e"/>
+  <!-- road -->
+  <path d="M 120,400 C 120,280 200,260 200,160 C 200,100 280,80 280,0"
+        fill="none" stroke="#475569" stroke-width="60" stroke-linecap="round"/>
+  <!-- centre dashes -->
+  <path d="M 120,400 C 120,280 200,260 200,160 C 200,100 280,80 280,0"
+        fill="none" stroke="#e2e8f0" stroke-width="2" stroke-dasharray="10 10"/>
+  <!-- passing place (small bulge) -->
+  <circle cx="170" cy="200" r="28" fill="#475569"/>
+  <!-- descending blue car (pulled into passing place) -->
+  <g transform="translate(148 180) rotate(15)">
+    <rect x="0" y="0" width="40" height="54" rx="8" fill="#2563eb" stroke="#1e3a8a" stroke-width="2"/>
+    <rect x="6" y="8" width="28" height="12" fill="#bfdbfe"/>
+    <rect x="6" y="34" width="28" height="12" fill="#bfdbfe"/>
+    <polygon points="20,54 12,44 28,44" fill="#fbbf24"/>
+    <text x="20" y="30" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="700" font-size="13" fill="#fff">YOU</text>
+  </g>
+  <!-- yield marker over blue -->
+  <g transform="translate(135 170)">
+    <polygon points="0,0 20,0 10,17" fill="#f8fafc" stroke="#b91c1c" stroke-width="2"/>
+  </g>
+  <!-- ascending red car on main path below the bulge, heading up -->
+  <g transform="translate(108 310) rotate(-10)">
+    <rect x="0" y="0" width="40" height="54" rx="8" fill="#dc2626" stroke="#7f1d1d" stroke-width="2"/>
+    <rect x="6" y="8" width="28" height="12" fill="#fecaca"/>
+    <rect x="6" y="34" width="28" height="12" fill="#fecaca"/>
+    <polygon points="20,-8 12,4 28,4" fill="#fbbf24"/>
+  </g>
+  <!-- priority arrow ascending -->
+  <g fill="none" stroke="#fbbf24" stroke-width="5" stroke-linecap="round">
+    <path d="M 128,340 Q 150,280 180,230"/>
+    <polygon points="182,218 170,230 190,238" fill="#fbbf24" stroke="none"/>
+  </g>
+  <text x="230" y="330" font-family="system-ui,sans-serif" font-weight="700" font-size="14" fill="#fbbf24">↑ ascends = priority</text>
+  <text x="30" y="160" font-family="system-ui,sans-serif" font-weight="700" font-size="14" fill="#f8fafc">↓ descending yields</text>
+</svg>
