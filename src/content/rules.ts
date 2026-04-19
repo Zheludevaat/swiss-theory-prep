@@ -113,12 +113,12 @@ export const seedRules: Rule[] = [
   // ---------- signs ----------
   {
     id: "signs.stop",
-    title: "Stop sign (2.30)",
+    title: "Stop sign (3.01)",
     statement:
       "At a stop sign, you must come to a complete stop at the marked line (or before the crossing if no line is marked) and then yield to all cross traffic.",
     category: "signs",
     legalRefs: ["SSV Art. 36"],
-    tags: ["sign:2.30"],
+    tags: ["sign:3.01"],
     examWeight: 0.95,
     workedExamples: [
       "Approaching a stop sign on a quiet road with no visible cross traffic: still required to stop completely (wheels at zero), then proceed.",
@@ -141,12 +141,12 @@ export const seedRules: Rule[] = [
   },
   {
     id: "signs.no-overtaking",
-    title: "No overtaking (2.44)",
+    title: "No overtaking (2.06)",
     statement:
-      "From a no-overtaking sign you may not overtake other motor vehicles until the end-of-prohibition sign or the next intersection.",
+      "From a no-overtaking sign (red car overtaking black car inside a red ring) you may not overtake other motor vehicles until the end-of-prohibition sign (2.27) or the next intersection.",
     category: "signs",
     legalRefs: ["SSV Art. 19"],
-    tags: ["sign:2.44"],
+    tags: ["sign:2.06"],
     examWeight: 0.65,
     workedExamples: [
       "Bicycles and tractors moving slower than 30 km/h may still be overtaken even where the sign applies.",
@@ -197,12 +197,12 @@ export const seedRules: Rule[] = [
   },
   {
     id: "signs.no-parking",
-    title: "No parking (2.50)",
+    title: "No parking (2.17)",
     statement:
-      "A blue disc with a red diagonal slash prohibits stationary parking. Short stops for loading or boarding are permitted; leaving the vehicle for other purposes is not.",
+      "A blue disc with a single red diagonal slash prohibits stationary parking. Short stops for loading or boarding are permitted; leaving the vehicle for other purposes is not.",
     category: "signs",
     legalRefs: ["SSV Art. 30"],
-    tags: ["sign:2.50", "parking"],
+    tags: ["sign:2.17", "parking"],
     examWeight: 0.6,
     workedExamples: [
       "You need to run into a shop for two minutes under a no-parking sign: not permitted — that counts as parking, not a brief load/unload.",
@@ -211,12 +211,12 @@ export const seedRules: Rule[] = [
   },
   {
     id: "signs.no-stopping",
-    title: "No stopping (2.49)",
+    title: "No stopping (2.16)",
     statement:
-      "A blue disc with a red X crossed through prohibits stopping entirely. Even brief halts to drop passengers or load goods are forbidden except for yielding to traffic control.",
+      "A blue disc with a red X crossed through it prohibits stopping entirely. Even brief halts to drop passengers or load goods are forbidden except when traffic control (signals, pedestrians, police) requires it.",
     category: "signs",
     legalRefs: ["SSV Art. 30"],
-    tags: ["sign:2.49", "parking"],
+    tags: ["sign:2.16", "parking"],
     examWeight: 0.6,
     workedExamples: [
       "You see a blue disc with a red X: you may not stop to drop a passenger, even for a few seconds.",
@@ -225,12 +225,12 @@ export const seedRules: Rule[] = [
   },
   {
     id: "signs.children-warning",
-    title: "Children warning (1.23)",
+    title: "Children warning (1.19)",
     statement:
-      "A triangular warning sign with two figures indicates a zone where children are likely — schools, playgrounds, residential streets. Reduce speed, increase following distance, and be ready to brake.",
+      "A triangular warning sign (SSV 1.19) with two running child figures indicates a zone where children are likely — schools, playgrounds, residential streets. Reduce speed, increase following distance, and be ready to brake.",
     category: "signs",
-    legalRefs: ["SSV Art. 5"],
-    tags: ["sign:1.23", "children"],
+    legalRefs: ["SSV Art. 5", "SSV Anhang 2 Ziff. 1.19"],
+    tags: ["sign:1.19", "children"],
     examWeight: 0.55,
     workedExamples: [
       "You see the children-warning sign ahead of a school at the start of the school day: slow well below the posted limit in case a child runs into the road.",
@@ -239,12 +239,12 @@ export const seedRules: Rule[] = [
   },
   {
     id: "signs.mandatory-direction",
-    title: "Mandatory direction (2.37 series)",
+    title: "Mandatory direction (2.40–2.47 series)",
     statement:
-      "A blue disc with a white arrow requires you to take the indicated direction at the next intersection. Combinations of arrows permit multiple directions. Disobeying is treated as prohibited movement, not merely poor lane choice.",
+      "A blue disc with a white arrow (SSV 2.40–2.47) requires you to take the indicated direction at the next intersection. Combinations of arrows permit multiple directions. Disobeying is treated as a prohibited movement, not merely poor lane choice.",
     category: "signs",
-    legalRefs: ["SSV Art. 21"],
-    tags: ["sign:2.37", "direction"],
+    legalRefs: ["SSV Art. 21", "SSV Anhang 2 Ziff. 2.40–2.47"],
+    tags: ["sign:2.40", "direction"],
     examWeight: 0.5,
     workedExamples: [
       "A blue disc with a straight-up arrow: you must continue straight — turning right or left is prohibited.",
@@ -253,12 +253,12 @@ export const seedRules: Rule[] = [
   },
   {
     id: "signs.bicycle-path",
-    title: "Bicycle path (2.60 / 2.63)",
+    title: "Bicycle path (2.51 / 2.53)",
     statement:
-      "A blue disc with a white bicycle marks a path reserved for bicycles. Motor vehicles must not use it. A combination disc shows a pedestrian and bicycle side by side on a shared path.",
+      "A blue disc with a white bicycle (SSV 2.51) marks a path reserved for bicycles; motor vehicles must not use it. A combination disc (2.53) shows a pedestrian and bicycle on a shared path.",
     category: "signs",
-    legalRefs: ["SSV Art. 33"],
-    tags: ["sign:2.60", "bicycle"],
+    legalRefs: ["SSV Art. 33", "SSV Anhang 2 Ziff. 2.51", "SSV Anhang 2 Ziff. 2.53"],
+    tags: ["sign:2.51", "bicycle"],
     examWeight: 0.45,
     workedExamples: [
       "A marked bicycle path runs parallel to the road: motorised traffic must stay on the road; crossing the path requires yielding to cyclists on it.",
@@ -291,6 +291,384 @@ export const seedRules: Rule[] = [
     workedExamples: [
       "A plain dead-end sign: entering is legal but you must turn around and come back out; no through-route exists.",
       "A dead-end sign with a pedestrian pictogram at the bar's end: the street ends for cars but pedestrians may continue via a path — useful when planning a route through town.",
+    ],
+  },
+  {
+    id: "signs.no-vehicles",
+    title: "No vehicles (2.01)",
+    statement:
+      "A round white sign with a wide red border (SSV 2.01) bans all vehicles in both directions. It is the most general prohibition — applies to motor vehicles, bicycles, and even hand carts unless an exception plate is shown.",
+    category: "signs",
+    legalRefs: ["SSV Art. 18", "SSV Anhang 2 Ziff. 2.01"],
+    tags: ["sign:2.01", "prohibition"],
+    examWeight: 0.55,
+    workedExamples: [
+      "An empty white disc with a red border at the start of a forest road: no vehicles of any kind may enter.",
+      "Same sign with a 'forestry vehicles excepted' plate underneath: forestry trucks may pass; private cars still may not.",
+    ],
+  },
+  {
+    id: "signs.no-uturn",
+    title: "No U-turn (2.05)",
+    statement:
+      "A round white sign with red border showing a U-shaped arrow (SSV 2.05) prohibits making a U-turn. The ban applies until the next intersection or a cancelling sign.",
+    category: "signs",
+    legalRefs: ["SSV Art. 19", "SSV Anhang 2 Ziff. 2.05"],
+    tags: ["sign:2.05", "u-turn"],
+    examWeight: 0.45,
+    workedExamples: [
+      "You miss your turn on a road posted with the no-U-turn sign: continue to the next intersection and turn around there, not on the road itself.",
+      "A no-U-turn sign at the start of a one-way street: this both bans U-turns and (combined with 2.02 if posted) reverses traffic.",
+    ],
+  },
+  {
+    id: "signs.speed-limit",
+    title: "Maximum speed (2.09)",
+    statement:
+      "A round white sign with red border and a black numeral (SSV 2.09) sets the maximum speed in km/h on that road. The limit applies to all motor vehicles unless a class-specific sign overrides it. It remains in force until cancelled (2.25) or replaced.",
+    category: "signs",
+    legalRefs: ["SSV Art. 22", "SSV Anhang 2 Ziff. 2.09"],
+    tags: ["sign:2.09", "speed"],
+    examWeight: 0.95,
+    workedExamples: [
+      "A sign showing '60' on a country road outside town: from this point your maximum is 60 km/h, regardless of the prior 80 km/h default.",
+      "A '40' sign on a town road: it overrides the 50 km/h built-up default until cancelled or until the road clearly leaves the built-up area.",
+    ],
+  },
+  {
+    id: "signs.general-50",
+    title: "General speed limit 50 (2.10)",
+    statement:
+      "The blue rectangular sign with '50 generell' (SSV 2.10) marks entry to a built-up area where 50 km/h applies as the general default for all roads, even those without a posted limit. It is cancelled by 2.26.",
+    category: "signs",
+    legalRefs: ["SSV Art. 22", "SSV Anhang 2 Ziff. 2.10"],
+    tags: ["sign:2.10", "speed", "built-up"],
+    examWeight: 0.7,
+    workedExamples: [
+      "You pass the blue '50 generell' sign at the village edge: 50 km/h becomes the default everywhere in town until you see 2.26.",
+      "Inside the built-up area you find a side street with no posted limit: 50 still applies because of the general 50 sign at the entrance.",
+    ],
+  },
+  {
+    id: "signs.no-bicycles",
+    title: "No bicycles / mopeds (2.19)",
+    statement:
+      "A red-bordered disc with a bicycle silhouette (SSV 2.19) prohibits bicycles and mopeds. This is common on motorways and on roads where cyclists must use a parallel bicycle path.",
+    category: "signs",
+    legalRefs: ["SSV Art. 18", "SSV Anhang 2 Ziff. 2.19"],
+    tags: ["sign:2.19", "bicycle", "prohibition"],
+    examWeight: 0.45,
+    workedExamples: [
+      "A road parallel to a marked cycle path shows the no-bicycles sign at its entry: cyclists must use the path, not the road.",
+      "A motorway entrance always carries this sign by default — bicycles, mopeds, pedestrians and slow vehicles are all forbidden on motorways.",
+    ],
+  },
+  {
+    id: "signs.no-trucks",
+    title: "No trucks (2.21)",
+    statement:
+      "A red-bordered disc with a truck silhouette (SSV 2.21) prohibits trucks above the standard light-truck weight. Light vans and cars are not affected. A weight figure on a plate below restricts more narrowly.",
+    category: "signs",
+    legalRefs: ["SSV Art. 19", "SSV Anhang 2 Ziff. 2.21"],
+    tags: ["sign:2.21", "truck", "prohibition"],
+    examWeight: 0.4,
+    workedExamples: [
+      "A village road posts the no-trucks sign: light vans and passenger cars may still enter; only trucks must take the bypass.",
+      "Same sign with a '7t' plate below: lorries above 7 tonnes are banned, lighter trucks may pass.",
+    ],
+  },
+  {
+    id: "signs.no-motor-vehicles",
+    title: "No motor vehicles (2.24)",
+    statement:
+      "A red-bordered disc showing a car and motorcycle (SSV 2.24) prohibits all motor vehicles. Bicycles, mopeds, agricultural vehicles, and pedestrians remain allowed unless a separate sign also bans them.",
+    category: "signs",
+    legalRefs: ["SSV Art. 18", "SSV Anhang 2 Ziff. 2.24"],
+    tags: ["sign:2.24", "prohibition"],
+    examWeight: 0.4,
+    workedExamples: [
+      "A forest track marked with the no-motor-vehicles sign: cars and motorcycles may not enter, but cyclists and walkers may.",
+      "Distinguish from 2.01 (no vehicles at all) — 2.24 specifically targets engine-powered vehicles only.",
+    ],
+  },
+  {
+    id: "signs.end-speed-limit",
+    title: "End of speed limit (2.25)",
+    statement:
+      "A round white sign with the previous limit numeral struck through by a black diagonal line (SSV 2.25) cancels a posted maximum speed. The applicable default then applies — typically 80 km/h on country roads.",
+    category: "signs",
+    legalRefs: ["SSV Art. 22", "SSV Anhang 2 Ziff. 2.25"],
+    tags: ["sign:2.25", "speed", "end"],
+    examWeight: 0.55,
+    workedExamples: [
+      "A '60' end sign on a country road: the limit returns to the country-road default of 80 km/h.",
+      "An end-of-60 sign inside a town: the built-up 50 km/h default resumes, not 80, because the 'general 50' sign is still in effect.",
+    ],
+  },
+  {
+    id: "signs.end-overtaking-ban",
+    title: "End of overtaking ban (2.27)",
+    statement:
+      "A white disc with the two-car overtaking pictogram crossed out by a diagonal line (SSV 2.27) cancels a no-overtaking ban posted with 2.06. Normal overtaking rules then apply.",
+    category: "signs",
+    legalRefs: ["SSV Art. 19", "SSV Anhang 2 Ziff. 2.27"],
+    tags: ["sign:2.27", "overtaking", "end"],
+    examWeight: 0.4,
+    workedExamples: [
+      "After a long no-overtaking stretch you see the diagonal-line variant of the sign: overtaking is again allowed where conditions permit.",
+      "The end sign does not lower the speed limit, nor does it grant any new priority — only the overtaking ban is lifted.",
+    ],
+  },
+  {
+    id: "signs.end-prohibitions",
+    title: "End of all restrictions (2.28)",
+    statement:
+      "A white disc with multiple thin diagonal lines (SSV 2.28, 'Freie Fahrt') cancels every previously posted prohibition simultaneously — speed, overtaking, weight, etc. The road's defaults return.",
+    category: "signs",
+    legalRefs: ["SSV Art. 16", "SSV Anhang 2 Ziff. 2.28"],
+    tags: ["sign:2.28", "end"],
+    examWeight: 0.4,
+    workedExamples: [
+      "After a stretch with limits on speed, weight, and overtaking you see the 'Freie Fahrt' sign: all three are lifted at once.",
+      "The sign does not override the general 50 km/h built-up area — that limit comes from 2.10 and is only cancelled by 2.26.",
+    ],
+  },
+  {
+    id: "signs.roundabout",
+    title: "Roundabout (2.50)",
+    statement:
+      "A blue disc with three curved arrows (SSV 2.50) marks a roundabout. Combined with the give-way sign (3.02) at the entry, it confirms that traffic already inside has priority.",
+    category: "signs",
+    legalRefs: ["SSV Art. 24", "SSV Anhang 2 Ziff. 2.50"],
+    tags: ["sign:2.50", "roundabout"],
+    examWeight: 0.7,
+    workedExamples: [
+      "Approaching the blue 'three-arrow' sign with a give-way triangle: yield to vehicles already circulating, then enter without signalling.",
+      "Inside the roundabout you only signal right just before exiting — the sign establishes the geometry, not a new priority rule.",
+    ],
+  },
+  {
+    id: "signs.shared-pedestrian-bicycle",
+    title: "Shared bike/pedestrian path (2.53)",
+    statement:
+      "A blue disc with both a bicycle and a pedestrian (SSV 2.53) marks a shared path. Cyclists and pedestrians share the surface; cyclists must travel at low speed and yield to pedestrians.",
+    category: "signs",
+    legalRefs: ["SSV Art. 33", "SSV Anhang 2 Ziff. 2.53"],
+    tags: ["sign:2.53", "bicycle", "pedestrian"],
+    examWeight: 0.4,
+    workedExamples: [
+      "A blue disc with bike and walker side by side: cyclists ride slowly and give way to walkers; motor vehicles still may not enter.",
+      "Sign 2.54 (separated path) divides the surface with a vertical line — each user has their own side.",
+    ],
+  },
+  {
+    id: "signs.minimum-speed",
+    title: "Minimum speed (2.56)",
+    statement:
+      "A blue disc with a white numeral (SSV 2.56) sets a minimum speed in km/h. Vehicles unable to maintain at least that speed must not use the road. Common at the entry of motorways or fast tunnels.",
+    category: "signs",
+    legalRefs: ["SSV Art. 22", "SSV Anhang 2 Ziff. 2.56"],
+    tags: ["sign:2.56", "speed", "minimum"],
+    examWeight: 0.3,
+    workedExamples: [
+      "A blue '60' sign at a tunnel entrance: vehicles incapable of 60 km/h (slow tractors, mopeds) must take an alternative route.",
+      "The minimum-speed sign is round and blue — distinguish from the round red-bordered '60' which is a maximum.",
+    ],
+  },
+  {
+    id: "signs.snow-chains",
+    title: "Snow chains required (2.57)",
+    statement:
+      "A blue disc with a tyre-and-chain pictogram (SSV 2.57) requires snow chains on at least two driving wheels. It applies in winter on certain mountain passes during snow conditions.",
+    category: "signs",
+    legalRefs: ["SSV Art. 30", "SSV Anhang 2 Ziff. 2.57"],
+    tags: ["sign:2.57", "winter", "mountain"],
+    examWeight: 0.35,
+    workedExamples: [
+      "A pass road posts the snow-chains sign during a snowfall: you must fit chains to two driving wheels before continuing — 4-season tyres alone are not sufficient.",
+      "The sign is cancelled by a corresponding end sign (often a struck-through chain) further uphill.",
+    ],
+  },
+  {
+    id: "signs.give-way-to-oncoming",
+    title: "Give way to oncoming (3.05)",
+    statement:
+      "A square white sign with a black upward arrow and a red downward arrow (SSV 3.05) requires you to yield to oncoming traffic on a narrow stretch. Used where two-way traffic cannot pass safely side by side.",
+    category: "signs",
+    legalRefs: ["SSV Art. 36", "SSV Anhang 2 Ziff. 3.05"],
+    tags: ["sign:3.05", "narrow", "priority"],
+    examWeight: 0.5,
+    workedExamples: [
+      "On a narrow bridge with the 'give way to oncoming' sign on your side: stop short and let the oncoming car pass before crossing.",
+      "The matching priority-over-oncoming sign (3.06) faces the opposite direction so only one side has priority.",
+    ],
+  },
+  {
+    id: "signs.priority-over-oncoming",
+    title: "Priority over oncoming (3.06)",
+    statement:
+      "A square blue sign with a white upward arrow and a red downward arrow (SSV 3.06) grants you priority through a narrow section. Oncoming traffic must wait. The sign always pairs with 3.05 facing the other way.",
+    category: "signs",
+    legalRefs: ["SSV Art. 36", "SSV Anhang 2 Ziff. 3.06"],
+    tags: ["sign:3.06", "narrow", "priority"],
+    examWeight: 0.5,
+    workedExamples: [
+      "You see the blue 'priority over oncoming' sign before a narrow road-works contraflow: continue without stopping, but be ready to yield if an oncoming driver fails to obey 3.05.",
+      "Priority does not justify driving without due care — VRV Art. 4 still requires speed adapted to view and conditions.",
+    ],
+  },
+  {
+    id: "signs.end-priority-road",
+    title: "End of priority road (3.04)",
+    statement:
+      "The yellow-diamond priority-road sign with a black diagonal stripe (SSV 3.04) cancels priority. From this point on, the right-hand rule applies again unless local signs say otherwise.",
+    category: "signs",
+    legalRefs: ["SSV Art. 22", "SSV Anhang 2 Ziff. 3.04"],
+    tags: ["sign:3.04", "priority", "end"],
+    examWeight: 0.5,
+    workedExamples: [
+      "Driving on a priority road through town, you see the diamond struck through with a black bar: at the next intersection vehicles from your right have priority again.",
+      "Until you see this sign or a give-way/stop sign, you keep priority — even at large-looking side roads.",
+    ],
+  },
+  {
+    id: "signs.junction-right-priority",
+    title: "Junction with right-hand priority (3.10)",
+    statement:
+      "A black-on-yellow square sign showing a T or +-junction with thick lines (SSV 3.10) warns that vehicles from the right have priority at the next junction. Used where drivers might assume priority from main-road appearance.",
+    category: "signs",
+    legalRefs: ["SSV Art. 37", "SSV Anhang 2 Ziff. 3.10"],
+    tags: ["sign:3.10", "priority", "intersection"],
+    examWeight: 0.45,
+    workedExamples: [
+      "A wide-looking road into a residential area shows this sign: at the next junction the side street from your right has priority despite the road's appearance.",
+      "Sign 3.11 instead warns of a non-priority road joining your priority road — opposite situation.",
+    ],
+  },
+  {
+    id: "signs.junction-non-priority",
+    title: "Junction with non-priority road (3.11)",
+    statement:
+      "A black-on-yellow square sign showing a thinner side road meeting a thicker through road (SSV 3.11) warns that you are on the priority road and a side road joins. You keep priority unless other signs override it.",
+    category: "signs",
+    legalRefs: ["SSV Art. 37", "SSV Anhang 2 Ziff. 3.11"],
+    tags: ["sign:3.11", "priority", "intersection"],
+    examWeight: 0.45,
+    workedExamples: [
+      "The thicker line points along your direction of travel: traffic from the joining side street must yield to you.",
+      "The sign confirms priority but does not increase your speed limit — speed depends on the speed sign in force.",
+    ],
+  },
+  {
+    id: "signs.warning-curves",
+    title: "Curve warning signs (1.01–1.04)",
+    statement:
+      "Red-bordered triangular warning signs (SSV 1.01–1.04) announce single or double curves. Reduce speed before the curve so braking inside the curve is unnecessary; brake straight, steer slow.",
+    category: "signs",
+    legalRefs: ["VRV Art. 4", "SSV Anhang 2 Ziff. 1.01–1.04"],
+    tags: ["sign:1.01", "sign:1.02", "warning", "curve"],
+    examWeight: 0.55,
+    workedExamples: [
+      "A 1.02 right-curve warning before a wet bend: brake on the straight, choose a gear that lets you accelerate gently out of the curve.",
+      "Double-curve sign 1.03: the first curve is to the left — plan your line so the second (right) curve is also catered for.",
+    ],
+  },
+  {
+    id: "signs.warning-pedestrian-crossing",
+    title: "Pedestrian crossing ahead (1.18)",
+    statement:
+      "A triangular warning sign showing a pedestrian on a striped crossing (SSV 1.18) warns of a pedestrian crossing further along. Slow enough to stop if a pedestrian appears; overtaking is prohibited approaching the crossing.",
+    category: "signs",
+    legalRefs: ["VRV Art. 33", "SSV Anhang 2 Ziff. 1.18"],
+    tags: ["sign:1.18", "warning", "pedestrian"],
+    examWeight: 0.5,
+    workedExamples: [
+      "A 1.18 sign on a town avenue: be ready to brake and watch the kerbs even before you can see the zebra.",
+      "Even without the warning sign, an unsignalised zebra crossing always confers priority to waiting pedestrians.",
+    ],
+  },
+  {
+    id: "signs.warning-slippery",
+    title: "Slippery road (1.10)",
+    statement:
+      "A triangular warning sign with a skidding car icon (SSV 1.10) warns of an unusually slippery surface — wet leaves, oil, or polished asphalt. Reduce speed, brake gently, avoid sudden steering inputs.",
+    category: "signs",
+    legalRefs: ["VRV Art. 4", "SSV Anhang 2 Ziff. 1.10"],
+    tags: ["sign:1.10", "warning", "slippery"],
+    examWeight: 0.45,
+    workedExamples: [
+      "A 1.10 sign before a section that is shaded year-round: slow well below the limit; the surface may be damp or icy when nowhere else is.",
+      "A supplementary plate showing 'glatte Fahrbahn bei Nässe' restricts the warning to wet conditions only.",
+    ],
+  },
+  {
+    id: "signs.warning-tram",
+    title: "Tram crossing (1.17)",
+    statement:
+      "A triangular warning sign showing a tram (SSV 1.17) warns of a tram line crossing or sharing the road. Trams have priority by default; rails can also throw bicycles and motorcycles off-line.",
+    category: "signs",
+    legalRefs: ["VRV Art. 38", "SSV Anhang 2 Ziff. 1.17"],
+    tags: ["sign:1.17", "warning", "tram"],
+    examWeight: 0.4,
+    workedExamples: [
+      "A 1.17 sign in town: expect a tram to cross or share the road — a tram from your left has priority over you.",
+      "Cross tram rails at as steep an angle as possible to reduce the risk of a wheel slipping into the groove.",
+    ],
+  },
+  {
+    id: "signs.warning-other-dangers",
+    title: "Other dangers (1.26)",
+    statement:
+      "A triangular warning sign with an exclamation mark (SSV 1.26) warns of an unspecified hazard. A supplementary plate names it. Without a plate, slow and look ahead carefully.",
+    category: "signs",
+    legalRefs: ["VRV Art. 4", "SSV Anhang 2 Ziff. 1.26"],
+    tags: ["sign:1.26", "warning"],
+    examWeight: 0.35,
+    workedExamples: [
+      "A 1.26 sign with a 'Smoke' plate near a sawmill: visibility may suddenly drop — slow and turn on dipped headlights.",
+      "1.26 alone in winter often warns of black ice — a real and frequent hazard.",
+    ],
+  },
+  {
+    id: "signs.distance-plate",
+    title: "Supplementary distance plate (5.01)",
+    statement:
+      "A small white rectangular plate placed below a sign and showing a distance in metres (SSV 5.01) tells you how far ahead the announced situation begins. It does not change the sign's meaning, only its location.",
+    category: "signs",
+    legalRefs: ["SSV Art. 63", "SSV Anhang 2 Ziff. 5.01"],
+    tags: ["sign:5.01", "supplementary"],
+    examWeight: 0.35,
+    workedExamples: [
+      "A no-overtaking sign with '300 m' below it: the ban begins 300 m further on, not at this sign — it is just a pre-warning.",
+      "A children-warning sign with '100 m': children may be expected starting 100 m further on, e.g. at the school yard around the bend.",
+    ],
+  },
+  {
+    id: "signs.length-plate",
+    title: "Length-of-section plate (5.02)",
+    statement:
+      "A small white rectangular plate showing a distance with arrows (SSV 5.02) gives the length of the section to which the sign applies. Useful for steep descents, slippery road warnings, or no-overtaking stretches.",
+    category: "signs",
+    legalRefs: ["SSV Art. 63", "SSV Anhang 2 Ziff. 5.02"],
+    tags: ["sign:5.02", "supplementary"],
+    examWeight: 0.3,
+    workedExamples: [
+      "A steep-descent sign with a '4 km' length plate: plan engine braking and cooling for the full descent, not just the next bend.",
+      "A no-overtaking sign with '2 km' length plate: even if traffic clears, the ban remains until you have travelled the full 2 km.",
+    ],
+  },
+  {
+    id: "signs.icy-road-plate",
+    title: "Icy road plate (5.05)",
+    statement:
+      "A supplementary plate showing 'Vereiste Fahrbahn' or an ice-crystal symbol (SSV 5.05) restricts a slippery-road warning to icy conditions. The warning applies whenever ice is or may be present.",
+    category: "signs",
+    legalRefs: ["VRV Art. 4", "SSV Anhang 2 Ziff. 5.05"],
+    tags: ["sign:5.05", "supplementary", "winter"],
+    examWeight: 0.3,
+    workedExamples: [
+      "A 1.10 slippery-road sign with a 5.05 ice plate: ice is the specific hazard; in dry summer conditions you may treat the section normally.",
+      "Even without 5.05, a slippery-road sign forces caution year-round — 5.05 only narrows the warning to ice.",
     ],
   },
 

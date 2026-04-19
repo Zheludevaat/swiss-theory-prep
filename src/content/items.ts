@@ -129,14 +129,16 @@ export const seedItems: Item[] = [
     id: "q.signs.stop.behaviour",
     ruleIds: ["signs.stop"],
     question: "At a stop sign on a quiet road with no cross traffic in sight:",
+    imageAssetId: "3.01.svg",
+    imageAlt: "Red octagonal stop sign with white 'STOP' text (SSV 3.01).",
     options: [
       { text: "You must come to a complete stop at the line", correct: true },
       { text: "You may roll through if the way is clear", correct: false },
       { text: "You yield only to traffic from the right", correct: false },
     ],
     rationale:
-      "A stop sign requires wheels-at-zero at the marked line, regardless of visible traffic.",
-    tags: ["sign:2.30"],
+      "A stop sign (SSV 3.01) requires wheels-at-zero at the marked line, regardless of visible traffic.",
+    tags: ["sign:3.01"],
     difficulty: 1,
   },
   {
@@ -149,23 +151,25 @@ export const seedItems: Item[] = [
       { text: "Both require only yielding, not stopping", correct: false },
     ],
     rationale:
-      "Give-way (3.02): slow and yield, no stop required if clear. Stop (2.30): always a full stop.",
-    tags: ["sign:2.30", "sign:3.02"],
+      "Give-way (SSV 3.02): slow and yield, no stop required if clear. Stop (SSV 3.01): always a full stop.",
+    tags: ["sign:3.01", "sign:3.02"],
     difficulty: 2,
   },
   {
     id: "q.signs.no-overtaking.applies",
     ruleIds: ["signs.no-overtaking"],
     question:
-      "You see the no-overtaking sign (2.44). Which overtakings remain permitted?",
+      "You see the no-overtaking sign (SSV 2.06). Which overtakings remain permitted?",
+    imageAssetId: "2.06.svg",
+    imageAlt: "Round white sign with red border showing two cars side by side; the right-hand car is red — overtaking prohibited (SSV 2.06).",
     options: [
       { text: "Overtaking a bicycle at walking pace", correct: true },
       { text: "Overtaking a car driving at the speed limit", correct: false },
       { text: "Overtaking a tractor moving at 20 km/h", correct: true },
     ],
     rationale:
-      "The ban applies to overtaking motor vehicles. Slow vehicles (<30 km/h) and cyclists remain overtake-able.",
-    tags: ["sign:2.44"],
+      "The ban (SSV 2.06) applies to overtaking motor vehicles. Slow vehicles (<30 km/h) and cyclists remain overtake-able. Cancelled by 2.27.",
+    tags: ["sign:2.06"],
     difficulty: 3,
   },
   {
@@ -173,13 +177,15 @@ export const seedItems: Item[] = [
     ruleIds: ["signs.priority-road"],
     question:
       "You are on a road marked with the yellow-diamond priority-road sign. At the next intersection:",
+    imageAssetId: "3.03.svg",
+    imageAlt: "Square sign tipped on its corner: white border, black border inside, central yellow diamond — priority road (SSV 3.03).",
     options: [
       { text: "You keep priority over crossing traffic", correct: true },
       { text: "You must still yield to traffic from your right", correct: false },
       { text: "Priority depends on the size of the side road", correct: false },
     ],
     rationale:
-      "The priority-road sign (3.03) overrides the right-hand rule until cancelled by 3.04.",
+      "The priority-road sign (SSV 3.03) overrides the right-hand rule until cancelled by SSV 3.04.",
     tags: ["sign:3.03", "priority"],
     difficulty: 2,
   },
@@ -188,6 +194,8 @@ export const seedItems: Item[] = [
     ruleIds: ["signs.no-entry"],
     question:
       "You see a red disc with a horizontal white bar at the mouth of a street. You:",
+    imageAssetId: "2.02.svg",
+    imageAlt: "Solid red circle with a horizontal white bar across the centre — no entry (SSV 2.02).",
     options: [
       { text: "Must not enter the street with a motor vehicle", correct: true },
       { text: "May briefly enter to turn around", correct: false },
@@ -217,45 +225,51 @@ export const seedItems: Item[] = [
     id: "q.signs.no-parking",
     ruleIds: ["signs.no-parking"],
     question:
-      "Under a no-parking sign (2.50), which of these is permitted?",
+      "Under a no-parking sign (SSV 2.17), which of these is permitted?",
+    imageAssetId: "2.17.svg",
+    imageAlt: "Blue disc with red border and a single red diagonal slash — no parking (SSV 2.17).",
     options: [
       { text: "Stopping briefly to let a passenger get out", correct: true },
       { text: "Leaving the car for two minutes to run into a shop", correct: false },
       { text: "Parking with hazard lights on", correct: false },
     ],
     rationale:
-      "No-parking (2.50) prohibits parking but allows brief boarding/loading. A short shop visit is parking, not a stop.",
-    tags: ["sign:2.50", "parking"],
+      "No-parking (SSV 2.17) prohibits parking but allows brief boarding/loading. A short shop visit is parking, not a stop.",
+    tags: ["sign:2.17", "parking"],
     difficulty: 2,
   },
   {
     id: "q.signs.no-stopping",
     ruleIds: ["signs.no-stopping"],
     question:
-      "Under a no-stopping sign (2.49) you may:",
+      "Under a no-stopping sign (SSV 2.16) you may:",
+    imageAssetId: "2.16.svg",
+    imageAlt: "Blue disc with red border and a red X — no stopping (SSV 2.16).",
     options: [
       { text: "Stop only if traffic control (red light, pedestrian crossing) requires it", correct: true },
       { text: "Stop briefly to drop a passenger", correct: false },
       { text: "Stop to load groceries", correct: false },
     ],
     rationale:
-      "No-stopping (2.49) is absolute except for traffic-control duties. Even loading and boarding are forbidden.",
-    tags: ["sign:2.49", "parking"],
+      "No-stopping (SSV 2.16) is absolute except for traffic-control duties. Even loading and boarding are forbidden.",
+    tags: ["sign:2.16", "parking"],
     difficulty: 2,
   },
   {
     id: "q.signs.children-warning",
     ruleIds: ["signs.children-warning"],
     question:
-      "You see the children-warning sign (1.23) on a town road posted at 50 km/h. The right action is to:",
+      "You see the children-warning sign (SSV 1.19) on a town road posted at 50 km/h. The right action is to:",
+    imageAssetId: "1.19.svg",
+    imageAlt: "Red-bordered triangular warning sign showing two running child silhouettes — children (SSV 1.19).",
     options: [
       { text: "Reduce speed below 50 and watch for children stepping out", correct: true },
       { text: "Maintain 50 km/h — the sign does not change the limit", correct: false },
       { text: "Sound the horn to alert children", correct: false },
     ],
     rationale:
-      "The warning sign does not lower the limit, but VRV Art. 4 still requires speed adapted to conditions.",
-    tags: ["sign:1.23"],
+      "The warning sign (SSV 1.19) does not lower the limit, but VRV Art. 4 still requires speed adapted to conditions.",
+    tags: ["sign:1.19"],
     difficulty: 2,
   },
   {
@@ -263,14 +277,16 @@ export const seedItems: Item[] = [
     ruleIds: ["signs.mandatory-direction"],
     question:
       "A blue disc with a single white arrow pointing straight up faces you at a junction. You:",
+    imageAssetId: "2.40.svg",
+    imageAlt: "Blue disc with a single white straight-up arrow — mandatory direction ahead (SSV 2.40).",
     options: [
       { text: "Must continue straight ahead — turning is prohibited", correct: true },
       { text: "May turn right but not left", correct: false },
       { text: "May choose any direction if no other sign appears", correct: false },
     ],
     rationale:
-      "Mandatory direction (2.37 series): you must take the indicated direction; turning is treated as a prohibited movement.",
-    tags: ["sign:2.37"],
+      "Mandatory direction (SSV 2.40–2.47): you must take the indicated direction; turning is treated as a prohibited movement.",
+    tags: ["sign:2.40"],
     difficulty: 2,
   },
   {
@@ -278,14 +294,16 @@ export const seedItems: Item[] = [
     ruleIds: ["signs.bicycle-path"],
     question:
       "A blue disc shows a single white bicycle. Which is correct?",
+    imageAssetId: "2.51.svg",
+    imageAlt: "Blue disc with a single white bicycle pictogram — bicycle path (SSV 2.51).",
     options: [
       { text: "Path is reserved for bicycles; motor vehicles must not enter", correct: true },
       { text: "Bicycles must yield to motor vehicles using the path", correct: false },
       { text: "Pedestrians may use the path freely alongside cyclists", correct: false },
     ],
     rationale:
-      "A bicycle-only sign reserves the path for bicycles. Pedestrians belong on the pedestrian-and-bicycle combined sign, not this one.",
-    tags: ["sign:2.60"],
+      "A bicycle-only sign (SSV 2.51) reserves the path for bicycles. Pedestrians belong on the pedestrian-and-bicycle combined sign (2.53), not this one.",
+    tags: ["sign:2.51"],
     difficulty: 2,
   },
   {
@@ -316,6 +334,605 @@ export const seedItems: Item[] = [
     rationale:
       "The pedestrian pictogram on a dead-end sign indicates the street continues for foot traffic but ends for motor vehicles.",
     tags: ["sign:4.09"],
+    difficulty: 3,
+  },
+  // --- new sign items wired to public/signs/*.svg (Chunk 5b) ---
+  {
+    id: "q.signs.no-vehicles.recognition",
+    ruleIds: ["signs.no-vehicles"],
+    question: "What does this sign mean?",
+    imageAssetId: "2.01.svg",
+    imageAlt: "Empty white circular sign with a thick red border (SSV 2.01).",
+    options: [
+      { text: "No vehicles of any kind in either direction", correct: true },
+      { text: "End of all restrictions", correct: false },
+      { text: "No motor vehicles only", correct: false },
+    ],
+    rationale:
+      "An empty white disc with a red border (SSV 2.01) bans all vehicles, including bicycles, unless an exception plate is shown.",
+    tags: ["sign:2.01"],
+    difficulty: 2,
+  },
+  {
+    id: "q.signs.no-vehicles.exception",
+    ruleIds: ["signs.no-vehicles"],
+    question:
+      "Beneath a 2.01 sign you see a plate reading 'forestry vehicles excepted'. May you, as a private driver, enter?",
+    options: [
+      { text: "No — the prohibition still applies to you", correct: true },
+      { text: "Yes, because the exception covers all motor vehicles", correct: false },
+      { text: "Only at low speed, with hazard lights on", correct: false },
+    ],
+    rationale:
+      "Exception plates only lift the ban for the listed users. Private cars remain prohibited under SSV 2.01.",
+    tags: ["sign:2.01"],
+    difficulty: 3,
+  },
+  {
+    id: "q.signs.no-uturn.basic",
+    ruleIds: ["signs.no-uturn"],
+    question: "What does this sign require?",
+    imageAssetId: "2.05.svg",
+    imageAlt: "Round white sign with red border showing a U-shaped arrow (SSV 2.05).",
+    options: [
+      { text: "U-turns are prohibited until the next intersection", correct: true },
+      { text: "Left turns are prohibited", correct: false },
+      { text: "Cars must follow the curve direction shown", correct: false },
+    ],
+    rationale:
+      "SSV 2.05 prohibits making a U-turn on the road. The ban runs until the next intersection or a cancelling sign.",
+    tags: ["sign:2.05"],
+    difficulty: 1,
+  },
+  {
+    id: "q.signs.speed-limit.basic",
+    ruleIds: ["signs.speed-limit"],
+    question:
+      "On a country road you pass a round white sign with a red border showing '60'. From this point:",
+    imageAssetId: "2.09.svg",
+    imageAlt: "Round white sign with red border and a black numeral — maximum speed (SSV 2.09).",
+    options: [
+      { text: "60 km/h is your maximum until cancelled or replaced", correct: true },
+      { text: "60 km/h is a recommendation, not a maximum", correct: false },
+      { text: "60 km/h is your minimum speed", correct: false },
+    ],
+    rationale:
+      "SSV 2.09 sets a binding maximum speed in km/h, valid until cancelled by an end sign (2.25) or replaced by another limit.",
+    tags: ["sign:2.09", "speed"],
+    difficulty: 1,
+  },
+  {
+    id: "q.signs.speed-limit.vs-default",
+    ruleIds: ["signs.speed-limit", "speeds.default-limits"],
+    question:
+      "A '40' speed-limit sign is posted in a built-up area where the general 50 already applies. The applicable limit is:",
+    options: [
+      { text: "40 km/h — the posted sign overrides the built-up default", correct: true },
+      { text: "50 km/h — built-up always wins", correct: false },
+      { text: "Whichever is higher of the two", correct: false },
+    ],
+    rationale:
+      "A more restrictive posted limit always overrides the area default. 40 km/h applies until cancelled.",
+    tags: ["sign:2.09", "speed"],
+    difficulty: 2,
+  },
+  {
+    id: "q.signs.general-50.entry",
+    ruleIds: ["signs.general-50"],
+    question:
+      "You pass a blue rectangular sign reading '50 generell' at the village edge. This means:",
+    imageAssetId: "2.10.svg",
+    imageAlt: "Blue rectangular sign with white text reading '50 generell' (SSV 2.10).",
+    options: [
+      { text: "50 km/h is the default on every road in this area until cancelled by 2.26", correct: true },
+      { text: "50 km/h applies only on this main road", correct: false },
+      { text: "50 km/h is a recommended speed for this stretch", correct: false },
+    ],
+    rationale:
+      "SSV 2.10 sets the area-wide built-up default at 50 km/h, including side streets without their own posted limit.",
+    tags: ["sign:2.10", "speed"],
+    difficulty: 2,
+  },
+  {
+    id: "q.signs.no-bicycles.motorway",
+    ruleIds: ["signs.no-bicycles"],
+    question:
+      "Why does a motorway entrance always carry the 'no bicycles' sign?",
+    imageAssetId: "2.19.svg",
+    imageAlt: "Round white sign with red border showing a black bicycle silhouette — no bicycles (SSV 2.19).",
+    options: [
+      { text: "Bicycles, mopeds, and slow vehicles are forbidden on motorways by law", correct: true },
+      { text: "It is only a recommendation, cyclists may use the hard shoulder", correct: false },
+      { text: "It applies only to e-bikes above 25 km/h", correct: false },
+    ],
+    rationale:
+      "Bicycles and mopeds are forbidden on motorways. The 2.19 sign reinforces the statutory ban at the entrance.",
+    tags: ["sign:2.19", "motorway"],
+    difficulty: 2,
+  },
+  {
+    id: "q.signs.no-trucks.scope",
+    ruleIds: ["signs.no-trucks"],
+    question:
+      "A village road posts the 'no trucks' sign (SSV 2.21) without any plate underneath. Which vehicles are banned?",
+    imageAssetId: "2.21.svg",
+    imageAlt: "Round white sign with red border showing a black truck silhouette — no trucks (SSV 2.21).",
+    options: [
+      { text: "Lorries above the standard light-truck weight", correct: true },
+      { text: "All commercial vehicles, including small vans", correct: false },
+      { text: "Buses, even though they show a different silhouette", correct: false },
+    ],
+    rationale:
+      "The 2.21 ban targets trucks proper. Light vans and passenger cars remain allowed; buses fall under their own sign.",
+    tags: ["sign:2.21"],
+    difficulty: 3,
+  },
+  {
+    id: "q.signs.no-motor-vehicles.bicycles",
+    ruleIds: ["signs.no-motor-vehicles", "signs.no-vehicles"],
+    question:
+      "What is the difference between SSV 2.01 and SSV 2.24?",
+    imageAssetId: "2.24.svg",
+    imageAlt: "Round white sign with red border showing a car and motorcycle silhouettes — no motor vehicles (SSV 2.24).",
+    options: [
+      { text: "2.01 bans every vehicle; 2.24 bans only motor vehicles, leaving bicycles allowed", correct: true },
+      { text: "Both bans are identical — the symbols are interchangeable", correct: false },
+      { text: "2.01 bans only motor vehicles; 2.24 bans every vehicle", correct: false },
+    ],
+    rationale:
+      "2.01 (no vehicles) is the broadest ban; 2.24 (no motor vehicles) leaves bicycles, mopeds, agricultural vehicles, and pedestrians free.",
+    tags: ["sign:2.01", "sign:2.24"],
+    difficulty: 3,
+  },
+  {
+    id: "q.signs.end-speed-limit.country",
+    ruleIds: ["signs.end-speed-limit", "speeds.default-limits"],
+    question:
+      "On a country road you pass an 'end of 60' sign (SSV 2.25). The applicable limit becomes:",
+    imageAssetId: "2.25.svg",
+    imageAlt: "Round white sign with a numeral struck through by a black diagonal line — end of speed limit (SSV 2.25).",
+    options: [
+      { text: "80 km/h, the country-road default", correct: true },
+      { text: "100 km/h, because no limit is posted", correct: false },
+      { text: "Whatever the limit was before the 60 sign", correct: false },
+    ],
+    rationale:
+      "End of a posted limit returns to the road's default. Country roads default to 80 km/h.",
+    tags: ["sign:2.25", "speed"],
+    difficulty: 2,
+  },
+  {
+    id: "q.signs.end-overtaking-ban.scope",
+    ruleIds: ["signs.end-overtaking-ban"],
+    question:
+      "After passing the 'end of overtaking ban' sign (SSV 2.27), what changes?",
+    imageAssetId: "2.27.svg",
+    imageAlt: "Round white sign with the two-car overtaking pictogram crossed out by a diagonal line — end of overtaking ban (SSV 2.27).",
+    options: [
+      { text: "Overtaking is again allowed where conditions and other rules permit", correct: true },
+      { text: "Overtaking is mandatory if a slower vehicle is ahead", correct: false },
+      { text: "The speed limit is automatically raised", correct: false },
+    ],
+    rationale:
+      "SSV 2.27 only cancels the no-overtaking ban from SSV 2.06. Speed limits and other rules are unaffected.",
+    tags: ["sign:2.27"],
+    difficulty: 2,
+  },
+  {
+    id: "q.signs.end-prohibitions.what-changes",
+    ruleIds: ["signs.end-prohibitions"],
+    question:
+      "You pass the 'Freie Fahrt' sign (SSV 2.28) on an open country road. Which restrictions are lifted?",
+    imageAssetId: "2.28.svg",
+    imageAlt: "Round white sign with multiple thin diagonal lines — end of all restrictions (SSV 2.28).",
+    options: [
+      { text: "All previously posted prohibitions, including speed and overtaking", correct: true },
+      { text: "Only the most recent prohibition", correct: false },
+      { text: "Only weight and dimension limits", correct: false },
+    ],
+    rationale:
+      "SSV 2.28 cancels all simultaneously posted prohibitions at once. The general 50 in built-up areas (2.10) is unaffected — only 2.26 cancels it.",
+    tags: ["sign:2.28"],
+    difficulty: 2,
+  },
+  {
+    id: "q.signs.roundabout.recognition",
+    ruleIds: ["signs.roundabout", "priority.roundabout"],
+    question:
+      "Approaching a roundabout you see the blue disc with three curved arrows (SSV 2.50) above a give-way sign. What must you do?",
+    imageAssetId: "2.50.svg",
+    imageAlt: "Blue disc with three white curved arrows forming a circle — roundabout (SSV 2.50).",
+    options: [
+      { text: "Yield to vehicles already inside the roundabout", correct: true },
+      { text: "Stop completely before entering, even if the circle is empty", correct: false },
+      { text: "Signal left when entering the circle", correct: false },
+    ],
+    rationale:
+      "The roundabout sign combined with give-way (3.02) requires yielding to circulating traffic. No left signal on entry; no full stop required.",
+    tags: ["sign:2.50", "roundabout"],
+    difficulty: 1,
+  },
+  {
+    id: "q.signs.shared-pedestrian-bicycle.use",
+    ruleIds: ["signs.shared-pedestrian-bicycle"],
+    question:
+      "On a path marked with the SSV 2.53 sign (bicycle and pedestrian together), how should you ride?",
+    imageAssetId: "2.53.svg",
+    imageAlt: "Blue disc with a bicycle and a pedestrian side by side — shared bike/pedestrian path (SSV 2.53).",
+    options: [
+      { text: "Ride at low speed and yield to pedestrians", correct: true },
+      { text: "Pedestrians must walk on the right edge so cyclists can pass at full speed", correct: false },
+      { text: "Cyclists may use it only when no pedestrians are present", correct: false },
+    ],
+    rationale:
+      "On a shared path (2.53), cyclists and pedestrians share the surface; cyclists adapt their speed and yield to walkers.",
+    tags: ["sign:2.53", "bicycle"],
+    difficulty: 2,
+  },
+  {
+    id: "q.signs.minimum-speed.tunnel",
+    ruleIds: ["signs.minimum-speed"],
+    question:
+      "At a tunnel entrance you see a blue circular '60' sign (SSV 2.56). This means:",
+    imageAssetId: "2.56.svg",
+    imageAlt: "Blue circular sign with white numeral '60' — minimum speed (SSV 2.56).",
+    options: [
+      { text: "Vehicles unable to maintain at least 60 km/h must not use the tunnel", correct: true },
+      { text: "60 km/h is the maximum permitted speed", correct: false },
+      { text: "60 km/h is a recommendation only", correct: false },
+    ],
+    rationale:
+      "A blue circular speed sign sets a minimum. Vehicles unable to meet it must take an alternative route.",
+    tags: ["sign:2.56", "speed"],
+    difficulty: 2,
+  },
+  {
+    id: "q.signs.snow-chains.required",
+    ruleIds: ["signs.snow-chains"],
+    question:
+      "A pass road shows the 'snow chains required' sign (SSV 2.57) during a snowfall. What must be true of your car?",
+    imageAssetId: "2.57.svg",
+    imageAlt: "Blue circular sign with a tyre wrapped in chains — snow chains required (SSV 2.57).",
+    options: [
+      { text: "At least two driving wheels must have snow chains fitted", correct: true },
+      { text: "Winter tyres alone are enough to satisfy the sign", correct: false },
+      { text: "The sign is purely a recommendation", correct: false },
+    ],
+    rationale:
+      "SSV 2.57 mandates chains on at least two driving wheels. Winter tyres without chains do not satisfy it.",
+    tags: ["sign:2.57", "winter"],
+    difficulty: 3,
+  },
+  {
+    id: "q.signs.give-way-to-oncoming.bridge",
+    ruleIds: ["signs.give-way-to-oncoming"],
+    question:
+      "On a narrow bridge your side shows the SSV 3.05 sign — black up arrow, red down arrow. You should:",
+    imageAssetId: "3.05.svg",
+    imageAlt: "Square white sign with a black up arrow and a red down arrow — give way to oncoming (SSV 3.05).",
+    options: [
+      { text: "Stop short and wait for the oncoming vehicle to pass", correct: true },
+      { text: "Cross at low speed in parallel with the oncoming vehicle", correct: false },
+      { text: "Sound the horn and continue — you have priority", correct: false },
+    ],
+    rationale:
+      "SSV 3.05 requires you to yield to oncoming traffic on the narrow section. The matching 3.06 faces the other side and grants priority there.",
+    tags: ["sign:3.05", "narrow"],
+    difficulty: 2,
+  },
+  {
+    id: "q.signs.priority-over-oncoming.use",
+    ruleIds: ["signs.priority-over-oncoming"],
+    question:
+      "You approach a narrow construction contraflow with the SSV 3.06 sign in your direction. You may:",
+    imageAssetId: "3.06.svg",
+    imageAlt: "Square blue sign with a white up arrow and a red down arrow — priority over oncoming (SSV 3.06).",
+    options: [
+      { text: "Continue without stopping, but keep speed adapted to view", correct: true },
+      { text: "Drive at the posted limit regardless of view", correct: false },
+      { text: "Stop and let oncoming traffic pass first", correct: false },
+    ],
+    rationale:
+      "Priority over oncoming (3.06) lets you continue, but VRV Art. 4 still requires speed adapted to conditions.",
+    tags: ["sign:3.06", "narrow"],
+    difficulty: 2,
+  },
+  {
+    id: "q.signs.end-priority-road.intersection",
+    ruleIds: ["signs.end-priority-road", "priority.right-hand.default"],
+    question:
+      "You are on a priority road and pass the SSV 3.04 sign (priority road struck through). At the next intersection:",
+    imageAssetId: "3.04.svg",
+    imageAlt: "Yellow diamond sign with a black diagonal stripe through it — end of priority road (SSV 3.04).",
+    options: [
+      { text: "The right-hand rule applies again unless other signs say otherwise", correct: true },
+      { text: "You keep priority for one more intersection", correct: false },
+      { text: "Traffic from the left always has priority", correct: false },
+    ],
+    rationale:
+      "SSV 3.04 cancels the priority road. From this point on, the default right-hand rule applies until new signs reassign priority.",
+    tags: ["sign:3.04", "priority"],
+    difficulty: 2,
+  },
+  {
+    id: "q.signs.junction-right-priority.warning",
+    ruleIds: ["signs.junction-right-priority", "priority.right-hand.default"],
+    question:
+      "You see a black-on-yellow square sign showing a junction with thick lines from the right (SSV 3.10). At the next junction:",
+    imageAssetId: "3.10.svg",
+    imageAlt: "Yellow square sign on its corner showing a + or T-junction with the right branch in thick black lines — junction with right-hand priority (SSV 3.10).",
+    options: [
+      { text: "The vehicle from the right has priority — be ready to yield", correct: true },
+      { text: "You have priority because your road looks larger", correct: false },
+      { text: "Stop is required before entering the junction", correct: false },
+    ],
+    rationale:
+      "SSV 3.10 warns that the right-hand rule applies despite the road's appearance. Yield to traffic from the right.",
+    tags: ["sign:3.10", "priority"],
+    difficulty: 3,
+  },
+  {
+    id: "q.signs.junction-non-priority.confirm",
+    ruleIds: ["signs.junction-non-priority"],
+    question:
+      "On a road showing the SSV 3.11 sign (priority road with a thinner side road joining):",
+    imageAssetId: "3.11.svg",
+    imageAlt: "Yellow square sign on its corner showing a thicker through road with a thinner side road meeting it — junction with non-priority side road (SSV 3.11).",
+    options: [
+      { text: "You keep priority — the joining traffic must yield to you", correct: true },
+      { text: "You must yield to traffic on the side road", correct: false },
+      { text: "Both roads have equal priority", correct: false },
+    ],
+    rationale:
+      "SSV 3.11 warns of a non-priority road joining yours. You retain priority unless other signs override.",
+    tags: ["sign:3.11", "priority"],
+    difficulty: 2,
+  },
+  {
+    id: "q.signs.warning-curves.behaviour",
+    ruleIds: ["signs.warning-curves"],
+    question:
+      "You see a 1.02 right-curve warning before a wet bend. The correct technique is to:",
+    imageAssetId: "1.02.svg",
+    imageAlt: "Red-bordered triangular warning sign showing a curve to the right — right curve (SSV 1.02).",
+    options: [
+      { text: "Brake on the straight, then steer through the curve at a steady speed", correct: true },
+      { text: "Brake hard inside the curve once you can see the exit", correct: false },
+      { text: "Maintain speed; the sign is only a suggestion", correct: false },
+    ],
+    rationale:
+      "Brake straight, steer slow: braking inside a curve unsettles the car, especially in the wet. Always reduce speed before the bend.",
+    tags: ["sign:1.02", "curve"],
+    difficulty: 2,
+  },
+  {
+    id: "q.signs.warning-curves.double",
+    ruleIds: ["signs.warning-curves"],
+    question:
+      "What does a 1.03 sign (double curve, left first) tell you about the second curve?",
+    imageAssetId: "1.03.svg",
+    imageAlt: "Red-bordered triangular warning sign showing two linked curves, the first to the left — double curve, left first (SSV 1.03).",
+    options: [
+      { text: "It is a right-hand curve following the left", correct: true },
+      { text: "It is another left-hand curve at higher radius", correct: false },
+      { text: "There is no second curve — only the left curve is shown", correct: false },
+    ],
+    rationale:
+      "1.03 means the first curve is to the left and the second to the right. Plan your line so both can be taken without sudden steering.",
+    tags: ["sign:1.03", "curve"],
+    difficulty: 2,
+  },
+  {
+    id: "q.signs.warning-pedestrian-crossing.action",
+    ruleIds: ["signs.warning-pedestrian-crossing", "maneuvers.pedestrian-crossing"],
+    question:
+      "You see a 1.18 sign on a town avenue. The right action is to:",
+    imageAssetId: "1.18.svg",
+    imageAlt: "Red-bordered triangular warning sign showing a pedestrian on a striped crossing — pedestrian crossing ahead (SSV 1.18).",
+    options: [
+      { text: "Slow down and watch the kerbs for pedestrians", correct: true },
+      { text: "Sound the horn to warn pedestrians off the crossing", correct: false },
+      { text: "Overtake the car ahead before reaching the crossing", correct: false },
+    ],
+    rationale:
+      "1.18 announces a crossing further along. Slow, scan the kerbs, and never overtake on the approach to a pedestrian crossing.",
+    tags: ["sign:1.18", "pedestrian"],
+    difficulty: 1,
+  },
+  {
+    id: "q.signs.warning-slippery.choice",
+    ruleIds: ["signs.warning-slippery"],
+    question:
+      "After a 1.10 'slippery road' sign you should:",
+    imageAssetId: "1.10.svg",
+    imageAlt: "Red-bordered triangular warning sign showing a car with skid lines — slippery road (SSV 1.10).",
+    options: [
+      { text: "Reduce speed and avoid sudden steering or braking", correct: true },
+      { text: "Brake firmly to test the surface grip", correct: false },
+      { text: "Turn off ABS to feel the wheels lock", correct: false },
+    ],
+    rationale:
+      "Smooth inputs preserve grip on slippery surfaces. Sudden steering or braking can trigger a skid.",
+    tags: ["sign:1.10", "slippery"],
+    difficulty: 1,
+  },
+  {
+    id: "q.signs.warning-tram.behaviour",
+    ruleIds: ["signs.warning-tram"],
+    question:
+      "A 1.17 tram-warning sign appears on a town street. Which statements are correct?",
+    imageAssetId: "1.17.svg",
+    imageAlt: "Red-bordered triangular warning sign showing a tram silhouette — tram crossing (SSV 1.17).",
+    options: [
+      { text: "A tram approaching from your left has priority over you", correct: true },
+      { text: "Cross the rails as steeply as possible to avoid wheels slipping into the groove", correct: true },
+      { text: "Trams must yield to passenger cars at all times", correct: false },
+    ],
+    rationale:
+      "Trams have priority by default (VRV Art. 38) and rails are a real hazard for two-wheelers. Cross at a steep angle.",
+    tags: ["sign:1.17", "tram"],
+    difficulty: 3,
+  },
+  {
+    id: "q.signs.warning-other-dangers.read-plate",
+    ruleIds: ["signs.warning-other-dangers"],
+    question:
+      "A 1.26 'other dangers' triangle has a 'Smoke' plate underneath. You should:",
+    imageAssetId: "1.26.svg",
+    imageAlt: "Red-bordered triangular warning sign showing a black exclamation mark — other dangers (SSV 1.26).",
+    options: [
+      { text: "Slow down and turn on dipped headlights in case visibility drops", correct: true },
+      { text: "Switch off all lights to avoid reflection from the smoke", correct: false },
+      { text: "Continue at full speed — smoke is only a visual nuisance", correct: false },
+    ],
+    rationale:
+      "1.26 with a plate names the hazard. Smoke can drop visibility quickly — slow and use dipped (not high-beam) headlights.",
+    tags: ["sign:1.26"],
+    difficulty: 2,
+  },
+  {
+    id: "q.signs.distance-plate.use",
+    ruleIds: ["signs.distance-plate"],
+    question:
+      "A no-overtaking sign (SSV 2.06) has a small white plate beneath reading '300 m' (SSV 5.01). The ban begins:",
+    imageAssetId: "5.01.svg",
+    imageAlt: "Small white rectangular plate showing a distance in metres — distance to start of restriction (SSV 5.01).",
+    options: [
+      { text: "300 m further along the road, not at this sign", correct: true },
+      { text: "Immediately at this sign and lasts for 300 m", correct: false },
+      { text: "Only when an oncoming vehicle is within 300 m", correct: false },
+    ],
+    rationale:
+      "Plate 5.01 indicates the distance to the start of the announced restriction. The sign at the post is a pre-warning.",
+    tags: ["sign:5.01", "supplementary"],
+    difficulty: 2,
+  },
+  {
+    id: "q.signs.length-plate.use",
+    ruleIds: ["signs.length-plate"],
+    question:
+      "A steep-descent sign (SSV 1.14) carries a '4 km' length plate (SSV 5.02). What does it mean?",
+    imageAssetId: "5.02.svg",
+    imageAlt: "Small white rectangular plate showing a distance with arrows — length of affected section (SSV 5.02).",
+    options: [
+      { text: "The descent continues for 4 km — plan engine braking and brake cooling for the full stretch", correct: true },
+      { text: "The descent will end in 4 km of road, then a flat section follows immediately", correct: false },
+      { text: "There are exactly four hairpin curves in the descent", correct: false },
+    ],
+    rationale:
+      "Plate 5.02 gives the length of the section to which the sign applies. Plan vehicle behaviour for the full distance.",
+    tags: ["sign:5.02", "supplementary"],
+    difficulty: 3,
+  },
+  {
+    id: "q.signs.icy-road-plate.scope",
+    ruleIds: ["signs.icy-road-plate", "signs.warning-slippery"],
+    question:
+      "A 1.10 slippery-road sign with a 5.05 ice-plate underneath warns of:",
+    imageAssetId: "5.05.svg",
+    imageAlt: "Small white rectangular plate showing an ice-crystal symbol — icy road surface (SSV 5.05).",
+    options: [
+      { text: "An icy surface — be ready for very low grip in cold weather", correct: true },
+      { text: "Wet leaves only — the plate is irrelevant in summer", correct: false },
+      { text: "Aquaplaning risk on rain — ignore in winter", correct: false },
+    ],
+    rationale:
+      "Plate 5.05 narrows the slippery-road warning to ice. Maximum braking distances apply when temperatures fall.",
+    tags: ["sign:5.05", "winter"],
+    difficulty: 2,
+  },
+  {
+    id: "q.signs.give-way.recognition",
+    ruleIds: ["signs.give-way"],
+    question: "What does this sign require?",
+    imageAssetId: "3.02.svg",
+    imageAlt: "Inverted equilateral triangle with a white interior and red border — give way (SSV 3.02).",
+    options: [
+      { text: "Slow and yield; stop only if necessary to give way", correct: true },
+      { text: "Always come to a complete stop at the line", correct: false },
+      { text: "Continue at full speed — you have priority", correct: false },
+    ],
+    rationale:
+      "Give way (SSV 3.02) requires yielding without a mandatory stop. If the way is clear, you may roll through.",
+    tags: ["sign:3.02"],
+    difficulty: 1,
+  },
+  {
+    id: "q.signs.no-overtaking.recognition",
+    ruleIds: ["signs.no-overtaking"],
+    question: "What does this sign mean?",
+    imageAssetId: "2.06.svg",
+    imageAlt: "Round white sign with red border showing two cars side by side, the right-hand car red — no overtaking (SSV 2.06).",
+    options: [
+      { text: "Overtaking motor vehicles is prohibited", correct: true },
+      { text: "Overtaking by trucks only is prohibited", correct: false },
+      { text: "Two-way traffic ahead", correct: false },
+    ],
+    rationale:
+      "SSV 2.06 prohibits overtaking motor vehicles. Slow vehicles (<30 km/h) and bicycles remain overtake-able.",
+    tags: ["sign:2.06"],
+    difficulty: 1,
+  },
+  {
+    id: "q.signs.priority-road.recognition",
+    ruleIds: ["signs.priority-road"],
+    question: "What does this sign mean?",
+    imageAssetId: "3.03.svg",
+    imageAlt: "Square sign tipped on its corner with a yellow inner diamond — priority road (SSV 3.03).",
+    options: [
+      { text: "You are on the priority road; the right-hand rule does not apply at intersections", correct: true },
+      { text: "You must yield to traffic from your right at the next intersection", correct: false },
+      { text: "End of priority road", correct: false },
+    ],
+    rationale:
+      "SSV 3.03 grants priority at all intersections until cancelled by 3.04 or overridden locally.",
+    tags: ["sign:3.03"],
+    difficulty: 1,
+  },
+  {
+    id: "q.signs.children-warning.recognition",
+    ruleIds: ["signs.children-warning"],
+    question: "What does this sign warn of?",
+    imageAssetId: "1.19.svg",
+    imageAlt: "Red-bordered triangular warning sign showing two running child silhouettes — children (SSV 1.19).",
+    options: [
+      { text: "Children are likely on or near the road — slow down and watch", correct: true },
+      { text: "A school zone with a 30 km/h limit", correct: false },
+      { text: "A play street where motor traffic is forbidden", correct: false },
+    ],
+    rationale:
+      "1.19 is a warning. It does not lower the limit, but VRV Art. 4 requires a speed adapted to conditions — usually well below the posted limit near schools.",
+    tags: ["sign:1.19"],
+    difficulty: 2,
+  },
+  {
+    id: "q.signs.bicycle-path.vs-shared",
+    ruleIds: ["signs.bicycle-path", "signs.shared-pedestrian-bicycle"],
+    question:
+      "On the bicycle-only sign (SSV 2.51), pedestrians are:",
+    options: [
+      { text: "Not allowed — they belong on the shared sign 2.53 or on a footway", correct: true },
+      { text: "Allowed if they walk on the right edge", correct: false },
+      { text: "Allowed only when no cyclists are present", correct: false },
+    ],
+    rationale:
+      "2.51 reserves the path for bicycles. Pedestrians use 2.52 (pedestrian path) or 2.53 (shared).",
+    tags: ["sign:2.51", "sign:2.53"],
+    difficulty: 3,
+  },
+  {
+    id: "q.signs.no-overtaking.applies.cancelled-by",
+    ruleIds: ["signs.no-overtaking", "signs.end-overtaking-ban"],
+    question:
+      "A no-overtaking ban (SSV 2.06) is cancelled by:",
+    options: [
+      { text: "The end-of-overtaking-ban sign (SSV 2.27)", correct: true },
+      { text: "The end-of-all-restrictions sign (SSV 2.28)", correct: true },
+      { text: "Crossing into a built-up area marked with 2.10", correct: false },
+    ],
+    rationale:
+      "Both 2.27 (specific) and 2.28 (general 'Freie Fahrt') cancel the overtaking ban. Entering a built-up area does not.",
+    tags: ["sign:2.06", "sign:2.27", "sign:2.28"],
     difficulty: 3,
   },
 
