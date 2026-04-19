@@ -51,7 +51,14 @@ export default defineConfig({
       // the user chooses when to reload. Prevents a mid-mock catastrophe
       // when a deploy lands during a 45-minute exam.
       registerType: "prompt",
-      includeAssets: ["favicon.svg", "icons/*.png", "signs/*.svg"],
+      includeAssets: [
+        "favicon.svg",
+        "offline.html",
+        "icons/*.png",
+        "signs/*.svg",
+        "splash/*.png",
+        "screenshots/*.png",
+      ],
       manifest: {
         name: "Swiss Theory Prep",
         short_name: "TheoryPrep",
@@ -60,8 +67,11 @@ export default defineConfig({
         theme_color: "#0f172a",
         background_color: "#0f172a",
         display: "standalone",
+        orientation: "portrait",
         scope: base,
         start_url: base,
+        lang: "en",
+        categories: ["education", "productivity"],
         icons: [
           {
             src: "icons/icon-192.png",
@@ -79,6 +89,43 @@ export default defineConfig({
             type: "image/png",
             purpose: "maskable",
           },
+          // F-4/F-5: apple-touch-icon variants so iOS "Add to Home Screen"
+          // picks a crisp raster at the device's native size instead of
+          // scaling the 192px down.
+          {
+            src: "icons/apple-touch-icon-180.png",
+            sizes: "180x180",
+            type: "image/png",
+          },
+          {
+            src: "icons/apple-touch-icon-167.png",
+            sizes: "167x167",
+            type: "image/png",
+          },
+          {
+            src: "icons/apple-touch-icon-152.png",
+            sizes: "152x152",
+            type: "image/png",
+          },
+        ],
+        // F-3: install-preview screenshots surface in browser install
+        // prompts (Android Chrome, Edge). Portrait-only to match the app's
+        // `orientation: "portrait"` and the real iPhone install flow.
+        screenshots: [
+          {
+            src: "screenshots/today.png",
+            sizes: "1080x1920",
+            type: "image/png",
+            form_factor: "narrow",
+            label: "Today — your day's rotation at a glance",
+          },
+          {
+            src: "screenshots/review.png",
+            sizes: "1080x1920",
+            type: "image/png",
+            form_factor: "narrow",
+            label: "Review — a single card with three options",
+          },
         ],
       },
       workbox: {
@@ -86,7 +133,11 @@ export default defineConfig({
         // the precache budget on stray assets.
         globPatterns: ["**/*.{js,css,html,svg,png,ico,webmanifest,json}"],
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+        // F-7: route navigations to the SPA shell when online; the dedicated
+        // offline.html acts as a graceful fallback only when the shell is
+        // also missing from cache (first-load failure scenario).
         navigateFallback: `${base}index.html`,
+        navigateFallbackDenylist: [/^\/api\//, new RegExp(`^${base}offline\\.html$`)],
         cleanupOutdatedCaches: true,
         // F-6: runtime cache for large static assets (signs, diagrams) —
         // CacheFirst with a bounded quota so a growing library doesn't
