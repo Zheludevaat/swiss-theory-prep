@@ -72,6 +72,9 @@ export const ItemSchema = z
     question: z.string(),
     imageAssetId: z.string().optional(),
     diagramAssetId: z.string().optional(),
+    /** D-6: human alt text for any attached image/diagram. Optional —
+     *  Card.tsx synthesizes a generic fallback when missing. */
+    imageAlt: z.string().optional(),
     options: z.tuple([OptionSchema, OptionSchema, OptionSchema]),
     rationale: z.string(),
     tags: z.array(z.string()).default([]),

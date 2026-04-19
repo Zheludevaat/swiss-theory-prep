@@ -179,20 +179,32 @@ export default function Card({
       </div>
 
       {/* Image / diagram (optional). D-17: bumped max-h from 48 to 80 so signs
-          are large enough to read on phones; tap to open a fullscreen zoom. */}
-      {item.imageAssetId && (
+          are large enough to read on phones; tap to open a fullscreen zoom.
+          A-15: render diagramAssetId too — diagrams live in /diagrams/, signs
+          in /signs/. D-6: pull alt text from item with a deterministic
+          fallback so screen readers always have something useful. */}
+      {(item.imageAssetId || item.diagramAssetId) && (
         <div className="mb-3 flex justify-center">
           <button
             type="button"
             onClick={() => setImageZoomed(true)}
             className="block focus:outline-none"
-            aria-label="Zoom sign image"
+            aria-label="Zoom image"
           >
-            <img
-              src={`./signs/${item.imageAssetId}`}
-              alt=""
-              className="max-h-80 w-auto"
-            />
+            {item.imageAssetId && (
+              <img
+                src={`./signs/${item.imageAssetId}`}
+                alt={item.imageAlt ?? `Swiss road sign ${item.imageAssetId.replace(/\.svg$/, "")}`}
+                className="max-h-80 w-auto"
+              />
+            )}
+            {item.diagramAssetId && (
+              <img
+                src={`./diagrams/${item.diagramAssetId}`}
+                alt={item.imageAlt ?? `Scenario diagram ${item.diagramAssetId.replace(/\.svg$/, "")}`}
+                className="max-h-80 w-auto"
+              />
+            )}
           </button>
         </div>
       )}
@@ -350,10 +362,20 @@ export default function Card({
         />
       )}
 
-      {/* D-17: fullscreen zoom modal for sign images. */}
-      {imageZoomed && item.imageAssetId && (
+      {/* D-17: fullscreen zoom modal for sign images or diagrams. */}
+      {imageZoomed && (item.imageAssetId || item.diagramAssetId) && (
         <ImageZoomModal
-          assetId={item.imageAssetId}
+          src={
+            item.imageAssetId
+              ? `./signs/${item.imageAssetId}`
+              : `./diagrams/${item.diagramAssetId}`
+          }
+          alt={
+            item.imageAlt ??
+            (item.imageAssetId
+              ? `Swiss road sign ${item.imageAssetId.replace(/\.svg$/, "")}`
+              : `Scenario diagram ${item.diagramAssetId?.replace(/\.svg$/, "") ?? ""}`)
+          }
           onClose={() => setImageZoomed(false)}
         />
       )}
@@ -362,10 +384,12 @@ export default function Card({
 }
 
 function ImageZoomModal({
-  assetId,
+  src,
+  alt,
   onClose,
 }: {
-  assetId: string;
+  src: string;
+  alt: string;
   onClose: () => void;
 }) {
   useEffect(() => {
@@ -379,13 +403,13 @@ function ImageZoomModal({
     <div
       role="dialog"
       aria-modal="true"
-      aria-label="Sign image"
+      aria-label={alt}
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
       onClick={onClose}
     >
       <img
-        src={`./signs/${assetId}`}
-        alt=""
+        src={src}
+        alt={alt}
         className="max-h-[90vh] max-w-full object-contain"
       />
       <button

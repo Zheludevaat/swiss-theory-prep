@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.0"
+   width="106.65369"
+   height="106.65369"
+   id="svg1889">
+  <defs
+     id="defs1891" />
+  <g
+     transform="translate(-189.5303,-359.0354)"
+     id="layer1">
+    <g
+       transform="matrix(1.249992,0,0,-1.249992,-127.7905,943.3838)"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;letter-spacing:normal;word-spacing:normal;text-anchor:start;fill:none;fill-opacity:1;stroke:black;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10.43299961;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="g10"
+       xml:space="preserve">
+<polygon
+   points="254,382.3 339.04,382.3 339.04,467.34 254,467.34 254,382.3 "
+   style="fill:white;fill-rule:nonzero;stroke:white;stroke-width:0"
+   id="polygon12" />
+<polygon
+   points="254,382.3 339.04,382.3 339.04,467.34 254,467.34 254,382.3 "
+   style="stroke-width:0.28349999"
+   id="polygon14" />
+<path
+   d="M 287.8,422.31 L 287.85,422.5 L 287.89,422.68 L 287.93,422.86 L 287.97,423.03 L 288.01,423.2 L 288.05,423.37 L 288.14,423.71 L 288.18,423.87 L 288.22,424.04 L 288.27,424.21 L 288.32,424.37 L 288.38,424.55 L 288.43,424.72 L 288.5,424.89 L 288.56,425.07 C 288.93,426.08 289.37,427.05 289.87,428 L 289.87,428 L 259.68,428 L 259.72,422.28 L 287.8,422.31 z "
+   style="fill:black;fill-rule:nonzero;stroke-width:0"
+   id="path16" />
+<path
+   d="M 293.87,433.36 L 293.96,433.44 L 294.04,433.51 L 294.12,433.58 L 294.2,433.66 L 294.35,433.8 L 294.49,433.94 L 294.63,434.07 L 294.77,434.2 L 294.9,434.33 L 295.03,434.46 L 295.17,434.58 L 295.3,434.71 L 295.44,434.84 L 295.58,434.97 L 295.73,435.1 L 295.89,435.23 L 295.97,435.3 L 296.05,435.37 L 296.13,435.44 L 296.22,435.51 C 297.16,436.29 298.57,437.27 299.54,437.99 L 299.54,437.99 L 299.52,461.9 L 293.89,461.9 L 293.87,433.36 z "
+   style="fill:black;fill-rule:nonzero;stroke-width:0"
+   id="path18" />
+<path
+   d="M 290.91,389.54 L 302.36,389.54 L 302.38,414.99 L 302.38,414.99 C 302.34,417.95 303.54,420.96 305.64,423.07 C 307.88,425.31 310.96,426.49 314.14,426.31 L 314.14,426.31 L 331.99,426.35 L 331.99,437.72 L 313.5,437.7 L 313.5,437.7 C 307.59,437.74 301.91,435.46 297.66,431.37 C 293.3,427.17 291,421.45 290.93,415.39 L 290.93,415.39 L 290.91,389.54 z "
+   style="fill:black;fill-rule:nonzero;stroke-width:0"
+   id="path20" />
+</g>  </g>
+</svg>

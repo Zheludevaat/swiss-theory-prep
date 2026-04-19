@@ -1,12 +1,11 @@
 // Read-only browse of the catalog. No reviews happen here. See §10.4.
 //
-// Two tabs: Rules (grouped by category) and Signs (grid). Signs tab is empty
-// in seed mode — drop SVGs into public/signs and reference them from items
-// to populate it.
+// Two tabs: Rules (grouped by category) and Signs (grouped by sign family).
 
 import { useMemo, useState } from "react";
-import { CATEGORY_LABELS, type Category, type Rule } from "@/content/schema";
+import { CATEGORY_LABELS, type Category, type Item, type Rule } from "@/content/schema";
 import { ITEMS, RULES } from "@/content/bundle";
+import { SIGN_FAMILY_LABELS, SIGN_MANIFEST, type SignManifestEntry } from "@/content/signs";
 import { useStore } from "@/store";
 import { isGraduated } from "@/scheduler/fsrs";
 import type { FsrsState, MemoryState } from "@/db/types";
@@ -202,29 +201,139 @@ function describeMastery(m: MemoryState | undefined): {
   };
 }
 
+// A-13: Signs tab grouped by family (warning / prohibition / mandatory /
+// priority / supplementary). The full SIGN_MANIFEST drives the grid even when
+// no item references a sign yet — so the Library is browsable as a reference
+// while item content is still being authored.
+//
+// Per-sign mastery: aggregate FSRS state across every item that references
+// the sign. "Graduated" means at least one item is graduated. Otherwise show
+// the highest-engagement state (review > learning > relearning > new).
 function SignsView() {
-  const signs = ITEMS.filter((i) => !!i.imageAssetId);
-  if (signs.length === 0) {
+  const memory = useStore((s) => s.memory);
+
+  const signItemsByCode = useMemo(() => {
+    const m = new Map<string, Item[]>();
+    for (const it of ITEMS) {
+      if (!it.imageAssetId) continue;
+      const code = it.imageAssetId.replace(/\.svg$/, "");
+      const arr = m.get(code) ?? [];
+      arr.push(it);
+      m.set(code, arr);
+    }
+    return m;
+  }, []);
+
+  const grouped = useMemo(() => {
+    const buckets = new Map<SignManifestEntry["family"], SignManifestEntry[]>();
+    for (const s of SIGN_MANIFEST) {
+      const arr = buckets.get(s.family) ?? [];
+      arr.push(s);
+      buckets.set(s.family, arr);
+    }
+    // Stable family order regardless of manifest insertion order.
+    const order: SignManifestEntry["family"][] = [
+      "warning",
+      "prohibition",
+      "mandatory",
+      "priority",
+      "supplementary",
+    ];
+    return order
+      .filter((f) => buckets.has(f))
+      .map((f) => [f, buckets.get(f)!] as const);
+  }, []);
+
+  if (SIGN_MANIFEST.length === 0) {
     return (
       <div className="rounded-2xl border border-slate-800 bg-slate-900 p-4 text-sm text-slate-400">
-        No sign images yet. Drop SVGs into <code>public/signs/</code> and set
-        <code> imageAssetId </code>on items to populate this grid.
+        No sign manifest entries. Add to <code>src/content/signs.ts</code>.
       </div>
     );
   }
+
   return (
-    <div className="grid grid-cols-3 gap-3">
-      {signs.map((i) => (
-        <div
-          key={i.id}
-          className="flex flex-col items-center rounded-xl border border-slate-800 bg-slate-900 p-2"
-        >
-          <img src={`./signs/${i.imageAssetId}`} alt="" className="h-16 w-16" />
-          <div className="mt-1 text-center text-[10px] text-slate-400">
-            {i.imageAssetId}
-          </div>
-        </div>
-      ))}
+    <div className="space-y-4">
+      {grouped.map(([family, signs]) => {
+        const familyLabel = SIGN_FAMILY_LABELS[family];
+        return (
+          <section
+            key={family}
+            className="rounded-2xl border border-slate-800 bg-slate-900"
+          >
+            <div className="flex items-center justify-between border-b border-slate-800 px-4 py-2 text-xs uppercase tracking-wide text-slate-400">
+              <span>{familyLabel}</span>
+              <span>{signs.length}</span>
+            </div>
+            <div className="grid grid-cols-3 gap-3 p-3">
+              {signs.map((s) => {
+                const items = signItemsByCode.get(s.code) ?? [];
+                const mastery = aggregateSignMastery(items, memory);
+                return (
+                  <div
+                    key={s.code}
+                    className="flex flex-col items-center rounded-xl border border-slate-800 bg-slate-950/40 p-2"
+                    title={`${s.code} — ${s.label}${s.nameDe ? ` · ${s.nameDe}` : ""}`}
+                  >
+                    <img
+                      src={`./signs/${s.code}.svg`}
+                      alt={`${s.label} (Swiss sign ${s.code})`}
+                      className="h-16 w-16 object-contain"
+                    />
+                    <div className="mt-1 text-center text-[10px] leading-tight text-slate-300">
+                      {s.label}
+                    </div>
+                    <div className="mt-0.5 text-center text-[9px] text-slate-500">
+                      {s.code}
+                    </div>
+                    {mastery && (
+                      <span
+                        className={`mt-1 rounded px-1.5 py-0.5 text-[9px] uppercase tracking-wide ${mastery.cls}`}
+                        title={mastery.detail}
+                      >
+                        {mastery.label}
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        );
+      })}
     </div>
   );
+}
+
+function aggregateSignMastery(
+  items: Item[],
+  memory: Map<string, MemoryState>,
+): { label: string; cls: string; detail: string } | null {
+  if (items.length === 0) return null;
+  const states = items.map((it) => memory.get(it.id));
+  const anyGrad = states.some((m) => m && isGraduated(m));
+  if (anyGrad) {
+    return {
+      label: "graduated",
+      cls: "bg-green-950 text-green-300",
+      detail: `${items.length} item(s); at least one graduated`,
+    };
+  }
+  const anyRelearning = states.some((m) => m?.state === "relearning");
+  if (anyRelearning) {
+    return {
+      label: "relearn",
+      cls: "bg-red-950 text-red-300",
+      detail: `${items.length} item(s); has relearning`,
+    };
+  }
+  const anyLearning = states.some((m) => m?.state === "learning");
+  if (anyLearning) {
+    return {
+      label: "learning",
+      cls: "bg-yellow-950 text-yellow-300",
+      detail: `${items.length} item(s); in learning`,
+    };
+  }
+  return null;
 }
