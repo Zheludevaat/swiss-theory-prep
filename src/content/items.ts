@@ -45,6 +45,16 @@ export const seedItems: Item[] = [
       "Inside traffic has priority. You may enter without stopping if the circle is clear, and you only signal right when leaving.",
     tags: ["roundabout"],
     difficulty: 2,
+    de: {
+      question: "Sie nähern sich einem einspurigen Kreisverkehr. Was gilt?",
+      options: [
+        "Der Verkehr im Kreisel hat Vortritt",
+        "Sie müssen auch bei leerem Kreisel anhalten",
+        "Im Kreisel links blinken",
+      ],
+      rationale:
+        "Der Verkehr im Kreisel hat Vortritt. Bei freiem Kreisel dürfen Sie ohne Halt einfahren; rechts blinken nur beim Verlassen.",
+    },
   },
   {
     id: "q.priority.roundabout.signal",
@@ -59,6 +69,16 @@ export const seedItems: Item[] = [
       "Swiss practice: no entry signal; signal right immediately before the exit you take.",
     tags: ["roundabout"],
     difficulty: 3,
+    de: {
+      question: "Welche Aussagen zum Blinken im Kreisverkehr sind richtig?",
+      options: [
+        "Kurz vor der Ausfahrt rechts blinken",
+        "Beim Vorbeifahren an nicht benutzten Ausfahrten links blinken",
+        "Bei der Einfahrt nicht blinken",
+      ],
+      rationale:
+        "Schweizer Praxis: kein Blinker bei der Einfahrt; rechts blinken erst unmittelbar vor der gewählten Ausfahrt.",
+    },
   },
   {
     id: "q.priority.tram.cross",
@@ -99,6 +119,17 @@ export const seedItems: Item[] = [
       "Emergency vehicles under siren have right of way. Clear a path by pulling right; stopping in-lane can block them.",
     tags: ["emergency"],
     difficulty: 2,
+    de: {
+      question:
+        "Ein Einsatzfahrzeug mit Blaulicht und Wechselklanghorn nähert sich von hinten. Sie:",
+      options: [
+        "Weichen so weit wie möglich nach rechts aus und lassen es vorbei",
+        "Halten sofort auf Ihrer Spur an",
+        "Behalten die Geschwindigkeit bei — Einsatzfahrzeuge müssen links überholen",
+      ],
+      rationale:
+        "Einsatzfahrzeuge mit Blaulicht und Wechselklanghorn haben Vortritt. Platz machen durch Ausweichen nach rechts; Anhalten auf der Spur kann die Durchfahrt blockieren.",
+    },
   },
   {
     id: "q.priority.yielding-on-entry",
@@ -114,6 +145,17 @@ export const seedItems: Item[] = [
       "Joining from private property or a side street: you yield to the priority road in both directions and only enter when no one needs to brake (VRV Art. 15).",
     tags: ["yield"],
     difficulty: 2,
+    de: {
+      question:
+        "Sie fahren aus einem Supermarkt-Parkplatz auf eine belebte Hauptstrasse. Was gilt?",
+      options: [
+        "Sie gewähren dem Verkehr auf der Hauptstrasse in beiden Richtungen den Vortritt",
+        "Sie dürfen einbiegen, wenn eine Lücke von 2 Sekunden besteht, auch wenn ein Herannahender bremsen muss",
+        "Rechtsvortritt gilt, weil vom Parkplatz aus kein Vortrittssignal sichtbar ist",
+      ],
+      rationale:
+        "Beim Einfahren aus einem Privatgrundstück oder einer Nebenstrasse: Vortritt gewähren in beiden Richtungen. Einbiegen nur, wenn kein anderer Fahrzeuglenker bremsen muss (VRV Art. 15).",
+    },
   },
   {
     id: "q.priority.rescue-corridor",
@@ -160,6 +202,17 @@ export const seedItems: Item[] = [
       "Flashing yellows on a stopped school bus: pass at walking pace, watching for children stepping out (VRV Art. 18).",
     tags: ["school", "bus"],
     difficulty: 2,
+    de: {
+      question:
+        "Ein Schulbus steht mit gelb blinkenden Warnleuchten am Strassenrand. Sie:",
+      options: [
+        "Fahren in Schrittgeschwindigkeit vorbei und sind bremsbereit",
+        "Behalten die signalisierte Geschwindigkeit bei, wenn Ihre Spur frei ist",
+        "Halten vollständig an, bis der Bus weiterfährt",
+      ],
+      rationale:
+        "Gelb blinkende Warnleuchten an einem stehenden Schulbus: in Schrittgeschwindigkeit vorbeifahren und mit plötzlich heraustretenden Kindern rechnen (VRV Art. 18).",
+    },
   },
 
   // ---------- signs ----------
@@ -178,6 +231,18 @@ export const seedItems: Item[] = [
       "A stop sign (SSV 3.01) requires wheels-at-zero at the marked line, regardless of visible traffic.",
     tags: ["sign:3.01"],
     difficulty: 1,
+    de: {
+      question:
+        "An einem Stoppsignal an einer ruhigen Strasse ohne sichtbaren Querverkehr:",
+      options: [
+        "Müssen Sie an der Haltelinie vollständig anhalten",
+        "Dürfen Sie rollend weiterfahren, wenn der Weg frei ist",
+        "Müssen Sie nur dem Verkehr von rechts den Vortritt gewähren",
+      ],
+      rationale:
+        "Das Stoppsignal (SSV 3.01) verlangt an der markierten Linie einen vollständigen Halt — unabhängig von sichtbarem Verkehr.",
+      imageAlt: "Rotes achteckiges Stoppsignal mit weisser Aufschrift 'STOP' (SSV 3.01).",
+    },
   },
   {
     id: "q.signs.stop-vs-giveway",
@@ -192,6 +257,16 @@ export const seedItems: Item[] = [
       "Give-way (SSV 3.02): slow and yield, no stop required if clear. Stop (SSV 3.01): always a full stop.",
     tags: ["sign:3.01", "sign:3.02"],
     difficulty: 2,
+    de: {
+      question: "Welche Aussage zum Vergleich Stopp- und Kein-Vortritt-Signal ist richtig?",
+      options: [
+        "Stopp verlangt immer einen vollständigen Halt; Kein Vortritt nicht",
+        "Beide verlangen einen vollständigen Halt",
+        "Beide verlangen nur Vortrittgewähren, kein Anhalten",
+      ],
+      rationale:
+        "Kein-Vortritt-Signal (SSV 3.02): Geschwindigkeit reduzieren und Vortritt gewähren, kein Halt nötig wenn frei. Stopp-Signal (SSV 3.01): immer vollständiger Halt.",
+    },
   },
   {
     id: "q.signs.no-overtaking.applies",
@@ -226,6 +301,19 @@ export const seedItems: Item[] = [
       "The priority-road sign (SSV 3.03) overrides the right-hand rule until cancelled by SSV 3.04.",
     tags: ["sign:3.03", "priority"],
     difficulty: 2,
+    de: {
+      question:
+        "Sie fahren auf einer mit dem Signal 'Hauptstrasse' (gelbes Quadrat auf Ecke) markierten Strasse. An der nächsten Verzweigung:",
+      options: [
+        "Haben Sie Vortritt vor dem querenden Verkehr",
+        "Müssen Sie dem Verkehr von rechts trotzdem den Vortritt gewähren",
+        "Der Vortritt hängt von der Grösse der Nebenstrasse ab",
+      ],
+      rationale:
+        "Das Signal 'Hauptstrasse' (SSV 3.03) setzt den Rechtsvortritt ausser Kraft — bis es durch 'Ende der Hauptstrasse' (SSV 3.04) aufgehoben wird.",
+      imageAlt:
+        "Auf die Spitze gestelltes Quadrat mit weissem Rand, schwarzem Innenrand und zentralem gelben Feld — Hauptstrasse (SSV 3.03).",
+    },
   },
   {
     id: "q.signs.no-entry",
@@ -243,6 +331,19 @@ export const seedItems: Item[] = [
       "Sign 2.02 (no entry) is absolute. Even a brief entry to turn around is not allowed (SSV Art. 17).",
     tags: ["sign:2.02"],
     difficulty: 1,
+    de: {
+      question:
+        "Am Anfang einer Strasse sehen Sie eine rote Scheibe mit waagrechtem weissem Balken. Sie:",
+      options: [
+        "Dürfen die Strasse mit einem Motorfahrzeug nicht befahren",
+        "Dürfen kurz einfahren, um zu wenden",
+        "Dürfen einfahren, wenn kein anderes Fahrzeug in der Strasse sichtbar ist",
+      ],
+      rationale:
+        "Signal 2.02 (Einfahrt verboten) gilt absolut. Auch ein kurzes Einfahren zum Wenden ist nicht erlaubt (SSV Art. 17).",
+      imageAlt:
+        "Vollständig rote Scheibe mit waagrechtem weissem Balken in der Mitte — Einfahrt verboten (SSV 2.02).",
+    },
   },
   {
     id: "q.signs.one-way",
@@ -258,6 +359,17 @@ export const seedItems: Item[] = [
       "An exemption panel for bicycles permits cyclists to ride against the one-way flow; motor vehicles still follow the arrow.",
     tags: ["sign:4.08"],
     difficulty: 3,
+    de: {
+      question:
+        "Eine Einbahnstrasse (4.08) mit einer Zusatztafel, die ein Fahrrad in Gegenrichtung zeigt. Das bedeutet:",
+      options: [
+        "Velos dürfen entgegen der Fahrtrichtung fahren; Autos und Motorräder folgen dem Pfeil",
+        "Velos müssen ebenfalls in Pfeilrichtung fahren",
+        "Der gesamte Verkehr darf in beide Richtungen fahren",
+      ],
+      rationale:
+        "Eine Ausnahmetafel für Fahrräder erlaubt Velos das Fahren entgegen der Einbahn; Motorfahrzeuge folgen weiterhin dem Pfeil.",
+    },
   },
   {
     id: "q.signs.no-parking",
@@ -275,6 +387,18 @@ export const seedItems: Item[] = [
       "No-parking (SSV 2.17) prohibits parking but allows brief boarding/loading. A short shop visit is parking, not a stop.",
     tags: ["sign:2.17", "parking"],
     difficulty: 2,
+    de: {
+      question: "Unter dem Signal 'Parkieren verboten' (SSV 2.17) ist erlaubt:",
+      options: [
+        "Kurzes Halten, um einen Fahrgast aussteigen zu lassen",
+        "Das Fahrzeug zwei Minuten verlassen, um in ein Geschäft zu gehen",
+        "Parkieren mit eingeschalteter Warnblinkanlage",
+      ],
+      rationale:
+        "'Parkieren verboten' (SSV 2.17) untersagt das Parkieren, erlaubt aber kurzes Ein- und Aussteigen oder Güterumschlag. Ein kurzer Einkauf gilt als Parkieren, nicht als Halten.",
+      imageAlt:
+        "Blaue Scheibe mit rotem Rand und einem roten Schrägstrich — Parkieren verboten (SSV 2.17).",
+    },
   },
   {
     id: "q.signs.no-stopping",
@@ -292,6 +416,18 @@ export const seedItems: Item[] = [
       "No-stopping (SSV 2.16) is absolute except for traffic-control duties. Even loading and boarding are forbidden.",
     tags: ["sign:2.16", "parking"],
     difficulty: 2,
+    de: {
+      question: "Unter dem Signal 'Halten verboten' (SSV 2.16) dürfen Sie:",
+      options: [
+        "Nur halten, wenn es der Verkehr verlangt (Rotlicht, Fussgängerstreifen)",
+        "Kurz halten, um einen Fahrgast aussteigen zu lassen",
+        "Halten, um Einkäufe zu laden",
+      ],
+      rationale:
+        "'Halten verboten' (SSV 2.16) gilt absolut, ausser zur Erfüllung von Verkehrsregeln. Auch Ein- und Aussteigen oder Güterumschlag sind verboten.",
+      imageAlt:
+        "Blaue Scheibe mit rotem Rand und einem roten Andreaskreuz — Halten verboten (SSV 2.16).",
+    },
   },
   {
     id: "q.signs.children-warning",
@@ -438,6 +574,19 @@ export const seedItems: Item[] = [
       "SSV 2.09 sets a binding maximum speed in km/h, valid until cancelled by an end sign (2.25) or replaced by another limit.",
     tags: ["sign:2.09", "speed"],
     difficulty: 1,
+    de: {
+      question:
+        "Auf einer Ausserortsstrasse passieren Sie ein rundes weisses Signal mit rotem Rand und der Zahl '60'. Ab hier:",
+      options: [
+        "Gilt 60 km/h als Höchstgeschwindigkeit, bis aufgehoben oder ersetzt",
+        "Ist 60 km/h eine Empfehlung, keine Höchstgrenze",
+        "Ist 60 km/h Ihre Mindestgeschwindigkeit",
+      ],
+      rationale:
+        "SSV 2.09 setzt eine verbindliche Höchstgeschwindigkeit in km/h — gültig bis zur Aufhebung (SSV 2.25) oder einem anderen Geschwindigkeitssignal.",
+      imageAlt:
+        "Rundes weisses Signal mit rotem Rand und schwarzer Zahl — Höchstgeschwindigkeit (SSV 2.09).",
+    },
   },
   {
     id: "q.signs.speed-limit.vs-default",
@@ -453,6 +602,17 @@ export const seedItems: Item[] = [
       "A more restrictive posted limit always overrides the area default. 40 km/h applies until cancelled.",
     tags: ["sign:2.09", "speed"],
     difficulty: 2,
+    de: {
+      question:
+        "Ein Signal '40' ist innerorts angebracht, wo bereits die Allgemeinhöchstgeschwindigkeit von 50 gilt. Welche Geschwindigkeit gilt?",
+      options: [
+        "40 km/h — das signalisierte Limit geht der allgemeinen Innerortsgeschwindigkeit vor",
+        "50 km/h — innerorts gilt immer 50",
+        "Die jeweils höhere der beiden",
+      ],
+      rationale:
+        "Eine strengere signalisierte Höchstgeschwindigkeit geht immer der Allgemeinhöchstgeschwindigkeit vor. 40 km/h gilt bis zur Aufhebung.",
+    },
   },
   {
     id: "q.signs.general-50.entry",
@@ -470,6 +630,19 @@ export const seedItems: Item[] = [
       "SSV 2.10 sets the area-wide built-up default at 50 km/h, including side streets without their own posted limit.",
     tags: ["sign:2.10", "speed"],
     difficulty: 2,
+    de: {
+      question:
+        "Am Ortsanfang passieren Sie ein blaues Rechtecksignal mit der Aufschrift '50 generell'. Das bedeutet:",
+      options: [
+        "50 km/h gilt als Allgemeinhöchstgeschwindigkeit für alle Strassen in diesem Gebiet, bis zur Aufhebung (SSV 2.26)",
+        "50 km/h gilt nur auf dieser Hauptstrasse",
+        "50 km/h ist eine empfohlene Geschwindigkeit für diesen Abschnitt",
+      ],
+      rationale:
+        "SSV 2.10 setzt die Allgemeinhöchstgeschwindigkeit innerorts auf 50 km/h — gültig auch auf Nebenstrassen ohne eigenes Geschwindigkeitssignal.",
+      imageAlt:
+        "Blaues Rechtecksignal mit weisser Aufschrift '50 generell' (SSV 2.10).",
+    },
   },
   {
     id: "q.signs.no-bicycles.motorway",
@@ -1185,6 +1358,13 @@ export const seedItems: Item[] = [
       "Default: 80 km/h outside built-up areas, 50 km/h inside, 100 on expressways, 120 on motorways (VRV Art. 4a).",
     tags: ["speed"],
     difficulty: 1,
+    de: {
+      question:
+        "Sie fahren auf einer nicht signalisierten Strasse ausserorts. Welche Höchstgeschwindigkeit gilt?",
+      options: ["80 km/h", "100 km/h", "50 km/h"],
+      rationale:
+        "Allgemeinhöchstgeschwindigkeit: 80 km/h ausserorts, 50 km/h innerorts, 100 km/h auf Autostrassen, 120 km/h auf Autobahnen (VRV Art. 4a).",
+    },
   },
   {
     id: "q.speeds.town-sign",
@@ -1199,6 +1379,17 @@ export const seedItems: Item[] = [
       "The place-name sign triggers the 50 km/h general-town limit. Tempo-30 applies only when explicitly zoned.",
     tags: ["speed"],
     difficulty: 2,
+    de: {
+      question:
+        "Sie passieren die blaue Ortstafel beim Eintritt in ein Dorf. Ab hier:",
+      options: [
+        "Gilt 50 km/h bis zur Ende-Ortstafel",
+        "Gilt 80 km/h bis zum nächsten Geschwindigkeitssignal",
+        "Gilt 30 km/h als Standardwert",
+      ],
+      rationale:
+        "Die Ortstafel löst die Allgemeinhöchstgeschwindigkeit innerorts von 50 km/h aus. Tempo-30 gilt nur in entsprechend signalisierten Zonen.",
+    },
   },
   {
     id: "q.speeds.tempo30.rules",
@@ -1213,6 +1404,16 @@ export const seedItems: Item[] = [
       "Tempo-30 zones omit zebras intentionally — pedestrians cross anywhere and drivers must adjust speed to yield.",
     tags: ["zone", "tempo30"],
     difficulty: 3,
+    de: {
+      question: "Welche beiden Aussagen zur Tempo-30-Zone sind richtig?",
+      options: [
+        "Die Höchstgeschwindigkeit beträgt 30 km/h",
+        "An jeder Verzweigung gilt der Rechtsvortritt",
+        "An jeder Verzweigung muss ein Fussgängerstreifen markiert sein",
+      ],
+      rationale:
+        "Tempo-30-Zonen verzichten bewusst auf Fussgängerstreifen — Fussgänger queren überall, Fahrzeuge müssen die Geschwindigkeit so anpassen, dass sie den Vortritt gewähren können.",
+    },
   },
   {
     id: "q.speeds.motorway-minimum",
@@ -1228,6 +1429,17 @@ export const seedItems: Item[] = [
       "Motorways require a vehicle that can sustain ≥60 km/h and is a road-legal motor vehicle. Tractors and slow E-bikes are excluded (VRV Art. 35).",
     tags: ["motorway"],
     difficulty: 2,
+    de: {
+      question:
+        "Welche Fahrzeuge sind auf der Schweizer Autobahn nicht zugelassen?",
+      options: [
+        "Ein landwirtschaftlicher Traktor, unabhängig von der erreichten Geschwindigkeit",
+        "Ein auf 45 km/h begrenztes E-Bike",
+        "Ein Personenwagen, der 110 km/h erreicht",
+      ],
+      rationale:
+        "Die Autobahn ist Motorfahrzeugen vorbehalten, die in der Ebene ≥60 km/h erreichen und verkehrszugelassen sind. Traktoren und langsame E-Bikes sind ausgeschlossen (VRV Art. 35).",
+    },
   },
   {
     id: "q.speeds.trailer-reduced",
@@ -1243,6 +1455,13 @@ export const seedItems: Item[] = [
       "Towing reduces the limit to 80 km/h on all roads, including motorways (VRV Art. 5).",
     tags: ["trailer", "speed"],
     difficulty: 1,
+    de: {
+      question:
+        "Sie fahren einen Cat.-B-Personenwagen mit kleinem Anhänger auf der Autobahn. Die Höchstgeschwindigkeit beträgt:",
+      options: ["80 km/h", "100 km/h", "120 km/h, gleich wie ohne Anhänger"],
+      rationale:
+        "Mit Anhänger gilt auf allen Strassen 80 km/h, auch auf der Autobahn (VRV Art. 5).",
+    },
   },
   {
     id: "q.speeds.begegnungszone",
@@ -1258,6 +1477,16 @@ export const seedItems: Item[] = [
       "Begegnungszone (SSV Art. 22b): 20 km/h, pedestrian priority, parking only in marked bays.",
     tags: ["zone", "begegnungszone"],
     difficulty: 2,
+    de: {
+      question: "Welche Aussagen zur Begegnungszone sind richtig?",
+      options: [
+        "Die Höchstgeschwindigkeit beträgt 20 km/h",
+        "Fussgänger haben Vortritt vor Fahrzeugen",
+        "Parkieren ist auf der ganzen Strasse erlaubt",
+      ],
+      rationale:
+        "Begegnungszone (SSV Art. 22b): 20 km/h, Vortritt für Fussgänger, Parkieren nur auf markierten Feldern.",
+    },
   },
   {
     id: "q.speeds.adapted-speed",
@@ -1273,6 +1502,17 @@ export const seedItems: Item[] = [
       "VRV Art. 4 requires speed adapted to conditions. Visibility 60 m on 80 km/h roads is far too fast — typically you'd be at 40 km/h or less.",
     tags: ["speed", "fog"],
     difficulty: 2,
+    de: {
+      question:
+        "Dichter Nebel reduziert die Sicht auf rund 60 m auf einer 80er-Strasse. Sie sollten:",
+      options: [
+        "Die Geschwindigkeit deutlich unter 80 km/h reduzieren, damit Sie innerhalb der Sichtweite anhalten können",
+        "80 km/h beibehalten, weil die signalisierte Höchstgeschwindigkeit gilt",
+        "Auf 70 km/h reduzieren — das reicht bei Nebel",
+      ],
+      rationale:
+        "VRV Art. 4 verlangt eine den Verhältnissen angepasste Geschwindigkeit. 60 m Sicht bei 80 km/h ist viel zu schnell — meist sind 40 km/h oder weniger angemessen.",
+    },
   },
   {
     id: "q.speeds.school-approach",
@@ -1288,6 +1528,17 @@ export const seedItems: Item[] = [
       "Adapt speed to conditions (VRV Art. 4). At school exit time with view obstructed, 30 km/h is often sensible even where 50 is posted.",
     tags: ["children", "school"],
     difficulty: 2,
+    de: {
+      question:
+        "Sie nähern sich zu Schulschluss einer Schule auf einer 50er-Strasse mit parkierten Fahrzeugen an beiden Strassenrändern. Die angepasste Geschwindigkeit ist:",
+      options: [
+        "Deutlich unter 50 — Kinder können zwischen parkierten Fahrzeugen hervortreten",
+        "Genau 50, weil die Höchstgeschwindigkeit unverändert bleibt",
+        "So schnell, wie es das vorausfahrende Fahrzeug zulässt",
+      ],
+      rationale:
+        "Geschwindigkeit den Verhältnissen anpassen (VRV Art. 4). Bei Schulschluss und eingeschränkter Sicht sind 30 km/h häufig angemessen, auch wenn 50 signalisiert ist.",
+    },
   },
 
   // ---------- mountain ----------
@@ -1735,6 +1986,17 @@ export const seedItems: Item[] = [
       "≥0.8‰ is a grave offence (SVG Art. 16c): mandatory ≥3 month withdrawal, criminal record, fitness reassessment.",
     tags: ["alcohol", "grave"],
     difficulty: 2,
+    de: {
+      question:
+        "Welche Folgen hat eine erste Widerhandlung mit 0,85‰ für einen Fahrer ohne Probezeit?",
+      options: [
+        "Führerausweisentzug von mindestens 3 Monaten",
+        "Ein Eintrag im Strafregister",
+        "Nur eine geringe Ordnungsbusse",
+      ],
+      rationale:
+        "Ab 0,8‰ gilt die Widerhandlung als qualifiziert (SVG Art. 16c): obligatorischer Entzug ≥3 Monate, Eintrag im Strafregister, verkehrsmedizinische Abklärung.",
+    },
   },
   {
     id: "q.penalties.drug-impairment",
@@ -1750,6 +2012,17 @@ export const seedItems: Item[] = [
       "Swiss law uses zero tolerance for THC, cocaine, opiates, amphetamines. Detection itself is the offence (VRV Art. 2 Abs. 2).",
     tags: ["drugs"],
     difficulty: 2,
+    de: {
+      question:
+        "Bei einem Fahrer wird 10 Stunden nach Konsum THC im Blut nachgewiesen. Rechtliche Einordnung:",
+      options: [
+        "Fahren in fahrunfähigem Zustand, gleichwertig zu qualifizierter Fahrunfähigkeit bei Alkohol",
+        "Nur eine kleine Busse — die Menge ist zu gering",
+        "Keine Widerhandlung, weil der Konsum Stunden zurückliegt",
+      ],
+      rationale:
+        "Das Schweizer Recht kennt Nulltoleranz für THC, Kokain, Opiate und Amphetamine. Der Nachweis selbst ist die Widerhandlung (VRV Art. 2 Abs. 2).",
+    },
   },
   {
     id: "q.penalties.speeding-katalog",
@@ -1765,6 +2038,17 @@ export const seedItems: Item[] = [
       "60 over in a 50 zone is the Raser threshold (SVG Art. 90 Abs. 3). Custodial sentence and vehicle seizure are routine.",
     tags: ["speed"],
     difficulty: 2,
+    de: {
+      question:
+        "Sie werden mit 110 km/h in einer 50er-Zone gemessen. Die wahrscheinliche Einordnung ist:",
+      options: [
+        "Raser-Tatbestand: Strafverfahren, Fahrzeug-Einziehung, Führerausweisentzug ≥24 Monate",
+        "Normale Geschwindigkeitsbusse ohne Konsequenzen für den Führerausweis",
+        "Nur eine Verwarnung, weil kein Unfall passiert ist",
+      ],
+      rationale:
+        "60 km/h zu viel in einer 50er-Zone ist der Raser-Tatbestand (SVG Art. 90 Abs. 3). Freiheitsstrafe und Einziehung des Fahrzeugs sind die Regel.",
+    },
   },
 
   // ---------- accidents-insurance ----------
@@ -1907,6 +2191,17 @@ export const seedItems: Item[] = [
       "A left-turner must yield to oncoming traffic going straight or turning right (VRV Art. 36 Abs. 3).",
     tags: ["intersection", "left-turn"],
     difficulty: 3,
+    de: {
+      question:
+        "Sie und ein entgegenkommendes Fahrzeug treffen an einer unsignalisierten Kreuzung ein. Das entgegenkommende Fahrzeug möchte links abbiegen und Ihre Fahrlinie kreuzen. Sie wollen geradeaus fahren. Wer hat Vortritt?",
+      options: [
+        "Sie — geradeausfahrender Verkehr hat Vortritt vor dem entgegenkommenden Linksabbieger",
+        "Das entgegenkommende Fahrzeug, weil es zuerst kam",
+        "Wer zuerst blinkt",
+      ],
+      rationale:
+        "Wer links abbiegt, muss dem entgegenkommenden Verkehr (geradeaus oder rechts abbiegend) den Vortritt gewähren (VRV Art. 36 Abs. 3).",
+    },
   },
   {
     id: "q.priority.right-hand.driveway",
@@ -1974,6 +2269,17 @@ export const seedItems: Item[] = [
       "VRV Art. 27 Abs. 2 obliges all road users to make way for emergency vehicles, including by entering an intersection on red when needed and safe.",
     tags: ["emergency", "priority"],
     difficulty: 3,
+    de: {
+      question:
+        "Ein Krankenwagen mit Blaulicht und Wechselklanghorn nähert sich der Kreuzung, an der Sie als Erster bei Rot stehen. Sie sollten:",
+      options: [
+        "Nur so weit in die Kreuzung fahren, wie nötig, um die Durchfahrt freizugeben — auch bei Rotlicht",
+        "An der Linie bleiben und warten — Rotlicht zu missachten ist immer verboten",
+        "Rückwärts fahren, um die Spur dahinter freizumachen",
+      ],
+      rationale:
+        "VRV Art. 27 Abs. 2 verpflichtet alle Verkehrsteilnehmer, Einsatzfahrzeugen freie Fahrt zu verschaffen — wenn nötig und gefahrlos auch durch Einfahren in die Kreuzung bei Rot.",
+    },
   },
   {
     id: "q.priority.emergency.tunnel",
@@ -2020,6 +2326,17 @@ export const seedItems: Item[] = [
       "VRV Art. 6 requires drivers to pass stopped public-transport vehicles slowly and with care, especially where children are present.",
     tags: ["school-bus", "children"],
     difficulty: 3,
+    de: {
+      question:
+        "Ein Schulbus steht mit eingeschalteter Warnblinkanlage am Strassenrand; Kinder sind in der Tür sichtbar. Sie sollten:",
+      options: [
+        "In Schrittgeschwindigkeit mit zusätzlichem Sicherheitsabstand vorbeifahren und bremsbereit sein",
+        "Die signalisierte Geschwindigkeit beibehalten — die Kinderaufsicht ist Sache des Buschauffeurs",
+        "Vollständig anhalten und warten, bis die Warnblinker erloschen sind",
+      ],
+      rationale:
+        "VRV Art. 6 verpflichtet Sie, an haltenden Fahrzeugen des öffentlichen Verkehrs langsam und besonders vorsichtig vorbeizufahren, insbesondere wenn Kinder zugegen sind.",
+    },
   },
   {
     id: "q.priority.bus-leaving-stop",
@@ -2339,6 +2656,13 @@ export const seedItems: Item[] = [
       "Default Swiss limits: 50 in town, 80 country, 100 expressway, 120 motorway (SVG Art. 32, VRV Art. 4a).",
     tags: ["speed", "defaults"],
     difficulty: 1,
+    de: {
+      question:
+        "Ausserorts auf einer normalen Landstrasse ohne Signalisation gilt für einen Personenwagen die Höchstgeschwindigkeit:",
+      options: ["80 km/h", "90 km/h", "100 km/h"],
+      rationale:
+        "Allgemeinhöchstgeschwindigkeiten: 50 innerorts, 80 ausserorts, 100 auf Autostrassen, 120 auf Autobahnen (SVG Art. 32, VRV Art. 4a).",
+    },
   },
   {
     id: "q.speeds.defaults.expressway",
@@ -2354,6 +2678,13 @@ export const seedItems: Item[] = [
       "Autostrasse defaults to 100 km/h. Only Autobahn (motorway, white-on-green) allows 120.",
     tags: ["speed", "expressway"],
     difficulty: 2,
+    de: {
+      question:
+        "Auf einer Schweizer Autostrasse (weisses Signal auf grünem Grund) gilt als Höchstgeschwindigkeit:",
+      options: ["100 km/h", "120 km/h", "80 km/h"],
+      rationale:
+        "Auf der Autostrasse gilt 100 km/h. Nur die Autobahn (weiss auf grünem Grund) erlaubt 120 km/h.",
+    },
   },
   {
     id: "q.speeds.defaults.motorway",
@@ -2369,6 +2700,13 @@ export const seedItems: Item[] = [
       "Switzerland's motorway default is 120 km/h. Variable signs may lower it; no posted sign means 120.",
     tags: ["speed", "motorway"],
     difficulty: 1,
+    de: {
+      question:
+        "Auf der Schweizer Autobahn ohne signalisierte Höchstgeschwindigkeit und ohne Anhänger beträgt Ihre Höchstgeschwindigkeit:",
+      options: ["120 km/h", "130 km/h", "100 km/h"],
+      rationale:
+        "Die Allgemeinhöchstgeschwindigkeit auf der Autobahn beträgt 120 km/h. Wechselsignale können tiefer signalisieren; ohne Signalisation gilt 120 km/h.",
+    },
   },
   {
     id: "q.speeds.tempo30.applies",
@@ -2474,6 +2812,17 @@ export const seedItems: Item[] = [
       "Rule of thumb: kilometre-per-hour speed should not exceed the visibility in metres in poor conditions. 30 m visibility → 30 km/h, regardless of the posted limit.",
     tags: ["fog", "speed"],
     difficulty: 4,
+    de: {
+      question:
+        "Bei dichtem Nebel mit rund 30 m Sicht liegt die angepasste Höchstgeschwindigkeit bei etwa:",
+      options: [
+        "30 km/h — Geschwindigkeit in km/h nicht höher als die Sichtweite in Metern",
+        "So hoch, wie es die signalisierte Höchstgeschwindigkeit erlaubt",
+        "60 km/h mit eingeschalteter Nebelschlussleuchte",
+      ],
+      rationale:
+        "Faustregel: bei schlechter Sicht soll die Geschwindigkeit in km/h die Sichtweite in Metern nicht überschreiten. 30 m Sicht → 30 km/h, unabhängig von der signalisierten Höchstgeschwindigkeit.",
+    },
   },
 
   // ---------- BAC, drugs, fitness ----------
@@ -2491,6 +2840,13 @@ export const seedItems: Item[] = [
       "SVG Art. 31 sets the general BAC limit at 0.5 ‰. 0.0 ‰ applies to novices, learners, and professional drivers in service.",
     tags: ["bac"],
     difficulty: 1,
+    de: {
+      question:
+        "Die allgemeine Promillegrenze für einen Cat.-B-Fahrer in der Schweiz beträgt:",
+      options: ["0,5 ‰ (Promille)", "0,8 ‰", "0,0 ‰"],
+      rationale:
+        "SVG Art. 31 setzt die allgemeine Promillegrenze auf 0,5 ‰. 0,0 ‰ gilt in der Probezeit, für Lernfahrer sowie für berufsmässige Fahrer im Dienst.",
+    },
   },
   {
     id: "q.fitness.bac.novice-probation",
@@ -2506,6 +2862,17 @@ export const seedItems: Item[] = [
       "Probation drivers, learners, professional drivers in service, and instructors face a 0.0 ‰ limit (VTS Art. 2).",
     tags: ["bac", "novice"],
     difficulty: 1,
+    de: {
+      question:
+        "In der dreijährigen Probezeit muss ein Cat.-B-Fahrer folgende Promillegrenze einhalten:",
+      options: [
+        "0,0 ‰ — faktische Nulltoleranz",
+        "0,1 ‰",
+        "0,3 ‰",
+      ],
+      rationale:
+        "Fahrer in der Probezeit, Lernfahrer, berufsmässige Fahrer im Dienst und Fahrlehrer unterliegen einer 0,0-‰-Grenze (VTS Art. 2).",
+    },
   },
   {
     id: "q.fitness.bac.grave",
@@ -2521,6 +2888,13 @@ export const seedItems: Item[] = [
       "From 0.8 ‰ the offence is qualified: minimum 3-month licence withdrawal, criminal penalties, and obligatory medical assessment.",
     tags: ["bac", "penalties"],
     difficulty: 3,
+    de: {
+      question:
+        "Ein Fahrer mit 0,85 ‰ gilt als 'qualifizierte Blutalkoholkonzentration' (schwere Widerhandlung). Der gesetzliche Schwellenwert liegt bei:",
+      options: ["0,8 ‰ und höher", "1,0 ‰ und höher", "0,5 ‰ und höher"],
+      rationale:
+        "Ab 0,8 ‰ gilt die Widerhandlung als qualifiziert: mindestens 3 Monate Führerausweisentzug, Strafverfolgung und obligatorische verkehrsmedizinische Begutachtung.",
+    },
   },
   {
     id: "q.fitness.medications.warning",
@@ -3211,6 +3585,17 @@ export const seedItems: Item[] = [
       "0.0 ‰ applies to learners, probation drivers, professionals in service, and driving instructors. Age alone is not a criterion.",
     tags: ["bac"],
     difficulty: 2,
+    de: {
+      question:
+        "Für welche Gruppen gilt in der Schweiz eine Promillegrenze von 0,0 ‰?",
+      options: [
+        "Inhaber eines Führerausweises auf Probe (die ersten 3 Jahre)",
+        "Berufsmässige Fahrer im Dienst (z. B. Bus, Taxi, Lastwagen)",
+        "Alle Fahrer unter 25 Jahren",
+      ],
+      rationale:
+        "0,0 ‰ gilt für Lernfahrer, Fahrer in der Probezeit, berufsmässige Fahrer im Dienst und Fahrlehrer. Das Alter allein ist kein Kriterium.",
+    },
   },
   {
     id: "q.facts.headlights-tunnel",

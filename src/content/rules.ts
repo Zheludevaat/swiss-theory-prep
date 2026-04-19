@@ -47,6 +47,15 @@ export const seedRules: Rule[] = [
       "Approaching a single-lane roundabout: yield to all vehicles already circulating.",
       "Inside the roundabout, indicate right just before the exit you intend to take.",
     ],
+    de: {
+      title: "Vortritt im Kreisverkehr",
+      statement:
+        "Im Kreisverkehr hat der Verkehr, der sich bereits im Kreis befindet, Vortritt. Der Blinker wird nur beim Verlassen des Kreisels gesetzt.",
+      workedExamples: [
+        "Einfahrt in einen einspurigen Kreisel: Sie gewähren allen bereits zirkulierenden Fahrzeugen den Vortritt.",
+        "Im Kreisel blinken Sie erst kurz vor der Ausfahrt, die Sie nehmen, nach rechts.",
+      ],
+    },
   },
   {
     id: "priority.tram",
@@ -84,6 +93,15 @@ export const seedRules: Rule[] = [
       "An ambulance with blue lights and siren approaches from behind on a two-lane road: pull as far right as safe, slow, and let it pass. Stopping in-lane is not enough — it can block the path.",
       "In a queue at a red light with an emergency vehicle arriving: if safe and lawful, move aside (even partially onto the pavement edge is permitted to clear the path).",
     ],
+    de: {
+      title: "Einsatzfahrzeuge mit Blaulicht und Wechselklanghorn",
+      statement:
+        "Einsatzfahrzeuge (Polizei, Feuerwehr, Ambulanz) mit Blaulicht und Wechselklanghorn haben gegenüber dem gesamten übrigen Verkehr Vortritt. Andere Verkehrsteilnehmer müssen sofort Platz machen — in der Regel durch Ausweichen nach rechts — und dürfen sie auch bei Rot oder im Stau nicht behindern.",
+      workedExamples: [
+        "Eine Ambulanz mit Blaulicht und Horn nähert sich von hinten auf einer zweispurigen Strasse: Sie fahren so weit nach rechts wie sicher möglich, verlangsamen und lassen sie vorbei. In der Spur stehenzubleiben genügt nicht — das blockiert den Weg.",
+        "Sie stehen im Stau vor einer roten Ampel, ein Einsatzfahrzeug nähert sich: wenn möglich und zulässig, weichen Sie aus (auch ein teilweises Aufrücken auf den Trottoirrand ist erlaubt, um den Weg freizugeben).",
+      ],
+    },
   },
   {
     id: "priority.yielding-on-entry",
@@ -98,6 +116,15 @@ export const seedRules: Rule[] = [
       "Leaving a supermarket car park onto a main road: you must yield to vehicles in both directions, even if the gap looks generous.",
       "Joining from a give-way-signed slip road: you may flow in without stopping only if no approaching vehicle would need to slow.",
     ],
+    de: {
+      title: "Vortritt beim Einmünden in eine Hauptstrasse",
+      statement:
+        "Wer von einer Nebenstrasse, einer Einfahrt oder aus privatem Grund auf eine Hauptstrasse einbiegt, gewährt dem gesamten Verkehr der Hauptstrasse Vortritt — in beiden Fahrtrichtungen — und fährt nur dann ein, wenn niemand wegen ihm bremsen muss.",
+      workedExamples: [
+        "Sie verlassen einen Supermarkt-Parkplatz auf eine Hauptstrasse: Sie müssen den Fahrzeugen in beiden Richtungen den Vortritt gewähren, auch wenn die Lücke grosszügig wirkt.",
+        "Sie biegen über einen mit «Kein Vortritt» signalisierten Einfädelstreifen ein: Sie dürfen nur dann ohne Anhalten einschwenken, wenn kein sich näherndes Fahrzeug abbremsen müsste.",
+      ],
+    },
   },
   {
     id: "priority.rescue-corridor",
@@ -151,6 +178,15 @@ export const seedRules: Rule[] = [
       "Approaching a stop sign on a quiet road with no visible cross traffic: still required to stop completely (wheels at zero), then proceed.",
       "A stop line exists: stop at the line even if cross traffic is visible only past the building at the corner. You may then creep forward to see clearly.",
     ],
+    de: {
+      title: "Stopp-Signal (3.01)",
+      statement:
+        "Beim Stopp-Signal müssen Sie an der Haltelinie (oder vor der Kreuzung, falls keine Linie markiert ist) vollständig anhalten und anschliessend dem gesamten Querverkehr Vortritt gewähren.",
+      workedExamples: [
+        "Sie nähern sich einem Stopp-Signal auf einer ruhigen Strasse ohne sichtbaren Querverkehr: trotzdem müssen Sie vollständig anhalten (Räder stehen still), bevor Sie weiterfahren.",
+        "Eine Haltelinie ist markiert: Sie halten an der Linie, auch wenn der Querverkehr erst hinter dem Eckgebäude sichtbar wird. Sie dürfen danach langsam nach vorne rollen, bis die Sicht frei ist.",
+      ],
+    },
   },
   {
     id: "signs.give-way",
@@ -165,6 +201,15 @@ export const seedRules: Rule[] = [
       "Joining a main road from a slip with a give-way sign: slow, check, proceed without stopping if no traffic.",
       "Traffic is approaching fast from your left on the priority road: you must stop and wait, even though the sign itself does not order a stop.",
     ],
+    de: {
+      title: "«Kein Vortritt» (3.02)",
+      statement:
+        "Beim Signal «Kein Vortritt» müssen Sie dem Verkehr auf der Hauptstrasse den Vortritt gewähren, müssen aber nicht zwingend anhalten, wenn die Fahrbahn frei ist.",
+      workedExamples: [
+        "Sie biegen über eine Auffahrt mit «Kein Vortritt» auf eine Hauptstrasse ein: verlangsamen, prüfen, bei freier Fahrbahn ohne Anhalten weiterfahren.",
+        "Auf der Hauptstrasse nähert sich von links zügig Verkehr: Sie müssen anhalten und warten, auch wenn das Signal selbst nicht zum Halten zwingt.",
+      ],
+    },
   },
   {
     id: "signs.no-overtaking",
@@ -179,6 +224,15 @@ export const seedRules: Rule[] = [
       "Bicycles and tractors moving slower than 30 km/h may still be overtaken even where the sign applies.",
       "The prohibition ends automatically at the next intersection unless the sign is repeated after it.",
     ],
+    de: {
+      title: "Überholverbot (2.06)",
+      statement:
+        "Ab dem Signal «Überholen verboten» (rotes Auto überholt schwarzes Auto im roten Ring) dürfen Sie keine anderen Motorfahrzeuge mehr überholen — bis zum Aufhebungssignal (2.27) oder bis zur nächsten Verzweigung.",
+      workedExamples: [
+        "Fahrräder und Traktoren mit weniger als 30 km/h dürfen auch dort überholt werden, wo das Verbot gilt.",
+        "Das Verbot endet automatisch bei der nächsten Verzweigung, sofern das Signal danach nicht wiederholt wird.",
+      ],
+    },
   },
   {
     id: "signs.priority-road",
@@ -193,6 +247,15 @@ export const seedRules: Rule[] = [
       "Driving through a town on a road marked with the yellow-diamond 3.03: crossing traffic from unsigned side streets must yield to you, regardless of which side they come from.",
       "After passing the 3.04 end-of-priority sign: the right-hand rule resumes, so a car approaching from an unmarked side street on your right now has priority.",
     ],
+    de: {
+      title: "Hauptstrasse (3.03 / 3.04)",
+      statement:
+        "Das gelb-weisse Rautensignal «Hauptstrasse» (3.03) gibt Ihnen Vortritt gegenüber dem Verkehr aus querenden Nebenstrassen — bis das Signal «Ende der Hauptstrasse» (3.04) diesen Vortritt wieder aufhebt. Auf einer Hauptstrasse gilt an den querenden Einmündungen kein Rechtsvortritt.",
+      workedExamples: [
+        "Sie fahren in einer Ortschaft auf einer mit 3.03 signalisierten Strasse: aus unsignalisierten Nebenstrassen einmündender Querverkehr muss Ihnen Vortritt gewähren, egal von welcher Seite er kommt.",
+        "Nach dem Passieren von 3.04 («Ende der Hauptstrasse») gilt wieder der Rechtsvortritt — ein von rechts aus einer unsignalisierten Nebenstrasse kommendes Fahrzeug hat nun Vortritt vor Ihnen.",
+      ],
+    },
   },
   {
     id: "signs.no-entry",
@@ -207,6 +270,15 @@ export const seedRules: Rule[] = [
       "You see a red disc with white bar at the mouth of a street: do not enter, even to turn around or park. Find another route.",
       "The other end of the same street typically has a one-way sign (4.08) — residents driving with the flow are legal, you driving against it are not.",
     ],
+    de: {
+      title: "Einfahrt verboten (2.02)",
+      statement:
+        "Eine rote Scheibe mit waagrechtem weissem Balken verbietet die Einfahrt für alle Motorfahrzeuge. Das Signal steht typischerweise am falschen Ende einer Einbahnstrasse — auch ein kurzes Hineinfahren ist verboten.",
+      workedExamples: [
+        "Sie sehen am Beginn einer Strasse eine rote Scheibe mit weissem Balken: nicht einfahren, auch nicht zum Wenden oder Parken. Suchen Sie eine andere Route.",
+        "Das andere Ende derselben Strasse trägt meist das Einbahnsignal (4.08) — Anwohner mit dem Verkehr sind legal unterwegs, Sie entgegen der Fahrtrichtung nicht.",
+      ],
+    },
   },
   {
     id: "signs.one-way",
@@ -221,6 +293,15 @@ export const seedRules: Rule[] = [
       "You enter a street marked with a white arrow on blue: traffic flows only in that direction; parking rules still apply to both kerbs.",
       "A one-way sign with a small supplementary panel showing a bicycle in the opposite direction means bicycles are exempt and may ride against the flow.",
     ],
+    de: {
+      title: "Einbahnstrasse (4.08)",
+      statement:
+        "Ein weisser Pfeil auf blauem Quadrat kennzeichnet eine Einbahnstrasse. Der Verkehr darf sich nur in Pfeilrichtung bewegen; das andere Ende trägt das Signal «Einfahrt verboten».",
+      workedExamples: [
+        "Sie biegen in eine Strasse mit weissem Pfeil auf blauem Grund ein: Verkehr nur in Pfeilrichtung; Parkregeln gelten weiterhin für beide Fahrbahnränder.",
+        "Eine Einbahnsignal-Tafel mit einer kleinen Zusatztafel, die ein Fahrrad in Gegenrichtung zeigt, bedeutet, dass Fahrräder ausgenommen sind und gegen die Fahrtrichtung fahren dürfen.",
+      ],
+    },
   },
   {
     id: "signs.no-parking",
@@ -235,6 +316,15 @@ export const seedRules: Rule[] = [
       "You need to run into a shop for two minutes under a no-parking sign: not permitted — that counts as parking, not a brief load/unload.",
       "You stop for thirty seconds to let a passenger out: permitted, because it is a stop for boarding, not parking.",
     ],
+    de: {
+      title: "Parkieren verboten (2.17)",
+      statement:
+        "Eine blaue Scheibe mit einem einzigen roten Schrägstrich verbietet das Parkieren. Kurzes Halten zum Ein- oder Aussteigen und zum Güterumschlag ist erlaubt; das Verlassen des Fahrzeugs zu anderen Zwecken nicht.",
+      workedExamples: [
+        "Sie wollen kurz für zwei Minuten in ein Geschäft unter einem «Parkieren verboten»-Signal: nicht erlaubt — das gilt als Parkieren, nicht als Güterumschlag.",
+        "Sie halten dreissig Sekunden, damit ein Beifahrer aussteigt: erlaubt, denn es ist ein Halten zum Aussteigen, kein Parkieren.",
+      ],
+    },
   },
   {
     id: "signs.no-stopping",
@@ -249,6 +339,15 @@ export const seedRules: Rule[] = [
       "You see a blue disc with a red X: you may not stop to drop a passenger, even for a few seconds.",
       "The sign does not prevent obeying traffic signals — stopping at a red light or for a pedestrian on a crossing is always required.",
     ],
+    de: {
+      title: "Halten verboten (2.16)",
+      statement:
+        "Eine blaue Scheibe mit einem roten Andreaskreuz verbietet das Halten vollständig. Selbst kurzes Halten zum Aussteigen oder Güterumschlag ist verboten — ausser wenn der Verkehr (Signale, Fussgänger, Polizei) Sie zum Halten zwingt.",
+      workedExamples: [
+        "Sie sehen eine blaue Scheibe mit rotem Kreuz: Sie dürfen nicht halten, um einen Beifahrer aussteigen zu lassen — auch nicht für wenige Sekunden.",
+        "Das Signal hebt verkehrsbedingtes Halten nicht auf — vor Rotlicht oder für einen Fussgänger auf dem Streifen müssen Sie selbstverständlich anhalten.",
+      ],
+    },
   },
   {
     id: "signs.children-warning",
@@ -361,6 +460,15 @@ export const seedRules: Rule[] = [
       "A sign showing '60' on a country road outside town: from this point your maximum is 60 km/h, regardless of the prior 80 km/h default.",
       "A '40' sign on a town road: it overrides the 50 km/h built-up default until cancelled or until the road clearly leaves the built-up area.",
     ],
+    de: {
+      title: "Höchstgeschwindigkeit (2.09)",
+      statement:
+        "Eine runde weisse Scheibe mit rotem Rand und schwarzer Zahl (SSV 2.09) legt die Höchstgeschwindigkeit in km/h auf der betreffenden Strasse fest. Die Begrenzung gilt für alle Motorfahrzeuge, sofern kein klassenspezifisches Signal sie überlagert, und bleibt in Kraft, bis sie aufgehoben (2.25) oder ersetzt wird.",
+      workedExamples: [
+        "Ein Signal «60» auf einer Ausserortsstrasse: ab hier ist Ihre Höchstgeschwindigkeit 60 km/h, unabhängig von der vorherigen Allgemeinhöchstgeschwindigkeit von 80 km/h.",
+        "Ein Signal «40» innerorts: es überlagert die 50-km/h-Allgemeinhöchstgeschwindigkeit, bis es aufgehoben wird oder die Ortschaft klar verlassen wird.",
+      ],
+    },
   },
   {
     id: "signs.general-50",
@@ -375,6 +483,15 @@ export const seedRules: Rule[] = [
       "You pass the blue '50 generell' sign at the village edge: 50 km/h becomes the default everywhere in town until you see 2.26.",
       "Inside the built-up area you find a side street with no posted limit: 50 still applies because of the general 50 sign at the entrance.",
     ],
+    de: {
+      title: "Allgemeine Höchstgeschwindigkeit 50 (2.10)",
+      statement:
+        "Die blaue Rechtecktafel «50 generell» (SSV 2.10) markiert den Beginn einer Ortschaft, in der 50 km/h als Allgemeinhöchstgeschwindigkeit für alle Strassen gilt — auch für jene ohne ausgeschildertes Tempolimit. Aufgehoben wird sie durch 2.26.",
+      workedExamples: [
+        "Sie passieren am Ortsanfang die blaue Tafel «50 generell»: ab hier gilt überall in der Ortschaft 50 km/h, bis Sie das Aufhebungssignal 2.26 sehen.",
+        "Innerorts finden Sie eine Nebenstrasse ohne eigenes Tempolimit: es gelten weiterhin 50 km/h dank der «50 generell»-Tafel am Ortseingang.",
+      ],
+    },
   },
   {
     id: "signs.no-bicycles",
@@ -883,6 +1000,15 @@ export const seedRules: Rule[] = [
       "On an unsigned country road outside a town: maximum 80 km/h.",
       "Entering a town with the place-name sign: 50 km/h applies until the end-of-town sign.",
     ],
+    de: {
+      title: "Allgemeine Höchstgeschwindigkeiten",
+      statement:
+        "Ohne anderslautende Signalisation gilt: 50 km/h innerorts, 80 km/h ausserorts, 100 km/h auf Autostrassen, 120 km/h auf Autobahnen.",
+      workedExamples: [
+        "Auf einer nicht signalisierten Landstrasse ausserorts: maximal 80 km/h.",
+        "Beim Passieren der Ortstafel gilt 50 km/h bis zum Ende-Ortstafel-Signal.",
+      ],
+    },
   },
   {
     id: "speeds.tempo30",
@@ -897,6 +1023,15 @@ export const seedRules: Rule[] = [
       "On a Tempo-30 residential street, you must yield to pedestrians on the road but they cross anywhere — there is no marked crossing.",
       "A car approaches from your right at a side-street junction inside the zone: even without a priority sign, you yield — Tempo-30 keeps the right-hand rule.",
     ],
+    de: {
+      title: "Tempo-30-Zone",
+      statement:
+        "In der Tempo-30-Zone gilt Höchstgeschwindigkeit 30 km/h. An allen Verzweigungen gilt ohne anderslautende Signalisation der Rechtsvortritt. Fussgängerstreifen sind in der Regel nicht markiert.",
+      workedExamples: [
+        "In einer Tempo-30-Quartierstrasse: Fussgänger dürfen die Fahrbahn überall überqueren — es gibt keinen markierten Streifen.",
+        "Ein Fahrzeug nähert sich von rechts aus einer Seitenstrasse innerhalb der Zone: Rechtsvortritt gilt trotz fehlender Signalisation.",
+      ],
+    },
   },
   {
     id: "speeds.motorway-minimum",
@@ -911,6 +1046,15 @@ export const seedRules: Rule[] = [
       "A vintage car that tops out at 55 km/h: not allowed on the motorway. Use the parallel cantonal road.",
       "An agricultural tractor: not allowed on any motorway or expressway, regardless of its speed.",
     ],
+    de: {
+      title: "Mindestgeschwindigkeit auf der Autobahn",
+      statement:
+        "Autobahnen und Autostrassen sind Motorfahrzeugen vorbehalten, die in der Ebene mindestens 60 km/h erreichen können. Langsamere Fahrzeuge — Traktoren, Mofas, Fahrräder, auf 45 km/h begrenzte E-Bikes — sind nicht zugelassen.",
+      workedExamples: [
+        "Ein Oldtimer, der höchstens 55 km/h fährt: nicht autobahnzulässig. Stattdessen auf der parallelen Kantonsstrasse fahren.",
+        "Ein landwirtschaftlicher Traktor: weder auf Autobahn noch Autostrasse zugelassen, unabhängig von der erreichten Geschwindigkeit.",
+      ],
+    },
   },
   {
     id: "speeds.trailer-reduced",
@@ -925,6 +1069,15 @@ export const seedRules: Rule[] = [
       "You drive a car towing a small cargo trailer on the motorway: maximum 80 km/h regardless of posted limits of 120.",
       "Camping trailer behind your car on a national highway: 80 km/h applies everywhere; you stay in the right lane unless overtaking a slower vehicle.",
     ],
+    de: {
+      title: "Höchstgeschwindigkeit mit Anhänger",
+      statement:
+        "Mit einem Anhänger hinter einem Cat.-B-Fahrzeug gilt auf allen Strassen inklusive Autobahn 80 km/h (die allgemeinen 120 km/h gelten nicht). Überschreitungen sind eine bewegliche Übertretung.",
+      workedExamples: [
+        "Personenwagen mit kleinem Lastanhänger auf der Autobahn: höchstens 80 km/h, auch wenn 120 signalisiert ist.",
+        "Wohnwagen am Zugfahrzeug auf der Nationalstrasse: 80 km/h gilt überall; bleiben Sie auf der rechten Spur, ausser zum Überholen langsamerer Fahrzeuge.",
+      ],
+    },
   },
   {
     id: "speeds.begegnungszone",
@@ -939,6 +1092,15 @@ export const seedRules: Rule[] = [
       "You enter a Begegnungszone at the door of a restaurant district: drive at 20 km/h maximum and yield to pedestrians stepping off the kerb.",
       "You cannot park on the street in a Begegnungszone unless you are within a marked parking bay — even a short stop to load must be within marked areas.",
     ],
+    de: {
+      title: "Begegnungszone (20 km/h)",
+      statement:
+        "In der Begegnungszone gilt für Fahrzeuge Höchstgeschwindigkeit 20 km/h. Fussgänger haben Vortritt und dürfen die ganze Strassenbreite benützen. Parkieren ist nur auf markierten Feldern erlaubt.",
+      workedExamples: [
+        "Sie fahren in eine Begegnungszone vor einem Restaurantbereich: höchstens 20 km/h und Fussgängern Vortritt gewähren, sobald diese die Fahrbahn betreten.",
+        "Parkieren in der Begegnungszone ist nur innerhalb markierter Felder zulässig — auch kurzes Halten zum Laden muss innerhalb der Markierung erfolgen.",
+      ],
+    },
   },
   {
     id: "speeds.adapted-speed",
@@ -953,6 +1115,15 @@ export const seedRules: Rule[] = [
       "Heavy fog reduces visibility to about 60 m on an 80 km/h road: you must slow to a speed from which you can stop inside your sight line — likely 40 km/h or less, not 80.",
       "A 30 km/h limit through a school zone at dismissal time: the 30 may still be too fast if children are running near the road. Reduce further.",
     ],
+    de: {
+      title: "Geschwindigkeit den Verhältnissen anpassen",
+      statement:
+        "Die signalisierte Geschwindigkeit ist eine Höchstgrenze, nicht eine Sollgeschwindigkeit. Bei eingeschränkter Sicht, schlechtem Wetter, schlechtem Strassenzustand, dichtem Verkehr oder Anwesenheit schwacher Verkehrsteilnehmer muss die Geschwindigkeit reduziert werden. Mit der signalisierten Höchstgeschwindigkeit unter ungünstigen Bedingungen zu fahren ist eine Verkehrsregelverletzung.",
+      workedExamples: [
+        "Dichter Nebel reduziert die Sicht auf 60 m auf einer 80er-Strasse: Sie müssen auf eine Geschwindigkeit reduzieren, bei der Sie innerhalb der Sichtweite anhalten können — wahrscheinlich 40 km/h oder weniger, nicht 80.",
+        "30 km/h vor einer Schule beim Schulschluss: Auch 30 kann zu schnell sein, wenn Kinder neben der Strasse rennen. Weiter reduzieren.",
+      ],
+    },
   },
   {
     id: "speeds.school-approach",
@@ -967,6 +1138,15 @@ export const seedRules: Rule[] = [
       "You approach a school marked with the children-warning sign at 08:05: drop to a speed you can stop from immediately — often 30 km/h is sensible even if the sign says 50.",
       "A line of parked cars in front of a playground: slow down and expect a ball (and a child following) to emerge between two cars without looking.",
     ],
+    de: {
+      title: "Annäherung an Schulen und Kinderspielplätze",
+      statement:
+        "Auf Strassen entlang Schulen, Kindergärten und Spielplätzen müssen Sie damit rechnen, dass Kinder ohne Vorwarnung auf die Fahrbahn treten. Die angepasste Geschwindigkeit liegt zu Schulbeginn und Schulschluss meist deutlich unter der signalisierten Höchstgeschwindigkeit, besonders wenn die Sicht durch parkierte Fahrzeuge eingeschränkt ist.",
+      workedExamples: [
+        "Sie nähern sich um 08:05 einer Schule mit Kinder-Warnsignal: auf eine Geschwindigkeit reduzieren, bei der Sie sofort anhalten können — häufig sind 30 km/h sinnvoll, auch wenn 50 signalisiert ist.",
+        "Eine Reihe parkierter Fahrzeuge vor einem Spielplatz: Geschwindigkeit reduzieren und damit rechnen, dass ein Ball (und ein Kind dahinter) zwischen den Autos hervortritt.",
+      ],
+    },
   },
 
   // ---------- mountain ----------
@@ -1387,6 +1567,15 @@ export const seedRules: Rule[] = [
       "First offence at 0.85‰: licence withdrawn ≥3 months, fine, entered on criminal record. You must also retake a fitness-to-drive assessment before reinstatement.",
       "Second offence within 10 years at 0.9‰: licence withdrawn ≥12 months, with obligatory alcohol-dependency assessment.",
     ],
+    de: {
+      title: "Qualifizierte Fahrunfähigkeit (≥0,8‰)",
+      statement:
+        "Eine Blutalkoholkonzentration ab 0,8‰ gilt als qualifizierte Fahrunfähigkeit und damit als schwere Widerhandlung. Folgen sind ein Führerausweisentzug von mindestens drei Monaten bei der ersten Widerhandlung, ein Eintrag im Strafregister, Verlust des Versicherungsrückgriffs und — bei Wiederholung — bis zu unbefristetem Entzug.",
+      workedExamples: [
+        "Erste Widerhandlung mit 0,85‰: Führerausweisentzug ≥3 Monate, Busse, Eintrag im Strafregister. Vor Wiedererteilung ist eine verkehrsmedizinische Begutachtung erforderlich.",
+        "Zweite Widerhandlung innert 10 Jahren mit 0,9‰: Entzug ≥12 Monate, mit obligatorischer verkehrspsychologischer Abklärung.",
+      ],
+    },
   },
   {
     id: "penalties.drug-impairment",
@@ -1401,6 +1590,15 @@ export const seedRules: Rule[] = [
       "A cannabis user stopped 10 hours after consumption: THC still detectable in blood — this is prosecuted the same as a BAC ≥0.8‰, with ≥3 months licence withdrawal on first offence.",
       "Prescription opioids with a driving-warning label are subject to the impairment test, not the zero-tolerance list. But you can still be charged if the doctor flagged it and you drove.",
     ],
+    de: {
+      title: "Drogen am Steuer: Nulltoleranz",
+      statement:
+        "Nach Schweizer Recht gilt als fahrunfähig auch, wer bestimmte Betäubungsmittel in jeder nachweisbaren Konzentration im Blut hat — Cannabis (THC), Kokain, Heroin, Amphetamine, Methamphetamin, MDMA. Bereits Spurenkonzentrationen werden gleichwertig zur qualifizierten Fahrunfähigkeit bei Alkohol verfolgt.",
+      workedExamples: [
+        "Cannabis-Konsument wird 10 Stunden nach Konsum angehalten: THC ist noch nachweisbar — das wird gleich wie ein BAK ≥0,8‰ verfolgt, mit Führerausweisentzug ≥3 Monate bei Ersttat.",
+        "Verschreibungspflichtige Opiate mit Warnhinweis fallen unter die Beeinträchtigungsprüfung, nicht die Nulltoleranzliste. Dennoch drohen Strafen, wenn der Arzt vor dem Fahren gewarnt hat.",
+      ],
+    },
   },
   {
     id: "penalties.speeding-katalog",
@@ -1415,6 +1613,15 @@ export const seedRules: Rule[] = [
       "110 km/h in a 50 zone (60 over): classified as a 'Raser' offence — criminal prosecution, vehicle seized, licence ≥24 months withdrawn, possible custodial sentence.",
       "50 over on a motorway (170 in a 120 zone): above the licence-withdrawal threshold; expect ≥3 months withdrawal plus a substantial fine — even for a first offence.",
     ],
+    de: {
+      title: "Raserkatalog und Geschwindigkeitsüberschreitungen",
+      statement:
+        "Über die Ordnungsbusse hinaus führen Geschwindigkeitsüberschreitungen zum Führerausweisentzug: rund +25 km/h innerorts, +30 ausserorts, +35 auf Autostrassen, +40 auf Autobahnen. Extreme Überschreitungen ('Raser-Tatbestand') ziehen Strafverfahren, Fahrzeug-Einziehung und Entzug von mindestens 24 Monaten nach sich.",
+      workedExamples: [
+        "110 km/h in einer 50er-Zone (60 zu viel): Raser-Tatbestand — Strafverfahren, Fahrzeug-Einziehung, Führerausweisentzug ≥24 Monate, Freiheitsstrafe möglich.",
+        "50 zu viel auf der Autobahn (170 in einer 120er-Zone): über der Entzugsschwelle; mit Entzug ≥3 Monaten und einer erheblichen Busse ist bereits bei Ersttat zu rechnen.",
+      ],
+    },
   },
 
   // ---------- accidents-insurance ----------
